@@ -1,4 +1,4 @@
-# SUBTERRA — Infrastructure Reconstruction UI (v0.3)
+# SUBTERRA — Infrastructure Reconstruction UI (v0.4)
 
 Front-end-only evidence-capture prototype for existing underground utility assets. The platform **does not design new networks or perform reverse-engineering calculations yet**.
 
@@ -37,6 +37,12 @@ Exports: project JSON (all values including classification, statuses and pipe-op
 Open `index.html` or serve this directory with `python -m http.server 8000`. GitHub Pages can deploy the repository's `main` branch from `/(root)`.
 
 No backend is required. No AI inference, hidden utility detection, automatic pipe connection, probabilistic reconstruction or new drawing/design is implemented in this release.
+
+## Delete projects (v0.4)
+
+On **All projects**, use the trash icon on any project card. The same icon appears next to every project under **Recent Projects** in the sidebar. The systems page for an opened project also includes **Delete project**. All deletion actions ask for confirmation, then remove the whole project and its nested manholes, pipe openings, and components from `subterra_ui_v1` localStorage in **this browser**, without affecting other projects.
+
+For a one-time requested deletion, open `?deleteProject=Sewer%20Test%2001` on the same browser and approve the confirmation dialog. This only matches the exact project name and refuses to choose automatically if duplicate project names exist. The query parameter is removed from the address immediately. This static GitHub site cannot remove data stored in another browser remotely.
 
 ## Data safety
 
