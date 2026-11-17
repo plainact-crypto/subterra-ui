@@ -1,4 +1,4 @@
-/* Subterra UI v0.2 — No backend, no design/reconstruction calculations yet. */
+/* Subterra UI v0.3 — classification wizard & surveyed manhole locations. No design calculations. */
 (() => {
   'use strict';
 
@@ -19,14 +19,6 @@
     ['fuel','Fuel / Oil Pipelines','Fuel distribution networks','◈',false],
     ['other','Other Utilities','Additional infrastructure systems','＋',false]
   ];
-  const MATERIALS = ['Precast Reinforced Concrete','Cast-in-Situ Reinforced Concrete','GRP','HDPE','Polypropylene (PP)','PVC','Brick Masonry','Other'];
-  const DEFAULT_TYPES = [
-    {id:'t-rc-1200',code:'MH-RC-1200',name:'Precast RC Manhole',material:'Precast Reinforced Concrete',shape:'Round',diameter:1200},
-    {id:'t-rc-insitu',code:'MH-CIS',name:'Cast-in-Situ Manhole',material:'Cast-in-Situ Reinforced Concrete',shape:'Rectangular',diameter:null},
-    {id:'t-grp',code:'MH-GRP',name:'GRP Inspection Chamber',material:'GRP',shape:'Round',diameter:1000},
-    {id:'t-hdpe',code:'MH-HDPE',name:'HDPE Inspection Chamber',material:'HDPE',shape:'Round',diameter:600},
-    {id:'t-brick',code:'MH-BRICK',name:'Brick Manhole',material:'Brick Masonry',shape:'Round',diameter:1000}
-  ];
   const $ = sel => document.querySelector(sel);
   const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const uid = () => (crypto.randomUUID ? crypto.randomUUID() : 'id-' + Date.now() + '-' + Math.random().toString(36).slice(2));
@@ -36,7 +28,6 @@
     projects:Array.isArray(persisted.projects) ? persisted.projects : [],
     activeId:persisted.activeId||null,
     page:'projects',
-    inspectorTab:'manholes',
     selectedMh:null,
     canvas:{panX:0,panY:0,scale:2,dirtyFit:true},
     pointer:null,
@@ -51,8 +42,8 @@
   }
   function active() { return state.projects.find(p => p.id===state.activeId) || null; }
   function announce(message) { const t=$('#toast'); t.textContent=message; t.classList.add('show'); clearTimeout(state.toastTimer); state.toastTimer=setTimeout(()=>t.classList.remove('show'),2500); }
-  function navigate(page) { state.page=page; state.inspectorTab='manholes'; window.scrollTo(0,0); render(); }
-  function selectProject(id) { state.activeId=id; state.selectedMh=null; state.canvas.dirtyFit=true; save(); navigate('systems'); }
+  function navigate(page) { state.page=page; window.scrollTo(0,0); render(); }
+  function selectProject(id) { state.activeId=id; state.selectedMh=null; window.SubterraWizard.resetStep(); state.canvas.dirtyFit=true; save(); navigate('systems'); }
   function renderNav() {
     $('#projectCount').textContent=state.projects.length;
     $('#navProjects').classList.toggle('active',state.page==='projects');
@@ -71,36 +62,69 @@
   }
   function renderWorkspace() {
     const p=active(); if(!p){navigate('projects');return;}
-    $('#mainContent').innerHTML=`<div class="workspace"><div class="ws-header"><div><h1>Sanitary Sewer <span style="font-size:12px;color:#80a3a3;font-weight:600">/ Data Workspace</span></h1><div class="ws-sub">${escapeHtml(p.name)} · Evidence capture & spatial plotting · No design calculations</div></div><div class="ws-actions"><button class="btn btn-outline btn-sm hide-sm" id="exportCsv">↓ Export CSV</button><button class="btn btn-outline btn-sm" id="exportJson">↓ JSON</button><button class="btn btn-outline btn-sm hide-sm" id="exportKml">↗ Google Earth KML</button><button class="btn btn-primary btn-sm" id="topAddMh">＋ Manhole</button></div></div><div class="ws-main"><section class="canvas-pane"><canvas class="canvas-surface" id="mapCanvas" aria-label="Infinite canvas with surveyed manholes. Drag to pan, scroll to zoom."></canvas><div class="canvas-toolbar"><span class="canvas-pill green">● Sewer / Manholes</span><span class="canvas-pill">${p.coordMode==='geographic'?'WGS84 · Local metric view':'Local XY · Metres'}</span></div><div class="canvas-controls"><button id="zoomIn" title="Zoom in">＋</button><button id="zoomOut" title="Zoom out">−</button><button class="fit" id="fitCanvas" title="Fit all manholes">FIT</button></div><div id="canvasEmpty" class="canvas-overlay-empty"><div class="ghost-icon">⌖</div><strong>Your survey canvas is ready</strong><p>Add a manhole with coordinates on the right. It will appear here automatically.</p></div><div class="canvas-hint">✥ Drag to pan <span style="opacity:.35">·</span> Scroll to zoom <span style="opacity:.35">·</span> Click a manhole to select</div><div class="canvas-legend"><span class="dot-legend"></span> Surveyed manhole</div></section><aside class="inspector"><div class="inspector-tabs"><button class="tab ${state.inspectorTab==='manholes'?'active':''}" data-tab="manholes">Manholes</button><button class="tab ${state.inspectorTab==='types'?'active':''}" data-tab="types">Manhole type library</button></div><div class="inspector-scroll" id="inspectorBody"></div></aside></div></div>`;
+    $('#mainContent').innerHTML=`<div class="workspace"><div class="ws-header"><div><h1>Sanitary Sewer <span style="font-size:12px;color:#80a3a3;font-weight:600">/ Data Workspace</span></h1><div class="ws-sub">${escapeHtml(p.name)} · Surveyed evidence & manhole classification · No design calculations</div></div><div class="ws-actions"><button class="btn btn-outline btn-sm hide-sm" id="exportCsv">↓ Export CSV</button><button class="btn btn-outline btn-sm" id="exportJson">↓ JSON</button><button class="btn btn-outline btn-sm hide-sm" id="exportKml">↗ Google Earth KML</button><button class="btn btn-primary btn-sm" id="topAddMh">＋ Manhole</button></div></div><div class="ws-main"><section class="canvas-pane"><canvas class="canvas-surface" id="mapCanvas" aria-label="Infinite canvas with surveyed manholes. Drag to pan, scroll to zoom."></canvas><div class="canvas-toolbar"><span class="canvas-pill green">● Sewer / Manholes</span><span class="canvas-pill">${p.coordMode==='geographic'?'WGS84 · Local metric view':'Local XY · Metres'}</span></div><div class="canvas-controls"><button id="zoomIn" title="Zoom in">＋</button><button id="zoomOut" title="Zoom out">−</button><button class="fit" id="fitCanvas" title="Fit all manholes">FIT</button></div><div id="canvasEmpty" class="canvas-overlay-empty"><div class="ghost-icon">⌖</div><strong>Your survey canvas is ready</strong><p>Add a manhole and enter its surveyed top coordinates. It will appear here automatically.</p></div><div class="canvas-hint">✥ Drag to pan <span style="opacity:.35">·</span> Scroll to zoom <span style="opacity:.35">·</span> Click a manhole to select</div><div class="canvas-legend"><span class="dot-legend"></span> Surveyed top point</div></section><aside class="inspector"><div class="inspector-tabs"><span class="inspector-caption">MANHOLE RECORDS &amp; CLASSIFICATION</span></div><div class="inspector-scroll" id="inspectorBody"></div></aside></div></div>`;
     renderInspector(); setupCanvas(); requestAnimationFrame(()=>{if(state.canvas.dirtyFit)fitCanvas();else drawCanvas();});
   }
-  function renderInspector() { if(state.inspectorTab==='types')renderTypes();else renderManholes(); }
-  function getSelectedMh(){const p=active(); return p?.manholes?.find(m=>m.id===state.selectedMh)||null;}
-  function validMh(p,m){ if(p.coordMode==='geographic')return m.lat!==''&&m.lon!==''&&Number.isFinite(+m.lat)&&Number.isFinite(+m.lon)&&Math.abs(+m.lat)<=90&&Math.abs(+m.lon)<=180;return m.x!==''&&m.y!==''&&Number.isFinite(+m.x)&&Number.isFinite(+m.y); }
-  function renderManholes(){
-    const p=active();if(!p)return;const mh=getSelectedMh();const located=p.manholes.filter(m=>validMh(p,m)).length;
-    const valueOf=(m,k)=>m[k]===null||m[k]===undefined?'':m[k];
-    const r=(label,key,placeholder='',type='text')=>`<div class="field-row"><div class="field-key">${label}</div><div class="field-value"><input data-mh-field="${key}" type="${type}" ${type==='number'?'step="any"':''} placeholder="${placeholder}" value="${escapeHtml(valueOf(mh,key))}" autocomplete="off" /></div></div>`;
-    const selectedType=p.types.find(t=>t.id===mh?.typeId);
-    const detailMarkup = mh ? window.SubterraDetails.render(mh) : '';
-    $('#inspectorBody').innerHTML=`<div class="panel-top"><span class="panel-title">Manhole schedule</span><span class="panel-counter">${located} / ${p.manholes.length} located</span></div><p class="panel-desc">Every manhole is an observed asset. Enter surveyed coordinates; the point appears on the canvas immediately.</p><button class="btn btn-outline btn-sm" id="addMhRight">＋ Add manhole</button>${p.manholes.length?`<div class="mh-list">${p.manholes.map(m=>`<button class="mh-list-item ${mh?.id===m.id?'selected':''}" data-select-mh="${escapeHtml(m.id)}"><span class="mh-item-icon">◎</span><span class="mh-row-main"><strong>${escapeHtml(m.name||'Unnamed manhole')}</strong><small>${validMh(p,m)?escapeHtml(p.coordMode==='geographic'?`${m.lat}, ${m.lon}`:`X ${m.x} · Y ${m.y}`):'Coordinates not entered'} · ${escapeHtml(p.types.find(t=>t.id===m.typeId)?.code||'No type')}</small></span><span class="mh-arrow">›</span></button>`).join('')}</div>`:'<div class="no-mh" style="margin-top:16px">No manholes yet. Add your first surveyed manhole to begin.</div>'}${mh?`<div class="section-head"><h3>Manhole properties</h3><small>FIELD / VALUE</small></div><div class="field-table">${r('Name','name','Auto: MH-001')}${p.coordMode==='geographic'?r('Latitude','lat','30.116926','number')+r('Longitude','lon','31.881307','number'):r('Easting X (m)','x','500000.00','number')+r('Northing Y (m)','y','3330000.00','number')}${r('Cover / Ground RL','cover','e.g. 102.50','number')}${r('Invert RL','invert','e.g. 100.40','number')}<div class="field-row"><div class="field-key">Manhole type</div><div class="field-value"><select data-mh-field="typeId"><option value="">Select from library…</option>${p.types.map(t=>`<option value="${escapeHtml(t.id)}" ${mh.typeId===t.id?'selected':''}>${escapeHtml(t.code)} · ${escapeHtml(t.name)}</option>`).join('')}</select></div></div><div class="field-row"><div class="field-key">Material</div><div class="field-value"><span class="muted-value" id="selectedMaterial">${escapeHtml(selectedType?.material||'Inherited from type library')}</span></div></div>${r('Observed / Notes','notes','Site survey remarks')}</div>${detailMarkup}<div class="property-footer"><button class="btn-text" id="editLibraryFromMh">↗ Edit type library</button><button class="danger-link" id="deleteMh">Delete manhole</button></div><div class="hint-inline">Measured values are stored exactly as entered. Missing values are left blank — this screen does not infer pipe connections, depths or alignments yet.</div>`:`<div class="hint-inline">Choose a manhole to edit its name, coordinates, levels and type. Type materials are managed separately in the library.</div>`}`;
+  function renderInspector(){renderManholes();}
+  function getSelectedMh(){const p=active();return p?.manholes?.find(m=>m.id===state.selectedMh)||null;}
+  function validMh(p,m){
+    if(p.coordMode==='geographic')return m.lat!==''&&m.lon!==''&&Number.isFinite(+m.lat)&&Number.isFinite(+m.lon)&&Math.abs(+m.lat)<=90&&Math.abs(+m.lon)<=180;
+    return m.x!==''&&m.y!==''&&Number.isFinite(+m.x)&&Number.isFinite(+m.y);
   }
-  function renderTypes(){const p=active();$('#inspectorBody').innerHTML=`<div class="panel-top"><span class="panel-title">Manhole type library</span><span class="panel-counter">${p.types.length} types</span></div><p class="panel-desc">Define reusable manhole types. The selected type controls the material and typical chamber dimensions — independently of manhole names or locations.</p><button class="btn btn-outline btn-sm" id="addType">＋ New type</button><div style="margin-top:18px">${p.types.map(t=>`<div class="type-card"><div><span class="type-code">${escapeHtml(t.code)}</span><br><strong>${escapeHtml(t.name)}</strong><p>${escapeHtml(t.material)} · ${escapeHtml(t.shape)}${t.diameter?' · Ø '+escapeHtml(t.diameter)+' mm':''}</p></div><div class="type-actions"><button class="mini-action" data-edit-type="${escapeHtml(t.id)}" title="Edit">Edit</button><button class="mini-action delete" data-delete-type="${escapeHtml(t.id)}" title="Delete">×</button></div></div>`).join('')}</div><div class="callout" style="margin-top:15px">Example: MH-001 and MH-002 can be different locations while both use type <strong>MH-RC-1200</strong>. A type belongs to the library; a manhole is a surveyed individual asset.</div>`;}
-  function addManhole(){const p=active();if(!p)return;let i=1;const used=new Set(p.manholes.map(m=>m.name));let name;do{name='MH-'+String(i++).padStart(3,'0')}while(used.has(name));const m={id:uid(),name,lat:'',lon:'',x:'',y:'',cover:'',invert:'',typeId:'t-rc-1200',notes:''};p.manholes.push(m);state.selectedMh=m.id;state.inspectorTab='manholes';save();renderInspector();drawCanvas();document.querySelector('[data-mh-field="name"]')?.focus();announce(`${name} added`);}
-  function updateMh(key,value){const p=active(),m=getSelectedMh();if(!m)return;if(['lat','lon','x','y'].includes(key)&&value!==''){const n=Number(value);if(!Number.isFinite(n))return;}m[key]=value;if(['cover','invert'].includes(key)){window.SubterraDetails.ensure(m);m.evidence.levels[key]=value===''?'unknown':'measured';}save();if(['lat','lon','x','y'].includes(key)&&validMh(p,m)){fitCanvas();}else{drawCanvas();}if(key==='name'||key==='typeId'){const sel=document.activeElement?.getAttribute('data-mh-field');renderInspector();if(sel&&key==='name'){const input=document.querySelector('[data-mh-field="name"]');input?.focus();input?.setSelectionRange(value.length,value.length);}}}
-  function selectMh(id){state.selectedMh=id;state.inspectorTab='manholes';renderInspector();drawCanvas();}
-  function openTypeDialog(typeId){const p=active(),t=p?.types.find(o=>o.id===typeId);$('#typeForm').reset();$('#editTypeId').value=t?.id||'';$('#typeDialogHeading').textContent=t?'Edit manhole type':'Create manhole type';$('#typeCode').value=t?.code||'';$('#typeName').value=t?.name||'';$('#typeMaterial').value=t?.material||MATERIALS[0];$('#typeShape').value=t?.shape||'Round';$('#typeDiameter').value=t?.diameter??'';$('#typeDialog').showModal();}
-  function saveType(form){const field=n=>form.elements.namedItem(n).value;const p=active(),id=field('typeId')||uid(),code=field('code').trim(),name=field('name').trim();if(!code||!name)return;const dupe=p.types.find(t=>t.code.toLowerCase()===code.toLowerCase()&&t.id!==id);if(dupe){announce('Type code already exists');return;}const obj={id,code,name,material:field('material'),shape:field('shape'),diameter:field('diameter')===''?null:Number(field('diameter'))};const idx=p.types.findIndex(t=>t.id===id);if(idx>=0)p.types[idx]=obj;else p.types.push(obj);save();$('#typeDialog').close();renderInspector();announce('Type saved to project library');}
-  function deleteType(id){const p=active();if(p.manholes.some(m=>m.typeId===id)){announce('Type is used by a manhole; change that manhole first');return;}if(!confirm('Delete this type from the library?'))return;p.types=p.types.filter(t=>t.id!==id);save();renderInspector();}
+  function renderManholes(){
+    const p=active();if(!p)return;
+    const mh=getSelectedMh();
+    const located=p.manholes.filter(m=>validMh(p,m)).length;
+    for(const m of p.manholes)window.SubterraWizard.ensure(m,p);
+    $('#inspectorBody').innerHTML=`<div class="panel-top"><span class="panel-title">Manhole schedule</span><span class="panel-counter">${located} / ${p.manholes.length} located</span></div>
+      <p class="panel-desc">Each manhole is classified step-by-step. Surveyed top coordinates plot its position; unknown values remain unknown.</p>
+      <button class="btn btn-outline btn-sm" id="addMhRight">＋ Add manhole</button>
+      ${p.manholes.length?`<div class="mh-list">${p.manholes.map(m=>`<button class="mh-list-item ${mh?.id===m.id?'selected':''}" data-select-mh="${escapeHtml(m.id)}"><span class="mh-item-icon">◎</span><span class="mh-row-main"><strong>${escapeHtml(m.name)}</strong><small>${validMh(p,m)?escapeHtml(p.coordMode==='geographic'?`${m.lat}, ${m.lon}`:`X ${m.x} · Y ${m.y}`):'Top coordinates not entered'} · ${Object.values(m.classification||{}).filter(v=>v && v!=='__infer__').length}/6 classifications</small></span><span class="mh-arrow">›</span></button>`).join('')}</div>`:'<div class="no-mh" style="margin-top:16px">No manholes. Add your first existing manhole to begin recording evidence.</div>'}
+      ${mh?`${window.SubterraWizard.render(mh,p)}<div class="property-footer"><button class="danger-link" id="deleteMh">Delete manhole</button></div>`:'<div class="hint-inline">Select a manhole to open its step-by-step classification.</div>'}`;
+  }
+  function addManhole(){
+    const p=active();if(!p)return;
+    const index=Math.max(0,...p.manholes.map(m=>m.autoIndex||0))+1;
+    const m={id:uid(),name:'',customName:'',autoIndex:index,lat:'',lon:'',x:'',y:'',cover:'',invert:'',invertPosition:{lat:'',lon:'',x:'',y:''},classification:{},notes:''};
+    p.manholes.push(m);window.SubterraWizard.ensure(m,p);state.selectedMh=m.id;window.SubterraWizard.resetStep();save();renderInspector();drawCanvas();
+    document.querySelector('[data-wiz-custom-name]')?.focus();announce(`${m.name} added`);
+  }
+  function selectMh(id){state.selectedMh=id;window.SubterraWizard.resetStep();renderInspector();drawCanvas();}
+  function refreshLocation(){
+    const p=active(),m=getSelectedMh();if(!p||!m)return;
+    const row=Array.from(document.querySelectorAll('[data-select-mh]')).find(b=>b.dataset.selectMh===m.id);
+    if(row){const summary=row.querySelector('small');if(summary)summary.textContent=(validMh(p,m)?(p.coordMode==='geographic'?`${m.lat}, ${m.lon}`:`X ${m.x} · Y ${m.y}`):'Top coordinates not entered')+' · '+Object.values(m.classification||{}).filter(v=>v&&v!=='__infer__').length+'/6 classifications';}
+    const located=p.manholes.filter(mm=>validMh(p,mm)).length;
+    const badge=document.querySelector('.panel-counter');if(badge)badge.textContent=`${located} / ${p.manholes.length} located`;
+    if(validMh(p,m))fitCanvas();else drawCanvas();
+  }
   function openProjectDialog(){$('#projectForm').reset();$('#projectDialog').showModal();setTimeout(()=>$('#projectName').focus(),30);}
-  function createProject(form){const field=n=>form.elements.namedItem(n).value;const p={id:uid(),name:field('name').trim(),location:field('location').trim(),coordMode:field('coordMode'),createdAt:new Date().toISOString(),types:clone(DEFAULT_TYPES),manholes:[]};if(!p.name)return;state.projects.push(p);state.activeId=p.id;state.selectedMh=null;save();$('#projectDialog').close();navigate('systems');announce('Project created');}
+  function createProject(form){
+    const field=n=>form.elements.namedItem(n).value;
+    const p={id:uid(),name:field('name').trim(),location:field('location').trim(),coordMode:field('coordMode'),createdAt:new Date().toISOString(),types:[],manholes:[]};
+    if(!p.name)return;state.projects.push(p);state.activeId=p.id;state.selectedMh=null;save();$('#projectDialog').close();navigate('systems');announce('Project created');
+  }
   function exportFile(name,content,mime){const url=URL.createObjectURL(new Blob([content],{type:mime}));const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),300);}
-  const safeFilename = s => (s||'project').replace(/[^a-z0-9\-_]/gi,'_').slice(0,40);
+  const safeFilename=s=>(s||'project').replace(/[^a-z0-9\-_]/gi,'_').slice(0,40);
   function escapeCsv(s){return '"'+String(s??'').replaceAll('"','""')+'"';}
-  function exportCsv(){const p=active();const h=['Name','Latitude','Longitude','Easting_X','Northing_Y','Cover_RL','Invert_RL','Manhole_Type','Material','Notes'];const rows=p.manholes.map(m=>[m.name,m.lat,m.lon,m.x,m.y,m.cover,m.invert,p.types.find(t=>t.id===m.typeId)?.code||'',p.types.find(t=>t.id===m.typeId)?.material||'',m.notes]);exportFile(`${safeFilename(p.name)}_manholes.csv`,[h,...rows].map(r=>r.map(escapeCsv).join(',')).join('\n'),'text/csv;charset=utf-8');announce('Manhole schedule exported');}
+  function exportCsv(){
+    const p=active();const categories=window.SubterraWizard.TAXONOMY;
+    const h=['Name','Latitude','Longitude','Easting_X','Northing_Y','Top_RL','Invert_Latitude','Invert_Longitude','Invert_X','Invert_Y','Invert_RL',...categories.map(c=>c.title),'Notes'];
+    const rows=p.manholes.map(m=>{window.SubterraWizard.ensure(m,p);return [m.name,m.lat,m.lon,m.x,m.y,m.cover,m.invertPosition.lat,m.invertPosition.lon,m.invertPosition.x,m.invertPosition.y,m.invert,...categories.map(c=>m.classification[c.key]==='__infer__'?'REQUEST INFERENCE':m.classification[c.key]),m.notes];});
+    exportFile(`${safeFilename(p.name)}_manholes.csv`,[h,...rows].map(row=>row.map(escapeCsv).join(',')).join('\n'),'text/csv;charset=utf-8');announce('Manhole schedule exported');
+  }
   function exportJson(){const p=active();exportFile(`${safeFilename(p.name)}_project.json`,JSON.stringify(p,null,2),'application/json');announce('Project JSON exported');}
-  function xmlEscape(value){return String(value??'').replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&quot;',"'":'&apos;'}[c]));}
-  function exportKml(){const p=active();if(p.coordMode!=='geographic'){announce('KML requires WGS84 coordinates. Use a WGS84 project for Google Earth.');return;}const placemarks=p.manholes.filter(m=>validMh(p,m)).map(m=>`<Placemark><name>${xmlEscape(m.name)}</name><description>${xmlEscape('Manhole type: '+(p.types.find(t=>t.id===m.typeId)?.code||'Unspecified')+'; Cover RL: '+(m.cover||'Unknown')+'; Invert RL: '+(m.invert||'Unknown'))}</description><Point><coordinates>${m.lon},${m.lat},0</coordinates></Point></Placemark>`).join('');if(!placemarks){announce('Add at least one manhole with valid coordinates first');return;}exportFile(`${safeFilename(p.name)}_manholes.kml`,`<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>${xmlEscape(p.name)}</name>${placemarks}</Document></kml>`,'application/vnd.google-earth.kml+xml');announce('KML ready for Google Earth');}
+  function xmlEscape(v){return String(v??'').replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&quot;',"'":'&apos;'}[c]));}
+  function exportKml(){
+    const p=active();if(p.coordMode!=='geographic'){announce('KML requires WGS84 coordinates. Use a WGS84 project for Google Earth.');return;}
+    const placemarks=p.manholes.filter(m=>validMh(p,m)).map(m=>{
+      window.SubterraWizard.ensure(m,p);
+      const cls=window.SubterraWizard.TAXONOMY.map(c=>`${c.short}: ${m.classification[c.key]||'Unknown'}`).join('; ');
+      return `<Placemark><name>${xmlEscape(m.name)}</name><description>${xmlEscape(cls+'; Top RL: '+(m.cover||'Unknown')+'; Invert RL: '+(m.invert||'Unknown'))}</description><Point><coordinates>${m.lon},${m.lat},0</coordinates></Point></Placemark>`;
+    }).join('');
+    if(!placemarks){announce('Add at least one manhole with valid top coordinates first');return;}
+    exportFile(`${safeFilename(p.name)}_manholes.kml`,`<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>${xmlEscape(p.name)}</name>${placemarks}</Document></kml>`,'application/vnd.google-earth.kml+xml');announce('KML ready for Google Earth');
+  }
 
   // Canvas — Cartesian metre coordinates with WGS84 values converted to a local equirectangular view.
   // This is for plotting only; it is NOT survey-grade projection/georeferencing.
@@ -131,32 +155,23 @@
     if(target.matches('[data-select-project],[data-open-project]'))return selectProject(target.dataset.selectProject||target.dataset.openProject);
     if(target.matches('[data-all-projects]'))return navigate('projects');
     if(target.matches('[data-open-system]')){if(target.dataset.openSystem==='sewer'){state.canvas.dirtyFit=true;navigate('sewer');}return;}
-    if(target.matches('[data-tab]')){state.inspectorTab=target.dataset.tab;renderInspector();return;}
     if(target.matches('#topAddMh,#addMhRight'))return addManhole();
     if(target.matches('[data-select-mh]'))return selectMh(target.dataset.selectMh);
-    if(target.matches('#editLibraryFromMh')){state.inspectorTab='types';renderInspector();return;}
-    if(target.matches('#deleteMh')){const p=active(),m=getSelectedMh();if(m&&confirm(`Delete ${m.name||'this manhole'}?`)){p.manholes=p.manholes.filter(x=>x.id!==m.id);state.selectedMh=p.manholes.at(-1)?.id||null;save();renderInspector();drawCanvas();}return;}
-    if(target.matches('#addType'))return openTypeDialog(null);
-    if(target.matches('[data-edit-type]'))return openTypeDialog(target.dataset.editType);
-    if(target.matches('[data-delete-type]'))return deleteType(target.dataset.deleteType);
+    if(target.matches('#deleteMh')){const p=active(),m=getSelectedMh();if(m&&confirm(`Delete ${m.name||'this manhole'}?`)){p.manholes=p.manholes.filter(x=>x.id!==m.id);state.selectedMh=p.manholes.at(-1)?.id||null;window.SubterraWizard.resetStep();save();renderInspector();drawCanvas();}return;}
     if(target.matches('#fitCanvas'))return fitCanvas();
     if(target.matches('#zoomIn,#zoomOut')){state.canvas.scale=Math.max(.0002,Math.min(80,state.canvas.scale*(target.id==='zoomIn'?1.4:1/1.4)));drawCanvas();return;}
     if(target.matches('#exportCsv'))return exportCsv();
     if(target.matches('#exportJson'))return exportJson();
     if(target.matches('#exportKml'))return exportKml();
   });
-  document.addEventListener('input',e=>{const key=e.target.dataset.mhField;if(key!==undefined && e.target.tagName==='INPUT')updateMh(key,e.target.value);});
-  document.addEventListener('change',e=>{const key=e.target.dataset.mhField;if(key!==undefined&&e.target.tagName==='SELECT')updateMh(key,e.target.value);});
   $('#projectForm').addEventListener('submit',e=>{e.preventDefault();createProject(e.currentTarget);});
-  $('#typeForm').addEventListener('submit',e=>{e.preventDefault();saveType(e.currentTarget);});
   $('#cancelProject').addEventListener('click',()=>$('#projectDialog').close());
-  $('#cancelType').addEventListener('click',()=>$('#typeDialog').close());
   $('#navProjects').addEventListener('click',()=>navigate('projects'));
   $('#navSystems').addEventListener('click',()=>{if(active())navigate('systems');else announce('Create a project first');});
   $('#brandHome').addEventListener('click',()=>navigate('projects'));
   $('#brandHome').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')navigate('projects');});
-  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.2 — UI prototype. Create projects, choose Sanitary Sewer, add manholes on an infinite coordinate canvas, and manage a project-specific manhole type library. No underground predictions or design calculations yet. Data is stored only in this browser; export JSON/CSV regularly.'));
-  $('#typeMaterial').innerHTML=MATERIALS.map(s=>`<option>${escapeHtml(s)}</option>`).join('');
+  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.3 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. No reconstruction calculations or AI inferences are executed. Data is stored locally in your browser. Export JSON backups regularly.'));
   window.SubterraDetails.setup({getSelectedMh,active,save,renderInspector,announce});
+  window.SubterraWizard.setup({getSelectedMh,active,save,renderInspector,announce,drawCanvas,refreshLocation});
   render();
 })();
