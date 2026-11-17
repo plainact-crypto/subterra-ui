@@ -1,0 +1,49 @@
+/* SUBTERRA v0.2 — evidence & opening inspector */
+.data-capture{margin-top:12px}
+.evidence-heading{margin-top:27px}
+.evidence-heading small{font-size:10px;line-height:1.35;text-align:right}
+.evidence-explainer{font-size:11px;line-height:1.65;color:#677f8d;background:#f5f9fa;padding:11px 12px;border-radius:8px;margin:0 0 14px}
+.evidence-subheading{font-size:11px;font-weight:800;color:#29465a;margin:15px 0 10px}
+.level-status{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.level-status label{font-size:10px;color:#607789;font-weight:650;display:grid;gap:7px;border:1px solid #e2eaf0;border-radius:9px;padding:10px}
+.data-capture input,.data-capture select{height:34px;min-width:0;width:100%;font-size:11px;border:1px solid #dce6ea;background:#fff;border-radius:6px;padding:6px 8px;color:#263e51}
+.data-capture input:focus,.data-capture select:focus{outline:2px solid #b4ded8;border-color:#53a9a2}
+.data-capture input:disabled,.data-capture select:disabled{background:#f3f6f8;color:#a1aeb7;opacity:.9;cursor:not-allowed}
+.data-capture input::placeholder{color:#a0b0ba}
+.inference-counter{background:#fff4dc;padding:5px 8px;color:#98661d!important;border-radius:6px;font-size:10px}
+.opening-total{display:grid;grid-template-columns:minmax(0,1fr) 76px 145px;gap:9px;align-items:center;background:#f9fbfc;border:1px solid #e4ebef;padding:11px;border-radius:9px;margin:12px 0}
+.opening-total label strong,.opening-total label small{display:block}
+.opening-total label strong{font-size:11px}
+.opening-total label small{font-size:10px;color:#8a9ba7;line-height:1.4;margin-top:4px}
+.opening-cards{display:grid;gap:10px}
+.evidence-empty{font-size:11px;color:#8095a3;padding:15px;border:1px dashed #d6e2e7;border-radius:8px;line-height:1.65}
+.opening-card{border:1px solid #dce8ed;border-radius:10px;background:white;padding:13px;box-shadow:0 1px 5px #17384907}
+.opening-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.opening-top input{font-weight:800;flex:1}
+.opening-number{flex:none;background:#e8f6f3;color:#148477;font-size:11px;font-weight:850;border-radius:6px;padding:7px 8px}
+.tiny-danger{background:#fff7f7;border:1px solid #f0dada;color:#ad615f;border-radius:6px;width:31px;height:31px;font-size:18px}
+.opening-primary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.opening-primary>div{min-width:0}
+.opening-primary label{display:block;font-size:10px;color:#718695;font-weight:700;margin-bottom:5px}
+.opening-fields{display:grid;gap:8px}
+.opening-fields.fields-inactive{opacity:.65}
+.evidence-metric{display:grid;gap:5px;padding-top:8px;border-top:1px solid #edf2f4}
+.evidence-metric-title{font-size:10.5px;color:#344d5f;font-weight:750}
+.evidence-metric-title small{font-size:10px;color:#95a3af;font-weight:500;margin-left:4px}
+.evidence-metric-inputs{display:grid;grid-template-columns:minmax(0,1fr) 155px;gap:8px}
+.infer-hint{font-size:10px;color:#9f771e}
+.add-opening-btn{width:100%;margin-top:12px}
+.components-list{display:grid;gap:8px}
+.component-row{border:1px solid #e1e9ee;padding:12px;border-radius:9px;background:#fff;display:grid;grid-template-columns:minmax(0,1fr) 125px;gap:7px 10px}
+.component-label strong,.component-label small{display:block}
+.component-label strong{font-size:11px;color:#283f52}
+.component-label small{font-size:10px;color:#98a9b5;margin-top:4px;line-height:1.4}
+.component-value{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px}
+.component-value input:last-child{grid-column:1/-1}
+.inference-summary{display:flex;gap:12px;background:#fff8ea;border:1px solid #f1e2bb;border-radius:10px;padding:13px;margin:18px 0 12px}
+.infer-icon{font-size:21px;color:#ab842f}
+.inference-summary strong{font-size:12px;color:#7e6228}
+.inference-summary p{font-size:10px;color:#8e7c51;line-height:1.65;margin:5px 0 0}
+.export-opening{width:100%}
+@media(max-width:1120px){.opening-total{grid-template-columns:1fr 75px}.opening-total select{grid-column:1/-1}}
+@media(max-width:700px){.opening-total{grid-template-columns:1fr 75px}.component-row{grid-template-columns:1fr 130px}}
