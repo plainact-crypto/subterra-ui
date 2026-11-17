@@ -43,3 +43,7 @@ Then open http://localhost:8000.
 ## License
 
 No open-source licence is granted by this prototype. Add a licence only after deciding on distribution and ownership terms.
+
+
+## V0.2 — manhole evidence capture
+Each manhole can hold an unlimited number of pipe openings (inlets/outlets) and record opening invert RL, centre RL, diameter, bearing, material, and notes. Every opening can be marked present, absent or unknown. Each attribute can be marked known/measured, unknown, or request inference; inference is a **status only** at this stage. The project also has an actual-component checklist and a separate known/unknown/infer status for cover RL, channel invert RL and total opening count. Manhole type library remains independent from surveyed instances. JSON exports preserve all metadata; a separate openings CSV is provided. Existing saved projects are automatically compatible, and remain stored locally in the browser. No underground routing or inference engine has been implemented yet.
