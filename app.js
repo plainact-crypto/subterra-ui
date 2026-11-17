@@ -1,8 +1,9 @@
-/* Subterra UI v0.3 — classification wizard & surveyed manhole locations. No design calculations. */
+/* Subterra UI v0.4 — confirmable full project deletion. No design calculations. */
 (() => {
   'use strict';
 
   const STORAGE_KEY = 'subterra_ui_v1';
+  const TRASH_ICON = '<svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 15H6L5 6M10 10v7M14 10v7"/></svg>';
   const SYSTEMS = [
     ['sewer','Sanitary Sewer','Gravity sewers, manholes and service connections','◉',true],
     ['storm','Stormwater Drainage','Catch basins, culverts and storm drainage','☂',false],
@@ -44,21 +45,50 @@
   function announce(message) { const t=$('#toast'); t.textContent=message; t.classList.add('show'); clearTimeout(state.toastTimer); state.toastTimer=setTimeout(()=>t.classList.remove('show'),2500); }
   function navigate(page) { state.page=page; window.scrollTo(0,0); render(); }
   function selectProject(id) { state.activeId=id; state.selectedMh=null; window.SubterraWizard.resetStep(); state.canvas.dirtyFit=true; save(); navigate('systems'); }
+  function deleteProject(id) {
+    const project=state.projects.find(p=>p.id===id);
+    if(!project)return false;
+    const count=project.manholes?.length||0;
+    // The entire project object includes its nested manholes, openings and components.
+    if(!window.confirm(`Permanently delete project "${project.name}"?\n\nThis removes all ${count} manhole records and project settings saved in this browser. This cannot be undone.\n\nExport a JSON backup first if required.`))return false;
+    state.projects=state.projects.filter(p=>p.id!==id);
+    if(state.activeId===id)state.activeId=null;
+    state.selectedMh=null;
+    state.canvas.dirtyFit=true;
+    window.SubterraWizard.resetStep();
+    save();
+    navigate('projects');
+    announce(`Project "${project.name}" deleted from this browser`);
+    return true;
+  }
+  function handleDeleteProjectLink() {
+    // A deletion link must be visited explicitly: ?deleteProject=Sewer%20Test%2001
+    const params=new URLSearchParams(window.location.search);
+    const name=params.get('deleteProject');
+    if(name===null)return;
+    params.delete('deleteProject');
+    const rest=params.toString();
+    window.history.replaceState(null,'',window.location.pathname+(rest?'?'+rest:'')+window.location.hash);
+    const matches=state.projects.filter(p=>p.name.trim()===name.trim());
+    if(matches.length===1)deleteProject(matches[0].id);
+    else if(matches.length>1)announce('Multiple projects share this name. Use the trash icon for a specific project.');
+    else announce('Project not found in this browser.');
+  }
   function renderNav() {
     $('#projectCount').textContent=state.projects.length;
     $('#navProjects').classList.toggle('active',state.page==='projects');
     $('#navSystems').classList.toggle('active',state.page==='systems');
-    $('#sideProjectList').innerHTML=state.projects.slice().reverse().map(p=>`<button class="side-project ${state.activeId===p.id?'current':''}" data-open-project="${escapeHtml(p.id)}"><span class="p-dot"></span><span title="${escapeHtml(p.name)}">${escapeHtml(p.name)}</span></button>`).join('');
+    $('#sideProjectList').innerHTML=state.projects.slice().reverse().map(p=>`<div class="side-project-row"><button class="side-project ${state.activeId===p.id?'current':''}" data-open-project="${escapeHtml(p.id)}"><span class="p-dot"></span><span class="side-project-name" title="${escapeHtml(p.name)}">${escapeHtml(p.name)}</span></button><button type="button" class="project-delete-btn side-project-delete" data-delete-project="${escapeHtml(p.id)}" title="Delete ${escapeHtml(p.name)}" aria-label="Delete project ${escapeHtml(p.name)}">${TRASH_ICON}</button></div>`).join('');
     const p=active(); const trail=state.page==='projects'?['Workspace','Projects']:state.page==='systems'?['Projects',p?.name||'Systems']:['Projects',p?.name||'Project','Sanitary Sewer'];
     $('#breadcrumbs').innerHTML=trail.map((x,i)=>`${i?'<span class="crumb-arrow">/</span>':''}${i===trail.length-1?`<b>${escapeHtml(x)}</b>`:`<span>${escapeHtml(x)}</span>`}`).join('');
   }
   function render() { renderNav(); if(state.page==='projects') renderProjects(); else if(state.page==='systems') renderSystems(); else if(state.page==='sewer') renderWorkspace(); }
   function renderProjects() {
-    $('#mainContent').innerHTML=`<section class="page"><div class="eyebrow">INFRASTRUCTURE RECONSTRUCTION</div><div class="page-header"><div><h1>Your projects</h1><p class="page-subtitle">Create a project, select an infrastructure system, then start recording actual site evidence.</p></div><button class="btn btn-primary" data-new-project>＋ New project</button></div>${state.projects.length?`<div class="project-cards">${state.projects.slice().reverse().map(p=>`<article class="project-card" data-select-project="${escapeHtml(p.id)}" role="button" tabindex="0"><div class="project-card-top"><span class="project-icon">▧</span><span class="light-label">PROJECT</span></div><h3>${escapeHtml(p.name)}</h3><p>${escapeHtml(p.location||'Location not specified')}</p><div class="project-card-bottom"><span>${p.manholes?.length||0} manholes · ${escapeHtml(p.coordMode==='projected'?'XY metres':'WGS84')}</span><span>Open project ↗</span></div></article>`).join('')}</div>`:`<div class="empty-state"><div class="empty-art">▧</div><h2>No projects yet</h2><p>Create a new project to organize your infrastructure systems, survey coordinates and engineering evidence.</p><button class="btn btn-primary" data-new-project>＋ Create first project</button></div>`}</section>`;
+    $('#mainContent').innerHTML=`<section class="page"><div class="eyebrow">INFRASTRUCTURE RECONSTRUCTION</div><div class="page-header"><div><h1>Your projects</h1><p class="page-subtitle">Create a project, select an infrastructure system, then start recording actual site evidence.</p></div><button class="btn btn-primary" data-new-project>＋ New project</button></div>${state.projects.length?`<div class="project-cards">${state.projects.slice().reverse().map(p=>`<article class="project-card" data-select-project="${escapeHtml(p.id)}" role="button" tabindex="0"><div class="project-card-top"><span class="project-icon">▧</span><div class="project-card-tools"><span class="light-label">PROJECT</span><button type="button" class="project-delete-btn project-card-delete" data-delete-project="${escapeHtml(p.id)}" title="Delete ${escapeHtml(p.name)}" aria-label="Delete project ${escapeHtml(p.name)}">${TRASH_ICON}</button></div></div><h3>${escapeHtml(p.name)}</h3><p>${escapeHtml(p.location||'Location not specified')}</p><div class="project-card-bottom"><span>${p.manholes?.length||0} manholes · ${escapeHtml(p.coordMode==='projected'?'XY metres':'WGS84')}</span><span>Open project ↗</span></div></article>`).join('')}</div>`:`<div class="empty-state"><div class="empty-art">▧</div><h2>No projects yet</h2><p>Create a new project to organize your infrastructure systems, survey coordinates and engineering evidence.</p><button class="btn btn-primary" data-new-project>＋ Create first project</button></div>`}</section>`;
   }
   function renderSystems() {
     const p=active(); if(!p){navigate('projects');return;}
-    $('#mainContent').innerHTML=`<section class="page"><div class="eyebrow">PROJECT / ${escapeHtml(p.name)}</div><div class="page-header"><div><h1>Infrastructure systems</h1><p class="page-subtitle">Choose a system to open its data workspace. The first prototype supports sanitary sewer manholes.</p></div><button class="btn btn-outline" data-all-projects>← All projects</button></div><div class="project-summary"><strong>${escapeHtml(p.name)}</strong><span class="summary-divider"></span><span>${escapeHtml(p.location||'Location not set')}</span><span class="summary-divider"></span><span>${escapeHtml(p.coordMode==='geographic'?'WGS84 · Latitude / Longitude':'Projected coordinates · XY metres')}</span></div><div class="system-grid">${SYSTEMS.map(([id,name,desc,sym,ready])=>`<button class="system-card" data-open-system="${id}" ${ready?'':'disabled'}><div class="system-head"><span class="system-symbol">${sym}</span><span class="${ready?'ready':'coming'}">${ready?'OPEN WORKSPACE':'COMING LATER'}</span></div><div><div class="system-title">${escapeHtml(name)}</div><div class="system-desc">${escapeHtml(desc)}</div></div></button>`).join('')}</div></section>`;
+    $('#mainContent').innerHTML=`<section class="page"><div class="eyebrow">PROJECT / ${escapeHtml(p.name)}</div><div class="page-header"><div><h1>Infrastructure systems</h1><p class="page-subtitle">Choose a system to open its data workspace. The first prototype supports sanitary sewer manholes.</p></div><div class="project-header-actions"><button class="btn btn-outline" data-all-projects>← All projects</button><button class="btn btn-danger-outline" data-delete-project="${escapeHtml(p.id)}">${TRASH_ICON} Delete project</button></div></div><div class="project-summary"><strong>${escapeHtml(p.name)}</strong><span class="summary-divider"></span><span>${escapeHtml(p.location||'Location not set')}</span><span class="summary-divider"></span><span>${escapeHtml(p.coordMode==='geographic'?'WGS84 · Latitude / Longitude':'Projected coordinates · XY metres')}</span></div><div class="system-grid">${SYSTEMS.map(([id,name,desc,sym,ready])=>`<button class="system-card" data-open-system="${id}" ${ready?'':'disabled'}><div class="system-head"><span class="system-symbol">${sym}</span><span class="${ready?'ready':'coming'}">${ready?'OPEN WORKSPACE':'COMING LATER'}</span></div><div><div class="system-title">${escapeHtml(name)}</div><div class="system-desc">${escapeHtml(desc)}</div></div></button>`).join('')}</div></section>`;
   }
   function renderWorkspace() {
     const p=active(); if(!p){navigate('projects');return;}
@@ -152,6 +182,7 @@
   document.addEventListener('click',e=>{
     const target=e.target.closest('button,[data-select-project]');if(!target)return;
     if(target.matches('[data-new-project]'))return openProjectDialog();
+    if(target.matches('[data-delete-project]')){e.preventDefault();e.stopPropagation();return deleteProject(target.dataset.deleteProject);}
     if(target.matches('[data-select-project],[data-open-project]'))return selectProject(target.dataset.selectProject||target.dataset.openProject);
     if(target.matches('[data-all-projects]'))return navigate('projects');
     if(target.matches('[data-open-system]')){if(target.dataset.openSystem==='sewer'){state.canvas.dirtyFit=true;navigate('sewer');}return;}
@@ -170,8 +201,9 @@
   $('#navSystems').addEventListener('click',()=>{if(active())navigate('systems');else announce('Create a project first');});
   $('#brandHome').addEventListener('click',()=>navigate('projects'));
   $('#brandHome').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')navigate('projects');});
-  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.3 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. No reconstruction calculations or AI inferences are executed. Data is stored locally in your browser. Export JSON backups regularly.'));
+  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.4 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. No reconstruction calculations or AI inferences are executed. Data is stored locally in your browser. Export JSON backups regularly.'));
   window.SubterraDetails.setup({getSelectedMh,active,save,renderInspector,announce});
   window.SubterraWizard.setup({getSelectedMh,active,save,renderInspector,announce,drawCanvas,refreshLocation});
   render();
+  handleDeleteProjectLink();
 })();
