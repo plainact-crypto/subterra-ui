@@ -1,49 +1,47 @@
-# Subterra — Infrastructure Reconstruction UI (v0.1)
+# SUBTERRA — Infrastructure Reconstruction UI (v0.3)
 
-A **front-end-only** concept prototype for an evidence-led underground infrastructure reconstruction platform.
+Front-end-only evidence-capture prototype for existing underground utility assets. The platform **does not design new networks or perform reverse-engineering calculations yet**.
 
-## Current features
+## Workflow
 
-1. Create a named infrastructure **project** and choose the coordinate format.
-2. Select from 14 **infrastructure systems** (Sanitary Sewer is the first active workspace).
-3. In the sewer workspace, add **manholes** with automatic names (`MH-001`, `MH-002`, ...), or edit names manually.
-4. Enter WGS84 latitude/longitude or local/projected Easting/Northing plus observed Cover and Invert levels.
-5. Entered locations immediately appear on a **pan-and-zoom infinite canvas**. Click a point to edit it. A fit-to-content tool is available.
-6. Define reusable **manhole types** in a separate library with code, name, material, shape, and typical diameter; assign types to individual manholes.
-7. Export the schedule to **CSV**, project data to **JSON**, and WGS84 manhole points to **Google Earth KML**.
-8. Persist data locally in your browser using `localStorage` (the current prototype has **no server-side database**).
+1. **Create project**: enter project name, location (optional), and WGS84 latitude/longitude or local/projected XY metres.
+2. **Choose infrastructure system**: sanitary sewer is the first active workspace. Other utility categories remain placeholders.
+3. **Open sewer workspace**: view the pan/zoom metric canvas and manhole schedule.
+4. **Add / select a manhole**: complete the eight-step entry wizard. Each step is available by number or Previous / Next.
 
-**Not implemented yet:** sewer pipe reconstruction, automatic pipe connections, invert interpolation, AI inference, probabilistic utility zones, 3D sections, authentic historical imagery inside the app, Revit integration. These will be specified and implemented in later iterations, not portrayed as already working.
+## Manhole wizard: exact engineering taxonomy
 
-## Launch locally
+1. **Location:** optional custom name; top/cover point coordinates and top RL; separately recorded invert/base point coordinates and main invert RL; evidence status Known/Measured, Unknown, or Request inference for elevations.
+2. **By Geometry:** Circular; Rectangular; Square; Tee-Section; Conical; Elliptical.
+3. **By Construction Material:** Precast Concrete; Cast-in-Place Concrete; FRP; GRP; PE; PP; PVC; Brick; Resin Concrete.
+4. **By Depth:** Shallow; Normal; Deep; Non-Entry Access Point; Inspection Chamber; Man-Entry Manhole.
+5. **By Hydraulic / Functional Type:** Straight-Through; Junction / Junction Chamber; Drop; Internal Drop; External Drop; Flushing; Lamp Hole; Terminal Cleanout; Vented; Metering; Flow Control; Diversion; Siphon / Inverted Siphon; Tangential; Discharge; Terminal / End.
+6. **By Utility Type:** Sanitary Sewer; Storm Sewer; Power; Communications; Meter / Meter Chamber.
+7. **By Construction Method:** Standard; Special; Assembled.
+8. **Pipe Openings & Manhole Components:** keep existing v0.2 pipe-opening evidence capture and detailed components checklist. Each opening can be marked Present, Not present, or Unknown; individual information can be Known/Measured, Unknown, or Request inference.
 
-Open `index.html` in a browser, or serve the folder:
+Each classification Dropdown contains **Unknown / not recorded** and **Unknown — request inference**. Unverified classifications are never silently selected. The six groups reflect the supplied categorisation; they are not used as a design specification.
 
-```sh
-python -m http.server 8000
-```
+## Auto-generated identifiers
 
-Then open http://localhost:8000.
+Leave the Custom manhole name blank and the app generates an identifier from the abbreviations for the **selected** categories plus a stable numeric sequence, e.g. `MH-CIR-CIP-DP-JNC-SAN-STD-001`. Unknown or inference-requested category codes are omitted. The identifier updates whenever the classifications change. A manually entered Custom name is preserved until it is cleared (or **Use auto name** is pressed). The current name is shown on the canvas.
 
-## Publish with GitHub Pages
+## Persistence and exports
 
-1. Create a new GitHub repository (e.g. `subterra-ui`).
-2. Upload `index.html`, `styles.css`, and `app.js` to the repository root.
-3. Go to **Settings → Pages → Build and deployment**.
-4. Choose **Deploy from a branch** → `main` → `/(root)` → Save.
-5. The demo will be served at `https://<username>.github.io/<repo>/` after deployment finishes.
+Data is automatically saved in the browser under the existing `subterra_ui_v1` localStorage key so v0.1/v0.2 projects and their openings/components stay available. Older type-library records are retained in legacy project JSON for safe compatibility but **the previous Manhole Type Library interface has been removed**; new projects do not create the old sample types. Existing saved manholes are **not deleted** during this migration.
 
-## Engineering / geospatial notes
+Exports: project JSON (all values including classification, statuses and pipe-opening records), manhole schedule CSV (top/invert coordinates/elevations and all six classifications), pipe-openings CSV, and WGS84 top-position KML for Google Earth. The canvas uses an approximate local equirectangular projection, **not** a certified georeferenced survey system.
 
-- Coordinates entered as **WGS84** are converted to a *local approximate metric display only*. The canvas is **not** georeferenced survey output; a proper GIS CRS and surveying transformations are required for engineering accuracy and for any eventual section model.
-- The canvas initially plots surveyed points only. No connections or hypothetical pipe locations are generated.
-- Google Earth integration in v0.1 means **KML export**, not embedding Google Earth's historical imagery or extracting coordinates from proprietary basemaps.
-- A real manhole-entry workflow should account for confined-space safety; no procedure for entering a manhole is included here.
+## Run / deploy
+
+Open `index.html` or serve this directory with `python -m http.server 8000`. GitHub Pages can deploy the repository's `main` branch from `/(root)`.
+
+No backend is required. No AI inference, hidden utility detection, automatic pipe connection, probabilistic reconstruction or new drawing/design is implemented in this release.
+
+## Data safety
+
+LocalStorage is specific to the browser and can be cleared by the user or browser. Export the JSON regularly. Survey observations and hypotheses are not a substitute for safe utility location and verification procedures before excavation.
 
 ## License
 
-No open-source licence is granted by this prototype. Add a licence only after deciding on distribution and ownership terms.
-
-
-## V0.2 — manhole evidence capture
-Each manhole can hold an unlimited number of pipe openings (inlets/outlets) and record opening invert RL, centre RL, diameter, bearing, material, and notes. Every opening can be marked present, absent or unknown. Each attribute can be marked known/measured, unknown, or request inference; inference is a **status only** at this stage. The project also has an actual-component checklist and a separate known/unknown/infer status for cover RL, channel invert RL and total opening count. Manhole type library remains independent from surveyed instances. JSON exports preserve all metadata; a separate openings CSV is provided. Existing saved projects are automatically compatible, and remain stored locally in the browser. No underground routing or inference engine has been implemented yet.
+No open-source licence is granted by this prototype. Decide the distribution and ownership terms before publishing proprietary inference algorithms.
