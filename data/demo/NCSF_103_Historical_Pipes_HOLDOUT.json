@@ -1,0 +1,1727 @@
+{
+  "schema": "subterra-ncsf-historical-pipe-holdout/v1",
+  "sourceCommit": "92486ace69b87d134cf9504d250cbafc3a7b72ba",
+  "warning": "LATE VALIDATION ONLY. These 103 old GIS polyline geometries must never be fetched by Round 00 or by the reconstruction engine.",
+  "pipes": [
+    {
+      "id": "NCSF-GIS-PIPE-1",
+      "diameterMm": 152.4,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7118009555332,
+          35.7965661725746
+        ],
+        [
+          -78.7120865984638,
+          35.7966666652183
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 1; Scanned Hardcopy Plan; Withers & Ravenel; Infield Redevelopment As-Built, Phase 1 & 2 Utility Plan As-Built Sheet 3A of 15.; Shape__Length=92.26662396973818 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-2",
+      "diameterMm": 152.4,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7120865984638,
+          35.7966666652183
+        ],
+        [
+          -78.7122106577634,
+          35.7967126329191
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 2; Scanned Hardcopy Plan; Withers & Ravenel; Infield Redevelopment As-Built, Phase 1 & 2 Utility Plan As-Built Sheet 3A of 15.; Shape__Length=40.415388869082065 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-3",
+      "diameterMm": 152.4,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7122106577634,
+          35.7967126329191
+        ],
+        [
+          -78.7124817352696,
+          35.7968119157779
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 3; Scanned Hardcopy Plan; Withers & Ravenel; Infield Redevelopment As-Built, Phase 1 & 2 Utility Plan As-Built Sheet 3A of 15.; Shape__Length=88.1362502343621 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-4",
+      "diameterMm": 152.4,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7124817352696,
+          35.7968119157779
+        ],
+        [
+          -78.712781232463,
+          35.7969373823195
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 4; Scanned Hardcopy Plan; Withers & Ravenel; Infield Redevelopment As-Built, Phase 1 & 2 Utility Plan As-Built Sheet 3A of 15.; Shape__Length=99.86812298760816 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-5",
+      "diameterMm": 152.4,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7119464905484,
+          35.796305709623
+        ],
+        [
+          -78.7121484623054,
+          35.7963770504756
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 5; Scanned Hardcopy Plan; Withers & Ravenel; Infield Redevelopment As-Built, Phase 1 & 2 Utility Plan As-Built Sheet 3A of 15.; Shape__Length=65.28102065658354 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-6",
+      "diameterMm": 152.4,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7121484623054,
+          35.7963770504756
+        ],
+        [
+          -78.7123576246824,
+          35.7964465052313
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 6; Scanned Hardcopy Plan; Withers & Ravenel; Infield Redevelopment As-Built, Phase 1 & 2 Utility Plan As-Built Sheet 3A of 15.; Shape__Length=66.9805783985201 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-7",
+      "diameterMm": 152.4,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7123576246824,
+          35.7964465052313
+        ],
+        [
+          -78.7126762863364,
+          35.7965552964831
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 7; Scanned Hardcopy Plan; Withers & Ravenel; Infield Redevelopment As-Built, Phase 1 & 2 Utility Plan As-Built Sheet 3A of 15.; Shape__Length=102.45947904193551 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-8",
+      "diameterMm": 152.4,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7126762863364,
+          35.7965552964831
+        ],
+        [
+          -78.7126394926077,
+          35.7966367821172
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 8; Scanned Hardcopy Plan; Withers & Ravenel; Infield Redevelopment As-Built, Phase 1 & 2 Utility Plan As-Built Sheet 3A of 15.; Shape__Length=31.60364103258683 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-9",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7126394926077,
+          35.7966367821172
+        ],
+        [
+          -78.712781232463,
+          35.7969373823195
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 9; Scanned Hardcopy Plan; Withers & Ravenel; Infield Redevelopment As-Built, Phase 1 & 2 Utility Plan As-Built Sheet 3A of 15.; Shape__Length=117.21270927017711 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-10",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7129674909159,
+          35.7965173647792
+        ],
+        [
+          -78.712781232463,
+          35.7969373823195
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 10; Scanned Hardcopy Plan; Withers & Ravenel; Infield Redevelopment As-Built, Phase 1 & 2 Utility Plan As-Built Sheet 3A of 15.; Shape__Length=162.55606948916545 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-11",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.712781232463,
+          35.7969373823195
+        ],
+        [
+          -78.7130287876348,
+          35.7974551846652
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 11; Scanned Hardcopy Plan; Withers & Ravenel; Infield Redevelopment As-Built, Phase 1 & 2 Utility Plan As-Built Sheet 3A of 15.; Shape__Length=202.26969128019354 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-12",
+      "diameterMm": 304.8,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7113722658101,
+          35.7970712121191
+        ],
+        [
+          -78.712235785194,
+          35.7974371633359
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 12; Scanned Hardcopy Plan; Withers & Ravenel; Infield Redevelopment As-Built, Existing Conditions Plan Sheet 1 of 15.; Shape__Length=288.6444308792308 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-13",
+      "diameterMm": 304.8,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.712235785194,
+          35.7974371633359
+        ],
+        [
+          -78.7130287876348,
+          35.7974551846652
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 13; Scanned Hardcopy Plan; Withers & Ravenel; Infield Redevelopment As-Built, Existing Conditions Plan Sheet 1 of 15.; Shape__Length=235.2501639428487 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-14",
+      "diameterMm": 304.8,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7101951479499,
+          35.7933773627236
+        ],
+        [
+          -78.7084865750284,
+          35.7940863830492
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 14; AutoCAD Data; CLH Design; Record Drawings For Commercial Education Building Parking Lot Renovations, C4.1.dwg.; Shape__Length=568.6275317904884 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-15",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7084865750284,
+          35.7940863830492
+        ],
+        [
+          -78.7084614332076,
+          35.7941491753718
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 15; AutoCAD Data; CLH Design; Record Drawings For Commercial Education Building Parking Lot Renovations, C4.1.dwg.; Shape__Length=24.04147403244333 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-16",
+      "diameterMm": 203.2,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7084614332076,
+          35.7941491753718
+        ],
+        [
+          -78.7078751592583,
+          35.7943918594808
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 16; AutoCAD Data; CLH Design; Record Drawings For Commercial Education Building Parking Lot Renovations, C4.1.dwg.; Shape__Length=195.01577212928092 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-17",
+      "diameterMm": 203.2,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7078751592583,
+          35.7943918594808
+        ],
+        [
+          -78.707033642448,
+          35.7943395918647
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 17; AutoCAD Data; CLH Design; Record Drawings For Commercial Education Building Parking Lot Renovations, C4.1.dwg.; Shape__Length=250.27890946523877 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-18",
+      "diameterMm": 203.2,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.707033642448,
+          35.7943395918647
+        ],
+        [
+          -78.7069901791962,
+          35.7943127616224
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 18; AutoCAD Data; CLH Design; Record Drawings For Commercial Education Building Parking Lot Renovations, C4.1.dwg.; Shape__Length=16.171192826897485 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-19",
+      "diameterMm": 203.2,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7087684506244,
+          35.7946414805749
+        ],
+        [
+          -78.7084614332076,
+          35.7941491753718
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 19; AutoCAD Data; CLH Design; Record Drawings For Commercial Education Building Parking Lot Renovations, C4.1.dwg.; Shape__Length=201.00014274412402 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-20",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7094333018838,
+          35.7963190240188
+        ],
+        [
+          -78.7093549313864,
+          35.7961336436274
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 20; Scanned Hardcopy Plan; Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13.; Shape__Length=71.36773004813234 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-22",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7093549313864,
+          35.7961336436274
+        ],
+        [
+          -78.7093039096895,
+          35.7959391581609
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 22; Scanned Hardcopy Plan; Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13.; Shape__Length=72.3906905509116 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-23",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7093039096895,
+          35.7959391581609
+        ],
+        [
+          -78.7092455123522,
+          35.7957311006663
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 23; Scanned Hardcopy Plan; Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13.; Shape__Length=77.68677246679857 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-24",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7092455123522,
+          35.7957311006663
+        ],
+        [
+          -78.7091517294501,
+          35.7955536773379
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 24; Scanned Hardcopy Plan; Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13.; Shape__Length=70.3150501222156 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-25",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7091517294501,
+          35.7955536773379
+        ],
+        [
+          -78.7091015190384,
+          35.7954426913929
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 25; Scanned Hardcopy Plan; Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13.; Shape__Length=43.055048496282225 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-26",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7091015190384,
+          35.7954426913929
+        ],
+        [
+          -78.709080129846,
+          35.7954006422511
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 26; Scanned Hardcopy Plan; Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13.; Shape__Length=16.567964460583756 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-27",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.709080129846,
+          35.7954006422511
+        ],
+        [
+          -78.7091146833529,
+          35.7952692124924
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 27; Scanned Hardcopy Plan; Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13.; Shape__Length=48.92491562763778 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-28",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7091146833529,
+          35.7952692124924
+        ],
+        [
+          -78.7091041754009,
+          35.7952184472024
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 28; Scanned Hardcopy Plan; Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13.; Shape__Length=18.739240053521552 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-29",
+      "diameterMm": 152.4,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7083273334438,
+          35.7958757314007
+        ],
+        [
+          -78.7084288342658,
+          35.7955402628506
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 29; Scanned Hardcopy Plan; Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13.; Shape__Length=125.76415496568258 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-30",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7084288342658,
+          35.7955402628506
+        ],
+        [
+          -78.7091146833529,
+          35.7952692124924
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 30; Scanned Hardcopy Plan; Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13.; Shape__Length=226.05491885849764 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-31",
+      "diameterMm": 304.8,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.709489087999,
+          35.7953431451557
+        ],
+        [
+          -78.7093711982508,
+          35.795231211963
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 31; Scanned Hardcopy Plan; Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13.; Shape__Length=53.6863382855716 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-32",
+      "diameterMm": 304.8,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7093711982508,
+          35.795231211963
+        ],
+        [
+          -78.7093471255792,
+          35.7951529837659
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 32; Scanned Hardcopy Plan; Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13.; Shape__Length=29.355932887721128 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-33",
+      "diameterMm": 304.8,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7091041754009,
+          35.7952184472024
+        ],
+        [
+          -78.7093471255792,
+          35.7951529837659
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 33; Scanned Hardcopy Plan; Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13.; Shape__Length=75.8851877445267 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-34",
+      "diameterMm": 304.8,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7093471255792,
+          35.7951529837659
+        ],
+        [
+          -78.7096120767542,
+          35.795019508259
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 34; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=92.37927919469116 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-35",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7090032929174,
+          35.7950219677077
+        ],
+        [
+          -78.7091041754009,
+          35.7952184472024
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 35; Scanned Hardcopy Plan; Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13.; Shape__Length=77.52280669876785 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-36",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7113207826085,
+          35.7944579297092
+        ],
+        [
+          -78.7108739410985,
+          35.7946289050987
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 36; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=146.39864718994946 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-37",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7108739410985,
+          35.7946289050987
+        ],
+        [
+          -78.710829646382,
+          35.7947707939781
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 37; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=53.29116524297358 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-38",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.710829646382,
+          35.7947707939781
+        ],
+        [
+          -78.7108158819223,
+          35.794814896478
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 38; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=16.56393476415928 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-39",
+      "diameterMm": 304.8,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7108158819223,
+          35.794814896478
+        ],
+        [
+          -78.7116601505283,
+          35.7950345121442
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 39; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=262.8211060456545 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-40",
+      "diameterMm": 304.8,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7116601505283,
+          35.7950345121442
+        ],
+        [
+          -78.7122352929574,
+          35.7951934148393
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 40; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=180.09940127290864 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-41",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7121306795127,
+          35.7950390597138
+        ],
+        [
+          -78.7121903190374,
+          35.7951275682666
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 41; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=36.7520913161419 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-42",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7121903190374,
+          35.7951275682666
+        ],
+        [
+          -78.7122352929574,
+          35.7951934148393
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 42; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=27.428718064940465 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-43",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7110066995859,
+          35.7947521064637
+        ],
+        [
+          -78.7110653336527,
+          35.7947649048803
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 43; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=18.00129487048299 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-44",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7110653336527,
+          35.7947649048803
+        ],
+        [
+          -78.7115525367813,
+          35.794874607954
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 44; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=149.89753716416703 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-45",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7115525367813,
+          35.794874607954
+        ],
+        [
+          -78.7118354426569,
+          35.7949373149849
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 45; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=86.94567638704594 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-46",
+      "diameterMm": 152.4,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7118816282087,
+          35.7944210149866
+        ],
+        [
+          -78.7115867650961,
+          35.7945362806051
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 46; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=96.9872188754838 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-47",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7115867650961,
+          35.7945362806051
+        ],
+        [
+          -78.7118354426569,
+          35.7949373149849
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 47; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=163.54526220947884 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-48",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7118354426569,
+          35.7949373149849
+        ],
+        [
+          -78.7121306795127,
+          35.7950390597138
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 48; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=95.0634730375343 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-49",
+      "diameterMm": 152.4,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7122663996002,
+          35.7949848183845
+        ],
+        [
+          -78.7121306795127,
+          35.7950390597138
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 49; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=44.82975152676735 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-50",
+      "diameterMm": 152.4,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7119935723686,
+          35.7945277381824
+        ],
+        [
+          -78.7122663996002,
+          35.7949848183845
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 50; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=185.00455903765834 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-51",
+      "diameterMm": 304.8,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7122352929574,
+          35.7951934148393
+        ],
+        [
+          -78.7124900843914,
+          35.7952675280348
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 51; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=80.22989234305538 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-52",
+      "diameterMm": 304.8,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7118849805056,
+          35.7942653888812
+        ],
+        [
+          -78.7122340402253,
+          35.7948294099143
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 52; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=229.9212822546264 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-53",
+      "diameterMm": 304.8,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7122340402253,
+          35.7948294099143
+        ],
+        [
+          -78.7124900843914,
+          35.7952675280348
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 53; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=176.62678324913227 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-54",
+      "diameterMm": 304.8,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7124900843914,
+          35.7952675280348
+        ],
+        [
+          -78.7127936533158,
+          35.7953862901281
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 54; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=99.86460408746387 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-55",
+      "diameterMm": 304.8,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7096120767542,
+          35.795019508259
+        ],
+        [
+          -78.7108158819223,
+          35.794814896478
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 55; Scanned Hardcopy Plan; Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.; Shape__Length=364.67648367740577 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-56",
+      "diameterMm": 304.8,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7127936533158,
+          35.7953862901281
+        ],
+        [
+          -78.7136681814628,
+          35.795668163897
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 56; AutoCAD Data; Stantec; 2004 survey; stantec-revised Dorton Triangle Area Site Utilities.dwg.; Shape__Length=278.8987187557639 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-57",
+      "diameterMm": 304.8,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7136681814628,
+          35.795668163897
+        ],
+        [
+          -78.7143572466085,
+          35.7951897683564
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 57; AutoCAD Data; Stantec; 2004 survey; stantec-revised Dorton Triangle Area Site Utilities.dwg.; Shape__Length=268.47389298079855 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-58",
+      "diameterMm": 304.8,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7143572466085,
+          35.7951897683564
+        ],
+        [
+          -78.7148229383183,
+          35.795176511593
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 58; AutoCAD Data; Stantec; 2004 survey; stantec-revised Dorton Triangle Area Site Utilities.dwg.; Shape__Length=138.18538681302317 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-59",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7133742366332,
+          35.7941895352686
+        ],
+        [
+          -78.7134495274597,
+          35.7943078775493
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 59; AutoCAD Data; HSSM; CAD for Multi-Purpose Exhibit Building; EN8CX02.dwg.; Shape__Length=48.51881110016354 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-62",
+      "diameterMm": 152.4,
+      "material": "CIP",
+      "coordinatesWGS84": [
+        [
+          -78.7123012692537,
+          35.7940728802585
+        ],
+        [
+          -78.7118849805056,
+          35.7942653888812
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 62; AutoCAD Data; Stantec; 2004 survey; stantec-revised Dorton Triangle Area Site Utilities.dwg.; Shape__Length=141.95266796391164 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-63",
+      "diameterMm": 304.8,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7145011718967,
+          35.7967690921636
+        ],
+        [
+          -78.7151878026941,
+          35.7965986832321
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 63; AutoCAD Data; RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.; Shape__Length=212.85520723715598 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-64",
+      "diameterMm": 304.8,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7151875959723,
+          35.7965986358791
+        ],
+        [
+          -78.7150545024211,
+          35.7959486369973
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 64; AutoCAD Data; RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.; Shape__Length=239.86612322561146 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-65",
+      "diameterMm": 304.8,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7150545024211,
+          35.7959486369973
+        ],
+        [
+          -78.7148229383183,
+          35.795176511593
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 65; AutoCAD Data; RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.; Shape__Length=289.3177713150754 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-66",
+      "diameterMm": 381,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7148229383183,
+          35.795176511593
+        ],
+        [
+          -78.7152707571269,
+          35.7951569352362
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 66; AutoCAD Data; RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.; Shape__Length=132.99195402816707 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-67",
+      "diameterMm": 381,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7152707571269,
+          35.7951569352362
+        ],
+        [
+          -78.7157616804941,
+          35.7958463566736
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 67; AutoCAD Data; RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.; Shape__Length=290.1179793141357 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-68",
+      "diameterMm": "",
+      "material": "UNKNOWN",
+      "coordinatesWGS84": [
+        [
+          -78.7157721318257,
+          35.7953333124271
+        ],
+        [
+          -78.7160359663138,
+          35.7955833940163
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 68; AutoCAD Data; RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.; Shape__Length=120.03205482331262 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-69",
+      "diameterMm": 152.4,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7161174346091,
+          35.7955072671581
+        ],
+        [
+          -78.7160359663138,
+          35.7955833940163
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 69; AutoCAD Data; RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.; Shape__Length=36.762878260300205 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-70",
+      "diameterMm": 152.4,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7160359663138,
+          35.7955833940163
+        ],
+        [
+          -78.7157616804941,
+          35.7958463566736
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 70; AutoCAD Data; RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.; Shape__Length=125.60983024780974 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-71",
+      "diameterMm": 381,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7157616804941,
+          35.7958463566736
+        ],
+        [
+          -78.7159922385431,
+          35.7961642326797
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 71; AutoCAD Data; RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.; Shape__Length=134.39642579088476 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-72",
+      "diameterMm": 381,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7159922385431,
+          35.7961642326797
+        ],
+        [
+          -78.7164572411926,
+          35.7964818896485
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 72; AutoCAD Data; RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.; Shape__Length=179.95636011525474 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-73",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7154136256198,
+          35.7945879825866
+        ],
+        [
+          -78.7152707571269,
+          35.7951569352362
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 73; AutoCAD Data; RWK; Heritage Village Drainage Improvements; NCSF Heritage for Sam 2-4-16.dwg.; Shape__Length=211.38554507603723 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-74",
+      "diameterMm": 304.8,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7130287876348,
+          35.7974551846652
+        ],
+        [
+          -78.7135953643134,
+          35.7974682468567
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 74; Scanned Hardcopy Plan; Wooten Company; Wastewater System Improvements, 5-27-75 Revision.; Shape__Length=168.08112550098932 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-75",
+      "diameterMm": 304.8,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7135953643134,
+          35.7974682468567
+        ],
+        [
+          -78.7146073088826,
+          35.7975006493907
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 75; Scanned Hardcopy Plan; Wooten Company; Wastewater System Improvements, 5-27-75 Revision.; Shape__Length=300.3158220255033 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-76",
+      "diameterMm": 304.8,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7146073088826,
+          35.7975006493907
+        ],
+        [
+          -78.7145011718967,
+          35.7967690921636
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 76; Scanned Hardcopy Plan; Wooten Company; Wastewater System Improvements, 5-27-75 Revision.; Shape__Length=268.13729967532555 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-79",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7220133409341,
+          35.7958897415726
+        ],
+        [
+          -78.7220126211795,
+          35.7959700711779
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 79; AutoCAD Data; TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.; Shape__Length=29.24039496688387 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-80",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7220126211795,
+          35.7959700711779
+        ],
+        [
+          -78.7220121119768,
+          35.796027124994
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 80; AutoCAD Data; TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.; Shape__Length=20.76788254664072 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-81",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7220121119768,
+          35.796027124994
+        ],
+        [
+          -78.7220113319575,
+          35.7961143650505
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 81; AutoCAD Data; TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.; Shape__Length=31.755833146128232 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-82",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7220113319575,
+          35.7961143650505
+        ],
+        [
+          -78.7228899649346,
+          35.7964768681976
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 82; AutoCAD Data; TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.; Shape__Length=292.0613476688962 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-83",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7200451523066,
+          35.796154059038
+        ],
+        [
+          -78.7203332507306,
+          35.7968923305224
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 83; AutoCAD Data; TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.; Shape__Length=281.9814260090992 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-84",
+      "diameterMm": 381,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7172418604342,
+          35.7964548537392
+        ],
+        [
+          -78.7179182468362,
+          35.7966263686586
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 84; AutoCAD Data; TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.; Shape__Length=210.0706280496559 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-85",
+      "diameterMm": 381,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7179182468362,
+          35.7966263686586
+        ],
+        [
+          -78.7185035284559,
+          35.7968395556503
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 85; AutoCAD Data; TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.; Shape__Length=190.11962874473693 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-86",
+      "diameterMm": 381,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7185035284559,
+          35.7968395556503
+        ],
+        [
+          -78.7196729112133,
+          35.797026326344
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 86; AutoCAD Data; TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.; Shape__Length=353.37469389408784 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-87",
+      "diameterMm": 381,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7196729112133,
+          35.797026326344
+        ],
+        [
+          -78.7203332507306,
+          35.7968923305224
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 87; AutoCAD Data; TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.; Shape__Length=201.8025108779159 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-88",
+      "diameterMm": 381,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7203332507306,
+          35.7968923305224
+        ],
+        [
+          -78.7211421488755,
+          35.7966912201457
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 88; AutoCAD Data; TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.; Shape__Length=250.79561492336083 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-89",
+      "diameterMm": 304.8,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7211421488755,
+          35.7966912201457
+        ],
+        [
+          -78.7220160580632,
+          35.7965840473075
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 89; AutoCAD Data; TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.; Shape__Length=262.07322571221425 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-90",
+      "diameterMm": 304.8,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7228899649346,
+          35.7964768681976
+        ],
+        [
+          -78.7238916003366,
+          35.7965254908166
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 90; AutoCAD Data; TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.; Shape__Length=297.5574486642173 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-91",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7196864928902,
+          35.7953782907583
+        ],
+        [
+          -78.7200451523066,
+          35.796154059038
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 91; AutoCAD Data; TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.; Shape__Length=301.74279643972267 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-92",
+      "diameterMm": 381,
+      "material": "TCP",
+      "coordinatesWGS84": [
+        [
+          -78.7164572411926,
+          35.7964818896485
+        ],
+        [
+          -78.7172418604342,
+          35.7964548537392
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 92; AutoCAD Data; RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.; Shape__Length=232.8835494418521 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-93",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7220243928308,
+          35.7940258395067
+        ],
+        [
+          -78.7220230180542,
+          35.7944255107809
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 93; AutoCAD Data; SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.; Shape__Length=145.47903975881377 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-94",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7220230180542,
+          35.7944255107809
+        ],
+        [
+          -78.7220216393578,
+          35.794832112418
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 94; AutoCAD Data; SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.; Shape__Length=148.00167259652315 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-95",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7220216393578,
+          35.794832112418
+        ],
+        [
+          -78.7220207130046,
+          35.7951985178521
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 95; AutoCAD Data; SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.; Shape__Length=133.37017665112754 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-96",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7220207130046,
+          35.7951985178521
+        ],
+        [
+          -78.7220159136515,
+          35.7956520616144
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 96; AutoCAD Data; SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.; Shape__Length=165.0940019623802 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-97",
+      "diameterMm": 203.2,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7220159136515,
+          35.7956520616144
+        ],
+        [
+          -78.7220133409341,
+          35.7958897415726
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 97; AutoCAD Data; SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.; Shape__Length=86.51779789658151 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-98",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7228659389697,
+          35.7948339220824
+        ],
+        [
+          -78.722674529515,
+          35.7948335127218
+        ],
+        [
+          -78.7226300630601,
+          35.7948334160143
+        ],
+        [
+          -78.7225755677751,
+          35.7948333000625
+        ],
+        [
+          -78.7225148051707,
+          35.7948331698137
+        ],
+        [
+          -78.7224603043575,
+          35.7948330528964
+        ],
+        [
+          -78.7223995284776,
+          35.7948329225599
+        ],
+        [
+          -78.7223450398344,
+          35.7948328056188
+        ],
+        [
+          -78.7222842617421,
+          35.7948326752198
+        ],
+        [
+          -78.7222297764181,
+          35.7948325582347
+        ],
+        [
+          -78.7221689994296,
+          35.794832428682
+        ],
+        [
+          -78.7221145129996,
+          35.7948323116429
+        ],
+        [
+          -78.722053601043,
+          35.7948321808235
+        ],
+        [
+          -78.7220216393578,
+          35.794832112418
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 98; AutoCAD Data; SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.; Shape__Length=250.37942393332827 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-99",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7228864835893,
+          35.7956540464183
+        ],
+        [
+          -78.7226275117758,
+          35.7956534562759
+        ],
+        [
+          -78.72255774081,
+          35.7956532974312
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 99; AutoCAD Data; SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.; Shape__Length=97.48865017364962 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-100",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.72255774081,
+          35.7956532974312
+        ],
+        [
+          -78.7225122472418,
+          35.7956531938363
+        ],
+        [
+          -78.72244247517,
+          35.7956530349231
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 100; AutoCAD Data; SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.; Shape__Length=34.182018250226974 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-101",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.72244247517,
+          35.7956530349231
+        ],
+        [
+          -78.7223969816021,
+          35.7956529312852
+        ],
+        [
+          -78.7223272106372,
+          35.7956527723085
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 101; AutoCAD Data; SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.; Shape__Length=34.18169017136097 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-102",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7223272106372,
+          35.7956527723085
+        ],
+        [
+          -78.7222817170696,
+          35.7956526686276
+        ],
+        [
+          -78.7222119461051,
+          35.7956525095849
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 102; AutoCAD Data; SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.; Shape__Length=34.18169015645981 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-103",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7222119461051,
+          35.7956525095849
+        ],
+        [
+          -78.7221664525378,
+          35.7956524058609
+        ],
+        [
+          -78.7220966815737,
+          35.7956522467522
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 103; AutoCAD Data; SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.; Shape__Length=34.18169017136097 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-104",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7220966815737,
+          35.7956522467522
+        ],
+        [
+          -78.7220511880098,
+          35.7956521420839
+        ],
+        [
+          -78.7220159136515,
+          35.7956520616144
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 104; AutoCAD Data; SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.; Shape__Length=23.951723758395474 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-105",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7134495274597,
+          35.7943078775493
+        ],
+        [
+          -78.7138915582624,
+          35.7941212097625
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 105; AutoCAD Data; HSSM; CAD for Multi-Purpose Exhibit Building; EN8CX02.dwg.; Shape__Length=147.64901666461077 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-106",
+      "diameterMm": 203.2,
+      "material": "PVC",
+      "coordinatesWGS84": [
+        [
+          -78.7138915582624,
+          35.7941212097625
+        ],
+        [
+          -78.7141071188488,
+          35.7943495797985
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 106; AutoCAD Data; HSSM; CAD for Multi-Purpose Exhibit Building; EN8CX02.dwg.; Shape__Length=104.86333613940278 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-107",
+      "diameterMm": 304.8,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7220160580632,
+          35.7965840473075
+        ],
+        [
+          -78.7228899649346,
+          35.7964768681976
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 107; AutoCAD Data; TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.; Shape__Length=262.0732256974854 ft."
+    },
+    {
+      "id": "NCSF-GIS-PIPE-108",
+      "diameterMm": 304.8,
+      "material": "DIP",
+      "coordinatesWGS84": [
+        [
+          -78.7238916003366,
+          35.7965254908166
+        ],
+        [
+          -78.7248932380492,
+          35.7965741052036
+        ]
+      ],
+      "source": "ArcGIS Sanitary Sewer Gravity Main Line Layer 4 OBJECTID 108; AutoCAD Data; TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.; Shape__Length=297.5577762153411 ft."
+    }
+  ]
+}
