@@ -108,7 +108,10 @@
       material:label(raw.material,100),
       coordinates:coords.map((v,j)=>{
         if(!Array.isArray(v)||v.length<2)throw Error('Invalid pipe vertex '+j);
-        return [Number(scalar(v[0],'Pipe longitude',[-180,180])),Number(scalar(v[1],'Pipe latitude',[-90,90]))];
+        const lon=scalar(v[0],'Pipe longitude',[-180,180]);
+        const lat=scalar(v[1],'Pipe latitude',[-90,90]);
+        if(lon===''||lat==='')throw Error('Missing documented pipe coordinate');
+        return [Number(lon),Number(lat)];
       })
     };
   }
@@ -118,7 +121,7 @@
     if(!isObject(doc)||!Array.isArray(doc.manholes))throw Error('JSON must contain a manholes array');
     if(doc.coordMode && doc.coordMode!==coordMode)throw Error('Coordinate system does not match the open project');
     if(doc.manholes.length>1000)throw Error('Maximum 1,000 manholes per import');
-    if(doc.observedPipes && coordMode!=='geographic')throw Error('Observed pipe geometry currently requires WGS84');
+    if(doc.observedPipes?.length && coordMode!=='geographic')throw Error('Observed pipe geometry currently requires WGS84');
     if(doc.observedPipes && (!Array.isArray(doc.observedPipes)||doc.observedPipes.length>2000))
       throw Error('Invalid observedPipes array');
     const manholes=doc.manholes.map((m,i)=>normalizeManhole(m,i,coordMode));
