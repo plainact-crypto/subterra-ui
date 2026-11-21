@@ -125,7 +125,7 @@ function assess(p){
 }
 function nextRound(p){
  const result=assess(p);if(result.score===null)throw Error("Select at least two surveyed manholes");
- const id="ROUND-"+String(p.rounds.length+1).padStart(2,"0");
+ const id="ROUND-"+String(p.rounds.length).padStart(2,"0");
  const roundObject={id,at:new Date().toISOString(),pair:[...p.pair],data:JSON.parse(JSON.stringify({control:p.control,manholes:p.manholes,points:p.points,fieldValues:p.fieldValues,evidence:p.evidence})),result:JSON.parse(JSON.stringify(result))};
  return {...p,rounds:[...p.rounds,roundObject],accepted:null};
 }
