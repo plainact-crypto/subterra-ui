@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>SUBTERRA - دليل JSON الرفع الميداني للمنهولات</title>
+<style>
+@page { size: A4; margin: 18mm 16mm 16mm; @bottom-center { content: "SUBTERRA  |  Field Survey JSON Manual  |  " counter(page); font-size:9px; color:#65798a; } }
+*{box-sizing:border-box}
+body{font-family:"Noto Naskh Arabic","Noto Sans Arabic",sans-serif;font-size:12px;line-height:1.7;color:#183449;margin:0;direction:rtl}
+h1,h2,h3{font-family:"Noto Sans Arabic","Noto Naskh Arabic",sans-serif;line-height:1.5}
+h1{font-size:28px;color:#113a54;margin:0 0 7px}h2{font-size:17px;color:#1d6486;margin:24px 0 8px;border-bottom:1px solid #ccdce5;padding-bottom:4px;break-after:avoid}
+h3{font-size:13px;color:#195575;margin:12px 0 3px;break-after:avoid}
+p{margin:5px 0 11px}
+small,.muted{color:#62788b}
+.cover{background:#e8f2f7;padding:20px 18px;border-radius:8px;margin-bottom:18px}
+.tag{display:inline-block;background:#d0e5ef;color:#185676;padding:3px 9px;font-size:9px;font-family:sans-serif}
+.lede{font-size:15px}
+.warning{padding:11px 13px;background:#fff3dc;border-right:4px solid #dd9b3c;margin:10px 0}
+.note{padding:11px 13px;background:#eaf5f5;border-right:4px solid #3d938b;margin:10px 0}
+table{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:10px;page-break-inside:auto}
+tr{page-break-inside:avoid}
+th,td{border:1px solid #cbd8df;padding:5px 7px;vertical-align:top}
+th{background:#e8f0f5;color:#204b68}
+code,pre,.ltr{font-family:"DejaVu Sans Mono","Liberation Mono",monospace;direction:ltr;unicode-bidi:isolate;text-align:left;font-size:10px}
+code{background:#edf4f7;padding:1px 4px;white-space:normal;overflow-wrap:anywhere}
+pre{background:#142e40;color:#fff;padding:12px;white-space:pre-wrap;overflow-wrap:anywhere;border-radius:4px}
+ul,ol{padding-right:20px;margin-top:5px;margin-bottom:10px}
+li{margin-bottom:5px}
+a{color:#0877a6;text-decoration:none}
+.page-break{break-before:page}
+.footer{font-size:10px;color:#688096;margin-top:22px}
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="tag" dir="ltr">SUBTERRA / FIELD VERIFICATION v1 / v0.15</div>
+<h1>دليل تعبئة ملف الرفع الميداني للمنهولات</h1>
+<p class="lede">دليل عملي لتجميع الملاحظات المرئية من خارج المنهول وداخله، وتسجيل جميع فتحات المواسير والسلالم والأبعاد والمناسيب، ثم إجراء تصحيح هندسي رياضي مستقل عن الذكاء الاصطناعي.</p>
+<p class="muted">مخصص للمستخدم الذي يرفع ملف <span dir="ltr">JSON</span> داخل مشروع <span dir="ltr">PIPE-56 Blind Reconstruction</span>.</p>
+</div>
+
+<div class="warning"><strong>تنبيه أساسي:</strong> ملف المثال اسمه <code>SIMULATED_DEMO</code>؛ كل القيم فيه افتراضية لا تمثل رفعًا حقيقيًا. لا يجوز تقديمه على أنه بيانات موقع أو دليل ميداني.</div>
+
+<h2>١. الملفات المطلوبة وكيف تبدأ</h2>
+<ol>
+<li>من موقع SUBTERRA افتح المشروع الحالي، ثم حمل <code>Field Survey JSON Template</code>.</li>
+<li>افتح الملف بمحرر نصوص يدعم <span dir="ltr">UTF-8</span> مثل VS Code، واحفظ نسخة باسم جديد.</li>
+<li>اكتب القيم التي ثبتت بالقياس أو الرؤية فقط. استخدم <code>null</code> لأي قيمة مجهولة؛ لا تكتب الرقم صفر مكان المجهول.</li>
+<li>أضف عنصرًا مستقلًا داخل <code>openings</code> لكل فتحة مرئية: دخول، خروج، جانبية، مقفولة، غير مستخدمة، أو مجهولة الوظيفة.</li>
+<li>بعد الحفظ، ارفع الملف من زر <code>Import Field Survey JSON</code>. البرنامج يفحص المدخلات ويحسب مسارًا مصححًا إذا توافرت الشروط.</li>
+<li>لتجربة المنطق دون الذهاب للموقع استخدم <code>Load Simulated Demo</code>، ولا تعتبر نتائجها Field Verified.</li>
+</ol>
+
+<h2>٢. قواعد JSON الأساسية</h2>
+<table>
+<thead><tr><th>القاعدة</th><th>مثال صحيح</th><th>ملاحظة</th></tr></thead>
+<tbody>
+<tr><td>الأرقام بلا علامات اقتباس</td><td dir="ltr"><code>"insideDiameterMm": 1500</code></td><td>الوحدة هنا مليمتر.</td></tr>
+<tr><td>النصوص بين علامتي اقتباس</td><td dir="ltr"><code>"pavementType": "ASPHALT"</code></td><td>الأسماء الإنجليزية كما في القالب.</td></tr>
+<tr><td>قيمة مجهولة</td><td dir="ltr"><code>"bearingOutwardDeg": null</code></td><td>لا تضع <code>0</code> إلا لو القيمة صفر فعلًا.</td></tr>
+<tr><td>نعم / لا</td><td dir="ltr"><code>"visible": true</code></td><td>استخدم <code>true</code> أو <code>false</code> بدون اقتباس.</td></tr>
+<tr><td>عدة فتحات</td><td dir="ltr"><code>"openings": [ {...}, {...} ]</code></td><td>عنصر مستقل لكل فتحة؛ لا تكرر المعرف.</td></tr>
+<tr><td>نظام الإحداثيات</td><td dir="ltr"><code>"horizontalCrs": "EPSG:4326"</code></td><td>خط عرض وطول WGS84 بالدرجات العشرية.</td></tr>
+</tbody>
+</table>
+<pre>{
+  "schema": "subterra-manhole-field-survey/v1",
+  "recordType": "FIELD_OBSERVATION",
+  "metadata": {
+    "surveyId": "FIELD-2026-001",
+    "inspector": "Survey Team"
+  },
+  "spatialReference": {
+    "horizontalCrs": "EPSG:4326",
+    "verticalDatum": "LOCAL_BM_01",
+    "verticalDatumConfirmedForBothManholes": true
+  }
+}</pre>
+
+<h2>٣. البيانات العامة والإحداثيات</h2>
+<table>
+<tr><th>المجموعة في JSON</th><th>ما الذي يتم تسجيله؟</th><th>مهم للتصحيح؟</th></tr>
+<tr><td dir="ltr"><code>metadata</code></td><td>رقم الرفع، التاريخ، الجهة، الراصد، وسيلة المعاينة، الجو، ملاحظات الوصول.</td><td>للتتبع والمراجعة</td></tr>
+<tr><td dir="ltr"><code>spatialReference</code></td><td>مرجع الإحداثيات، مرجع المناسيب، كود الـ Benchmark، وحدات القياس.</td><td>نعم</td></tr>
+<tr><td dir="ltr"><code>surveyedCenter</code></td><td>Latitude, Longitude لمركز جسم الغرفة الفعلي، دقة الرفع، نوع الجهاز، جودة القياس.</td><td>نعم</td></tr>
+<tr><td dir="ltr"><code>surface</code></td><td>منسوب الغطاء ومنسوب الأرض، مركز الغطاء، القطر، الغطاء والإطار والعلامات وعيوب الرصف.</td><td>فحص ومراجعة</td></tr>
+<tr><td dir="ltr"><code>surroundings</code></td><td>الطرق المجاورة، حافة الرصيف، المسافات للمباني، العوائق، المرافق الظاهرة، الاستخدام.</td><td>سياق فقط حتى يتم قياسه</td></tr>
+</table>
+<div class="note">فرّق بين <strong>مركز الغطاء</strong> وبين <strong>مركز جسم المنهول</strong>. لو الغطاء غير متمركز، لا تستخدم موقع الغطاء تلقائيًا كمركز للمنهول. قيمة <code>surveyedCenter</code> لازم توضح مرجع القياس الحقيقي.</div>
+
+<h2>٤. تفاصيل المنهول الداخلية</h2>
+<table>
+<tr><th>القسم</th><th>قائمة البيانات المرئية المطلوب تسجيلها</th></tr>
+<tr><td dir="ltr"><code>geometry</code></td><td>شكل الغرفة (دائري/مستطيل)، القطر الداخلي، الطول والعرض والعمق، سمك الحائط، إزاحة المركز، مادة الإنشاء، وجود Drop Connection.</td></tr>
+<tr><td dir="ltr"><code>chimney</code></td><td>الوجود، الارتفاع، عدد حلقات الضبط، المادة، الحالة والعيوب.</td></tr>
+<tr><td dir="ltr"><code>cone</code></td><td>الوجود، الشكل، الارتفاع، اتجاه الجزء اللامركزي، الحالة.</td></tr>
+<tr><td dir="ltr"><code>barrel</code></td><td>عدد القطاعات، الفواصل، الرشح، الشروخ، الصدأ والتآكل، التسليح الظاهر والتشوه.</td></tr>
+<tr><td dir="ltr"><code>bench</code></td><td>وجود الـ Bench، الميل، المادة، شكل الـ Channel، عرضه وعمقه، الرواسب والمياه الراكدة واتجاه الجريان الملحوظ.</td></tr>
+<tr><td dir="ltr"><code>access</code></td><td>سلم أو درجات مثبتة، المادة، عدد الدرجات، التباعد، عرض الدرجة، أول درجة، الدرجات المفقودة والمتآكلة، وسائل الأمان.</td></tr>
+<tr><td dir="ltr"><code>serviceAndSafety</code></td><td>الرشح، الجذور، الشحوم، الرواسب، الرائحة، عمق المياه، حالة الانسداد، مع التنبيه أن التدفق لا يُخمن من عمق المياه.</td></tr>
+<tr><td dir="ltr"><code>media</code></td><td>معرفات الصور والفيديو والكروكي والـ Scan، بشرط ربطها بالأصل الفعلي عند توفره.</td></tr>
+<tr><td dir="ltr"><code>completeness</code></td><td>هل تمت مشاهدة جميع الأوجه؟ هل كل الفتحات مسجلة؟ هل توجد مناطق محجوبة؟ هل راجع الراصد اكتمال الحصر؟</td></tr>
+</table>
+
+<h2 class="page-break">٥. أهم جزء: جميع فتحات المواسير داخل المنهول</h2>
+<p>لكل فتحة اكتب عنصرًا منفصلًا في <code>manholes[].openings[]</code>، بما فيها الفتحات الجانبية والمقفولة وغير المعلومة. لا تجمع فتحتين في سجل واحد.</p>
+<table>
+<tr><th>اسم المفتاح</th><th>معناه وطريقة القياس</th></tr>
+<tr><td dir="ltr"><code>openingId</code></td><td>رقم فريد داخل المنهول، مثل <code>IN-01</code> أو <code>OUT-01</code> أو <code>LAT-01</code>.</td></tr>
+<tr><td dir="ltr"><code>visible</code> / <code>operationalStatus</code></td><td>هل الفتحة مرئية؟ هل هي ACTIVE أو CAPPED أو ABANDONED أو UNKNOWN؟</td></tr>
+<tr><td dir="ltr"><code>roleObserved</code></td><td>Inlet / Outlet إذا لوحظ الاتجاه بيقين، وإلا <code>null</code>. لا تستنتج اتجاه التشغيل من المنسوب وحده.</td></tr>
+<tr><td dir="ltr"><code>positionClock</code></td><td>موقع تقريبي على الساعة للتوثيق البصري فقط؛ لا يعوض Bearing حقيقي.</td></tr>
+<tr><td dir="ltr"><code>bearingOutwardDeg</code></td><td>الاتجاه الأفقي من مركز المنهول إلى خارج الجدار، بالدرجات من الشمال الحقيقي مع اتجاه عقارب الساعة: 0° شمال، 90° شرق.</td></tr>
+<tr><td dir="ltr"><code>bearingAccuracyDeg</code></td><td>الخطأ التقديري في قياس الاتجاه، وليس نسبة ثقة AI.</td></tr>
+<tr><td dir="ltr"><code>radialOffsetFromChamberCenterM</code></td><td>المسافة الأفقية من مركز جسم المنهول إلى مركز فتحة الماسورة عند وجه الجدار الداخلي بالمتر.</td></tr>
+<tr><td dir="ltr"><code>invertElevationRL</code></td><td>منسوب قاع الماسورة عند وجه الجدار؛ متوافق مع Benchmark مشترك.</td></tr>
+<tr><td dir="ltr"><code>nominalDiameterMm</code> / <code>insideDiameterMm</code></td><td>القطر الاسمي والقطر الداخلي المقاس؛ ليسا بالضرورة متساويين.</td></tr>
+<tr><td dir="ltr"><code>shape</code></td><td>دائري أو بيضاوي أو صندوقي أو غير معروف.</td></tr>
+<tr><td dir="ltr"><code>pipeMaterialObserved</code></td><td>مادة الماسورة إن كانت مؤكدة بصريًا أو مستنديًا؛ وإلا <code>null</code>.</td></tr>
+<tr><td dir="ltr"><code>pipeTypeObserved</code></td><td>Sanitary / Storm / Service / Stub إن كان معروفًا، وإلا <code>null</code>.</td></tr>
+<tr><td dir="ltr"><code>connectionType</code> / <code>bendOrDropType</code></td><td>نوع الوصلة المرئي والـ Drop أو الكوع الظاهر إن وجد.</td></tr>
+<tr><td dir="ltr"><code>flowDepthMm</code> / <code>debrisHeightMm</code></td><td>عمق المياه والرواسب عند الفتحة.</td></tr>
+<tr><td dir="ltr"><code>visibleLengthIntoPipeM</code></td><td>المسافة التي ظهرت بوضوح داخل الماسورة بالكاميرا أو المصباح، وليست طول الماسورة بالكامل.</td></tr>
+<tr><td dir="ltr"><code>photoIds</code> / <code>visualClues</code></td><td>روابط معرفات الصور والأدلة المرئية على المادة والحالة.</td></tr>
+</table>
+<pre>{
+  "openingId": "OUT-01",
+  "visible": true,
+  "operationalStatus": "ACTIVE",
+  "roleObserved": "outlet",
+  "bearingOutwardDeg": 291.9,
+  "bearingAccuracyDeg": 1.8,
+  "radialOffsetFromChamberCenterM": 0.75,
+  "invertElevationRL": 145.047,
+  "invertAccuracyM": 0.01,
+  "nominalDiameterMm": 304.8,
+  "insideDiameterMm": 296,
+  "pipeMaterialObserved": "TERRA_COTTA_PIPE"
+}</pre>
+<p class="muted">هذا المقتطف توضيحي فقط، وليس ملف JSON مستقلًا كاملًا. استخدم القالب الكامل وحافظ على باقي المفاتيح.</p>
+
+<h2>٦. هل نوع المنهول معروف أم يستنتجه البرنامج؟</h2>
+<p>في <code>geometry.chamberTypeObserved</code> اكتب نوع المنهول إذا عرفه الراصد وتأكد منه. إذا غير معروف اتركه <code>null</code>. حينئذ يستخدم البرنامج قواعد واضحة على <strong>عدد الفتحات النشطة الظاهرة</strong>:</p>
+<table>
+<tr><th>الحالة</th><th>Classification</th><th>القيد</th></tr>
+<tr><td>فتحة نشطة واحدة فقط</td><td dir="ltr">TERMINAL</td><td>مبدئي ما لم يؤكد اكتمال الحصر.</td></tr>
+<tr><td>فتحتان نشطتان</td><td dir="ltr">THROUGH</td><td>لا يعني بالضرورة نفس خدمة الماسورة.</td></tr>
+<tr><td>أكثر من فتحتين نشطتين</td><td dir="ltr">JUNCTION</td><td>قد تكون فتحات جانبية أو خدمات مختلفة.</td></tr>
+<tr><td>وجود Drop Connection مرئي</td><td dir="ltr">DROP</td><td>يقدم دليل الـ Drop المرئي على العد فقط.</td></tr>
+<tr><td>بيانات ناقصة أو غير مؤكدة</td><td dir="ltr">UNKNOWN / TENTATIVE</td><td>لا يصدر حكمًا نهائيًا.</td></tr>
+</table>
+<p>البرنامج <strong>لا يستنتج مادة الماسورة المجهولة من القطر وحده</strong>، ولا يجزم باتصال فتحتين في غرفتين من خلال الشكل فقط.</p>
+
+<h2>٧. معادلات تصحيح الخط بدون AI</h2>
+<p>يظل الخط البرتقالي الأصلي من المرحلة 2A ثابتًا. عند إدخال إحداثيات مراكز المنهولات التي رفعها المستخدم واتجاهات الفتحات والمسافات الشعاعية، نحسب لكل فتحة:</p>
+<pre>E_opening = E_center + r * sin(theta)
+N_opening = N_center + r * cos(theta)
+L_face = sqrt((E2 - E1)^2 + (N2 - N1)^2)
+S_face = (Invert_from - Invert_to) / L_face</pre>
+<p>ثم نفحص تناسق اتجاه فتحة الخروج مع خط الربط، واتجاه فتحة الدخول المعاكس له. إذا تجاوز الاختلاف المسموح، أو كانت المناسيب غير مشتركة المرجع، أو لا يوجد سقوط موجب، يعرض البرنامج <code>GEOMETRIC_OR_VERTICAL_CONFLICT</code> **من غير رسم خط مصحح على أنه مقبول**.</p>
+<div class="warning">الخط الأخضر هو <strong>Hypothesis مصحح بين وجهي الفتحتين المرئيتين</strong>؛ ليس قياسًا لمسار مدفون بين المنهولين. الفرق في الطول بين الخط البرتقالي المركز-للمركز والخط الأخضر الوجه-للوجه يشمل نصف قطر المنهول ولا يعني أن الماسورة الحقيقية «قصرت».</div>
+
+<h2>٨. التحقق من الجودة والأمان</h2>
+<ul>
+<li>راجع أن كل <code>openingId</code> فريد، وأن كل فتحة مرئية مسجلة ولو كانت مجهولة.</li>
+<li>ثبت مرجع إحداثيات <code>EPSG:4326</code> ومرجع منسوب موحد قبل حساب الميل.</li>
+<li>الرفع السطحي والكاميرا العلوية أولًا. <strong>دخول المنهول لا يتم لمجرد تعبئة JSON.</strong> أي دخول يحتاج إجراءات Confined Space رسمية وتصريح وفحص جو وطاقم مؤهل.</li>
+<li>حافظ على معرفات الصور الحقيقية. ملف Demo يحتوي أسماء صور وهمية وليست مرفقات.</li>
+<li>لا تعدل Phase 2A أو Phase 2B القديمة؛ ملفات الرفع تحفظ كسجلات مستقلة قابلة للمراجعة.</li>
+<li>أي <code>FIELD_OBSERVATION</code> يبقى <strong>مدخلًا من المستخدم غير مدقق خارجيًا</strong> حتى يراجع السند الأصلي.</li>
+</ul>
+
+<h2>٩. مصادر الاسترشاد الفني</h2>
+<ul>
+<li>US EPA، دليل فحص وصيانة شبكات الصرف الصحي CMOM، يوضح عناصر الحالة والعيوب والرشح وعلامات التشغيل.</li>
+<li>NASSCO، برنامج MACP لتوصيف حالة المنهولات، والاستعانة بأسماء المكونات لا تعني أن SUBTERRA معتمد أو متوافق رسميًا مع معيار MACP.</li>
+<li>الملفات والقواعد والمعادلات في هذه الوثيقة <strong>تعريف مخصص لنموذج SUBTERRA v1</strong> وليست استنساخًا لنظام NASSCO.</li>
+</ul>
+<p class="footer" dir="ltr">SUBTERRA Field Survey JSON v1 — Read-only Field Scenario Overlay — 2026-11-21</p>
+</body></html>
