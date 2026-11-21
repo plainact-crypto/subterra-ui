@@ -10,13 +10,17 @@ function project(x){
  if(!name||!crs||!datum)throw Error("Name, projected CRS and vertical datum required");
  return {schema:"subterra-v2",id:id(),name,network:x.network==="storm"?"storm":"sanitary",
  control:{method:"TOTAL_STATION",crs,verticalDatum:datum,instrumentId:x.instrumentId||"",surveyor:x.surveyor||""},
- manholes:[],points:[],fieldValues:[],evidence:[],pair:[],rounds:[],accepted:null};
+ manholes:[],points:[],fieldValues:[],evidence:[],pair:[],rounds:[],accepted:null,surfaceSurveyComplete:false};
 }
 function addManhole(p,m){
  const name=String(m.id||"").trim(),sxy=Number(m.sigmaXY),sz=Number(m.sigmaZ);
  if(!name||p.manholes.some(x=>x.id.toLowerCase()===name.toLowerCase()))throw Error("Unique manhole ID required");
  if(!validPt(m)||!num(sxy)||!num(sz)||sxy<=0||sz<=0||sxy>5||sz>5)throw Error("Total Station X,Y,Z and positive precision values required");
- return {...p,manholes:[...p.manholes,{id:name,x:m.x,y:m.y,z:m.z,sigmaXY:sxy,sigmaZ:sz,method:"TOTAL_STATION",pointDefinition:"COVER_CENTER",openings:[],inventoryComplete:false}],accepted:null};
+ return {...p,manholes:[...p.manholes,{id:name,x:m.x,y:m.y,z:m.z,sigmaXY:sxy,sigmaZ:sz,method:"TOTAL_STATION",pointDefinition:"COVER_CENTER",openings:[],inventoryComplete:false}],surfaceSurveyComplete:false,accepted:null};
+}
+function setSurfaceSurveyComplete(p,complete){
+ if(complete&&p.manholes.length<2)throw Error("Total Station survey requires at least two manholes");
+ return {...p,surfaceSurveyComplete:complete===true,accepted:null};
 }
 function setPair(p,a,b){
  if(a===b||!p.manholes.some(x=>x.id===a)||!p.manholes.some(x=>x.id===b))throw Error("Choose two distinct surveyed manholes");
@@ -60,7 +64,7 @@ function getPoint(p,m,k,o){
 }
 function assess(p){
  const pair=p.pair||[],a=p.manholes.find(m=>m.id===pair[0]),b=p.manholes.find(m=>m.id===pair[1]);
- if(!a||!b||a.id===b.id)return {status:"AWAITING_SURVEY",score:null,route:null,completeness:null,factors:[],warnings:[],
+ if(!a||!b||a.id===b.id||!p.surfaceSurveyComplete)return {status:"AWAITING_SURVEY",score:null,route:null,completeness:null,factors:[],warnings:[],
   tasks:[{key:"survey",label:"Total Station XYZ for at least two visible manholes",priority:100,method:"TOTAL_STATION"}],meaning:note};
  const opA=a.openings.find(x=>x.role==="OUTLET"),opB=b.openings.find(x=>x.role==="INLET");
  const centerA=getPoint(p,a,"CHAMBER_CENTER"),centerB=getPoint(p,b,"CHAMBER_CENTER");
@@ -133,7 +137,7 @@ function selfTest(){
  let p=project({name:"Synthetic",crs:"LOCAL_ENU_METRES",verticalDatum:"SYNTHETIC_BM"});
  p=addManhole(p,{id:"A",x:0,y:0,z:104,sigmaXY:.01,sigmaZ:.01});
  p=addManhole(p,{id:"B",x:60,y:0,z:102,sigmaXY:.01,sigmaZ:.01});
- p=setPair(p,"A","B");
+ p=setPair(p,"A","B");p=setSurfaceSurveyComplete(p,true);
  let r=assess(p);if(r.score!==14||r.route.gradePercent!==null)throw Error("Initial assumption invalid "+r.score);
  p=addOpening(p,"A",{id:"OUT",role:"OUTLET",material:"PVC",diameterMm:300});
  p=addOpening(p,"B",{id:"IN",role:"INLET",material:"PVC",diameterMm:300});
@@ -155,5 +159,5 @@ function selfTest(){
  if(JSON.stringify(edited.rounds[0])!==was)throw Error("Immutable snapshot changed");
  return {initial:r.score,full:best.score,initialZ:r.route.gradePercent,finalZ:best.route.gradePercent,immutable:true};
 }
-root.SubterraV2={W,project,addManhole,setPair,addOpening,inventory,addPoint,field,evidence,assess,nextRound,accept,selfTest};
+root.SubterraV2={W,project,addManhole,setSurfaceSurveyComplete,setPair,addOpening,inventory,addPoint,field,evidence,assess,nextRound,accept,selfTest};
 })(window);
