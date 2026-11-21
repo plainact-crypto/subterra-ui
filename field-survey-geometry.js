@@ -28,6 +28,8 @@
      mustNum(mh.surveyedCenter?.latitude,id+".surveyedCenter.latitude",-90,90);
      mustNum(mh.surveyedCenter?.longitude,id+".surveyedCenter.longitude",-180,180);
      mustNum(mh.surveyedCenter?.horizontalAccuracyM,id+".surveyedCenter.horizontalAccuracyM",0,30);
+     if(mh.surveyedCenter.measuredReference!=="SURVEYED_CHAMBER_CENTER")
+       throw Error(id+": surveyedCenter must refer to the actual chamber center, not the off-center cover");
      if(!Array.isArray(mh.openings)||mh.openings.length<1||mh.openings.length>50)throw Error(id+" must enumerate its visible openings");
      const portIds=new Set();
      for(const op of mh.openings){
@@ -58,6 +60,7 @@
      mustNum(op.invertElevationRL,where+".invertElevationRL",-500,9000);
      mustNum(op.bearingAccuracyDeg,where+".bearingAccuracyDeg",0,90);
      mustNum(op.invertAccuracyM,where+".invertAccuracyM",0,10);
+     mustNum(op.radialOffsetAccuracyM,where+".radialOffsetAccuracyM",0,5);
    }
    if(a.roleObserved!==null&&a.roleObserved!=="outlet")throw Error("Selected source opening is not identified as outlet");
    if(b.roleObserved!==null&&b.roleObserved!=="inlet")throw Error("Selected destination opening is not identified as inlet");
@@ -124,6 +127,11 @@
    const ra=radial(checked.a),rb=radial(checked.b);
    const faceA=[centerA[0]+ra[0],centerA[1]+ra[1]];
    const faceB=[centerB[0]+rb[0],centerB[1]+rb[1]];
+   const sigmaFace=(center,op)=>Math.hypot(center.horizontalAccuracyM,op.radialOffsetAccuracyM,
+      op.radialOffsetFromChamberCenterM*op.bearingAccuracyDeg*RAD);
+   const sigmaA=sigmaFace(aM.surveyedCenter,checked.a);
+   const sigmaB=sigmaFace(bM.surveyedCenter,checked.b);
+   const combinedOpeningUncertaintyM=Math.hypot(sigmaA,sigmaB);
    const delta=[faceB[0]-faceA[0],faceB[1]-faceA[1]];
    const length=len(delta),originalLength=len(originalTo);
    if(length<1)throw Error("Computed face-to-face span is less than 1 m");
@@ -160,6 +168,10 @@
       sourceOpeningRadialOffsetM:len(ra),
       destinationOpeningRadialOffsetM:len(rb),
       referenceLinePerpendicularOffsetsM:offsets.map(endpointCross),
+      measuredOpeningAApprox1SigmaM:sigmaA,
+      measuredOpeningBApprox1SigmaM:sigmaB,
+      combinedApprox1SigmaM:combinedOpeningUncertaintyM,
+      uncertaintyStatement:"FIRST_ORDER_INPUT_ERROR_PROPAGATION_ONLY; older GIS baseline error is unknown; not a certified accuracy estimate",
       // Comparing face-to-face end points to old center-to-center ends includes physical chamber radii.
       faceToFaceLengthDeltaVsCenterBaselineM:length-prior.candidate.distanceM,
       midpointVectorDeltaVsReferenceMidpointM:len([midpointCorrected[0]-midOriginal[0],midpointCorrected[1]-midOriginal[1]]),
@@ -202,6 +214,7 @@
       ...(!angularCompatible?["Bearing mismatch exceeds configured threshold; do not draw corrected line"]:[]),
       ...(!positiveDrop?["Selected source-to-destination connection has zero or negative gravity drop"]:[]),
       "Shortened face-to-face span must NOT be interpreted as a real reduction of pipe center-to-center length.",
+      "The reported uncertainty is first-order propagation of user-entered accuracies, not independent ground-truth accuracy.",
       "Manhole and opening observations alone do NOT prove physical continuity between chambers.",
       "Do not interpret deviation versus old straight line as ground-truth positional error.",
       "Photographs and survey-grade methods must be independently audited for genuine field verification."
