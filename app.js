@@ -189,6 +189,7 @@
       const calc=window.SubterraPipe56Phase2.compute(evidence);
       if(!window.SubterraPipe56Phase2.verify(evidence,calc).pass)throw Error('Calculation check failed');
       p.blindCase.phase2=calc;
+      p.blindCase.stage='PHASE_2A_CALCULATED';
       p.showCalculatedCandidate=true;
       save();renderWorkspace();
       announce('Phase 2A calculated and frozen — GIS reference withheld');
@@ -266,7 +267,7 @@
       ['07','Calculation / validation',completed?'Phase 2A geometry & gravity calculated; no GIS validation yet':'Not run — next phase']
     ];
     $('#inspectorBody').innerHTML=`<div class="blind-inspector">
-      <div class="panel-top"><span class="panel-title">PIPE 56 · PHASE 1</span>
+      <div class="panel-top"><span class="panel-title">${project.blindCase.phase2?'PIPE 56 · PHASE 2A':'PIPE 56 · PHASE 1'}</span>
         <span class="panel-counter">${v.pass?'Inputs locked':'Integrity warning'}</span></div>
       <p class="panel-desc">Retrospective controlled replay. The earlier reference was already seen; no prospective-blind claim.</p>
       <div class="blind-status">${v.pass?'Frozen evidence verified':'Fixture mismatch: '+v.issues.map(fmt).join('; ')}</div>
