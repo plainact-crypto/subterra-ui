@@ -216,7 +216,8 @@
           "orientationReference": "OUTWARD_FROM_CHAMBER_TRUE_NORTH",
           "photoIds": [],
           "visualClues": [],
-          "notes": null
+          "notes": null,
+          "radialOffsetAccuracyM": null
         },
         {
           "openingId": "OUT-01",
@@ -253,7 +254,8 @@
           "orientationReference": "OUTWARD_FROM_CHAMBER_TRUE_NORTH",
           "photoIds": [],
           "visualClues": [],
-          "notes": null
+          "notes": null,
+          "radialOffsetAccuracyM": null
         },
         {
           "openingId": "LAT-01",
@@ -290,7 +292,8 @@
           "orientationReference": "OUTWARD_FROM_CHAMBER_TRUE_NORTH",
           "photoIds": [],
           "visualClues": [],
-          "notes": null
+          "notes": null,
+          "radialOffsetAccuracyM": null
         }
       ],
       "media": {
@@ -464,7 +467,8 @@
           "orientationReference": "OUTWARD_FROM_CHAMBER_TRUE_NORTH",
           "photoIds": [],
           "visualClues": [],
-          "notes": null
+          "notes": null,
+          "radialOffsetAccuracyM": null
         },
         {
           "openingId": "OUT-01",
@@ -501,7 +505,8 @@
           "orientationReference": "OUTWARD_FROM_CHAMBER_TRUE_NORTH",
           "photoIds": [],
           "visualClues": [],
-          "notes": null
+          "notes": null,
+          "radialOffsetAccuracyM": null
         },
         {
           "openingId": "STUB-01",
@@ -538,7 +543,8 @@
           "orientationReference": "OUTWARD_FROM_CHAMBER_TRUE_NORTH",
           "photoIds": [],
           "visualClues": [],
-          "notes": null
+          "notes": null,
+          "radialOffsetAccuracyM": null
         }
       ],
       "media": {
