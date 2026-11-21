@@ -1,0 +1,2370 @@
+{
+  "schema": "subterra-ncsf-historical-manhole-reference/v1",
+  "dataset": "NC State Fairgrounds – Sanitary Sewer GIS, Raleigh NC USA",
+  "sourceCommit": "92486ace69b87d134cf9504d250cbafc3a7b72ba",
+  "provenance": "Historical ArcGIS/AutoCAD source. These ARE NOT a 2026 Total Station field survey. Original vertical datum unconfirmed.",
+  "horizontalCrs": "EPSG:4326",
+  "historicalVerticalDatum": "UNKNOWN",
+  "purpose": "Seeds explicitly SIMULATED total-station measurements for competition; not a contemporary survey.",
+  "manholes": [
+    {
+      "id": "NCSF-MH-1",
+      "lat": 35.796305709623006,
+      "lon": -78.71194649054836,
+      "coverRLm": 143.289528,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 1. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Infield Redevelopment As-Built, Phase 1 & 2 Utility Plan As-Built Sheet 3A of 15; surveyed location, Sheet 3B.. GIS values: RimElev=470.11 ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=4'; MHMaterial=PRECAST; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-2",
+      "lat": 35.79663678211718,
+      "lon": -78.71263949260766,
+      "coverRLm": 142.225776,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 2. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Infield Redevelopment As-Built, Phase 1 & 2 Utility Plan As-Built Sheet 3A of 15; surveyed location, Sheet 3B.. GIS values: RimElev=466.62 ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-3",
+      "lat": 35.79651736477919,
+      "lon": -78.71296749091594,
+      "coverRLm": 141.936216,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 3. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Infield Redevelopment As-Built, Phase 1 & 2 Utility Plan As-Built Sheet 3A of 15; surveyed location, Sheet 3B.. GIS values: RimElev=465.67 ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-4",
+      "lat": 35.79693738231951,
+      "lon": -78.71278123246303,
+      "coverRLm": 141.570456,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "IN-03",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "IN-04",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 4. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Infield Redevelopment As-Built, Phase 1 & 2 Utility Plan As-Built Sheet 3A of 15; surveyed location, Sheet 3B.. GIS values: RimElev=464.47 ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-5",
+      "lat": 35.796566172574614,
+      "lon": -78.71180095553318,
+      "coverRLm": 143.182848,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 5. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Infield Redevelopment As-Built, Phase 1 & 2 Utility Plan As-Built Sheet 3A of 15; surveyed location, Sheet 3B.. GIS values: RimElev=469.76 ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=4'; MHMaterial=PRECAST; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-6",
+      "lat": 35.79745518466522,
+      "lon": -78.7130287876348,
+      "coverRLm": 139.513056,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 137.705592,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 138.187176,
+          "materialSourceText": null
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 6. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Infield Redevelopment As-Built, Existing Conditions Plan Sheet 1 of 15; inverts and elevation, Sheet 1.. GIS values: RimElev=457.72 ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-7",
+      "lat": 35.7974371633359,
+      "lon": -78.71223578519403,
+      "coverRLm": 140.796264,
+      "historicalInvertRLm": 138.839448,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": 138.955272,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 138.85164,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 138.839448,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 7. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Infield Redevelopment As-Built, Existing Conditions Plan Sheet 1 of 15; inverts and elevation, Sheet 1.. GIS values: RimElev=461.93 ft; Invert_Out=455.51 ft; Depth=6.420000000000016 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-8",
+      "lat": 35.79707121211905,
+      "lon": -78.71137226581014,
+      "coverRLm": 144.173448,
+      "historicalInvertRLm": 140.78712,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": 143.152368,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": 141.54912,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 140.78712,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 8. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Infield Redevelopment As-Built, Existing Conditions Plan Sheet 1 of 15; inverts and elevation, Sheet 1.. GIS values: RimElev=473.01 ft; Invert_Out=461.9 ft; Depth=11.110000000000014 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-9",
+      "lat": 35.794312761622436,
+      "lon": -78.7069901791962,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 9. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: CLH Design; Record Drawings For Commercial Education Building Parking Lot Renovations, C4.1.dwg.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-10",
+      "lat": 35.79433959186469,
+      "lon": -78.70703364244798,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 10. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: CLH Design; Record Drawings For Commercial Education Building Parking Lot Renovations, C4.1.dwg.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-11",
+      "lat": 35.79439185948077,
+      "lon": -78.70787515925834,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 11. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: CLH Design; Record Drawings For Commercial Education Building Parking Lot Renovations, C4.1.dwg.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-12",
+      "lat": 35.79414917537175,
+      "lon": -78.70846143320757,
+      "coverRLm": null,
+      "historicalInvertRLm": 145.621248,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 149.370288,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 145.651728,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 145.621248,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 12. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: CLH Design; Record Drawings For Commercial Education Building Parking Lot Renovations, C4.1.dwg; inverts, C4.1.dwg.. GIS values: RimElev=not recorded ft; Invert_Out=477.76 ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-13",
+      "lat": 35.79408638304917,
+      "lon": -78.70848657502845,
+      "coverRLm": null,
+      "historicalInvertRLm": 149.352,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 149.68728,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 149.352,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 13. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: CLH Design; Record Drawings For Commercial Education Building Parking Lot Renovations, C4.1.dwg; inverts, C4.1.dwg.. GIS values: RimElev=not recorded ft; Invert_Out=490 ft; Depth=not recorded ft; MHDiameter=5'; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-14",
+      "lat": 35.796319024018835,
+      "lon": -78.70943330188385,
+      "coverRLm": null,
+      "historicalInvertRLm": 147.824952,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 147.824952,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 14. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13; inverts, Sheet 4.. GIS values: RimElev=not recorded ft; Invert_Out=484.99 ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-15",
+      "lat": 35.796133643627364,
+      "lon": -78.70935493138643,
+      "coverRLm": null,
+      "historicalInvertRLm": 147.56892,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 147.56892,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 15. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13; inverts, Sheet 4.. GIS values: RimElev=not recorded ft; Invert_Out=484.15 ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-16",
+      "lat": 35.79593915816092,
+      "lon": -78.70930390968947,
+      "coverRLm": null,
+      "historicalInvertRLm": 147.40128,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 147.40128,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 16. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13; inverts, Sheet 4.. GIS values: RimElev=not recorded ft; Invert_Out=483.6 ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-17",
+      "lat": 35.79573110066627,
+      "lon": -78.70924551235217,
+      "coverRLm": null,
+      "historicalInvertRLm": 147.24888,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 147.24888,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 17. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13; inverts, Sheet 4.. GIS values: RimElev=not recorded ft; Invert_Out=483.1 ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-18",
+      "lat": 35.79555367733788,
+      "lon": -78.70915172945011,
+      "coverRLm": null,
+      "historicalInvertRLm": 147.09648,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 147.09648,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 18. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13; inverts, Sheet 4.. GIS values: RimElev=not recorded ft; Invert_Out=482.6 ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-19",
+      "lat": 35.795442691392914,
+      "lon": -78.70910151903841,
+      "coverRLm": null,
+      "historicalInvertRLm": 146.94408,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 146.94408,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 19. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13; inverts, Sheet 4.. GIS values: RimElev=not recorded ft; Invert_Out=482.1 ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-20",
+      "lat": 35.79526921249239,
+      "lon": -78.70911468335288,
+      "coverRLm": null,
+      "historicalInvertRLm": 146.785584,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 146.785584,
+          "materialSourceText": "PVC"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 20. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13; inverts, Sheet 4.. GIS values: RimElev=not recorded ft; Invert_Out=481.58 ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-21",
+      "lat": 35.79521844720235,
+      "lon": -78.70910417540088,
+      "coverRLm": null,
+      "historicalInvertRLm": 146.755104,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 146.764248,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 146.785584,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 146.755104,
+          "materialSourceText": "PVC"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 21. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13; inverts, Sheet 4.. GIS values: RimElev=not recorded ft; Invert_Out=481.48 ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-22",
+      "lat": 35.79554026285055,
+      "lon": -78.70842883426577,
+      "coverRLm": null,
+      "historicalInvertRLm": 147.9804,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": 147.9804,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 147.9804,
+          "materialSourceText": "PVC"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 22. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13; inverts, Sheet 4.. GIS values: RimElev=not recorded ft; Invert_Out=485.5 ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-23",
+      "lat": 35.79587573140075,
+      "lon": -78.70832733344379,
+      "coverRLm": null,
+      "historicalInvertRLm": 148.416264,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": 148.416264,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 101.6,
+          "historicalInvertRLm": 148.486368,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": 148.416264,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 23. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13; inverts, Sheet 4.. GIS values: RimElev=not recorded ft; Invert_Out=486.93 ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-24",
+      "lat": 35.79534314515568,
+      "lon": -78.70948908799902,
+      "coverRLm": null,
+      "historicalInvertRLm": 146.739864,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": null,
+          "historicalInvertRLm": 146.770344,
+          "materialSourceText": "UNKNOWN"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 146.739864,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 24. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13; inverts, Sheet 4.. GIS values: RimElev=not recorded ft; Invert_Out=481.43 ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-25",
+      "lat": 35.795231211963,
+      "lon": -78.70937119825079,
+      "coverRLm": null,
+      "historicalInvertRLm": 146.706336,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 146.706336,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 25. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13; inverts, Sheet 4.. GIS values: RimElev=not recorded ft; Invert_Out=481.32 ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-26",
+      "lat": 35.79515298376588,
+      "lon": -78.70934712557921,
+      "coverRLm": null,
+      "historicalInvertRLm": 146.66976,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 146.681952,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 146.681952,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 146.66976,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 26. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13; inverts, Sheet 4.. GIS values: RimElev=not recorded ft; Invert_Out=481.2 ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=PRECAST; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-27",
+      "lat": 35.795021967707676,
+      "lon": -78.70900329291739,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 27. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Withers & Ravenel; Scott Lot Redevelopment Construction Drawings, Phase 3 Utility Plan Sheet 4 of 13.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-28",
+      "lat": 35.79501950825902,
+      "lon": -78.70961207675418,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 28. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-29",
+      "lat": 35.79462890509869,
+      "lon": -78.71087394109847,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 29. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-30",
+      "lat": 35.79481489647804,
+      "lon": -78.7108158819223,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 30. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-31",
+      "lat": 35.79445792970918,
+      "lon": -78.71132078260845,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 31. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-32",
+      "lat": 35.795034512144184,
+      "lon": -78.71166015052827,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 32. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-33",
+      "lat": 35.79519341483927,
+      "lon": -78.71223529295742,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 33. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-34",
+      "lat": 35.79503905971384,
+      "lon": -78.71213067951265,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "IN-03",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 34. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-35",
+      "lat": 35.79493731498495,
+      "lon": -78.71183544265688,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 35. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-36",
+      "lat": 35.79475210646374,
+      "lon": -78.7110066995859,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 36. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-37",
+      "lat": 35.79453628060512,
+      "lon": -78.71158676509613,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 37. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-38",
+      "lat": 35.79442101498659,
+      "lon": -78.71188162820866,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 38. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-39",
+      "lat": 35.79498481838454,
+      "lon": -78.71226639960022,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 39. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-40",
+      "lat": 35.794527738182374,
+      "lon": -78.71199357236864,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 40. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-41",
+      "lat": 35.7952675280348,
+      "lon": -78.71249008439145,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 41. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-42",
+      "lat": 35.795386290128114,
+      "lon": -78.7127936533158,
+      "coverRLm": 146.980656,
+      "historicalInvertRLm": 145.060416,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 145.090896,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 145.060416,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 42. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: Stantec; 2004 survey; stantec-revised Dorton Triangle Area Site Utilities.dwg.. GIS values: RimElev=482.22 ft; Invert_Out=475.92 ft; Depth=6.3 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-43",
+      "lat": 35.79482940991434,
+      "lon": -78.71223404022527,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 43. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-44",
+      "lat": 35.79426538888115,
+      "lon": -78.71188498050556,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 44. Original units: feet; elevations converted to metres with 0.3048. Source: Scanned Hardcopy Plan. Source detail: Dewberry & Davis; Infrastructure Renovations State Fairgrounds, Utility Layout Plan (Water & Sewer) C-06R Sheet 6 of 22.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-45",
+      "lat": 35.79566816389703,
+      "lon": -78.7136681814628,
+      "coverRLm": 144.176496,
+      "historicalInvertRLm": 142.393416,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 142.454376,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 142.393416,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 45. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: Stantec; 2004 survey; stantec-revised Dorton Triangle Area Site Utilities.dwg.. GIS values: RimElev=473.02 ft; Invert_Out=467.17 ft; Depth=5.85 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-46",
+      "lat": 35.79518976835637,
+      "lon": -78.71435724660853,
+      "coverRLm": 141.588744,
+      "historicalInvertRLm": 139.196064,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 139.820904,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": 140.826744,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 139.196064,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 46. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: Stantec; 2004 survey; stantec-revised Dorton Triangle Area Site Utilities.dwg.. GIS values: RimElev=464.53 ft; Invert_Out=456.68 ft; Depth=7.85 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-47",
+      "lat": 35.79517651159303,
+      "lon": -78.71482293831828,
+      "coverRLm": 137.702544,
+      "historicalInvertRLm": 134.6454,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 135.34644,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 135.980424,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": 134.6454,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 47. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.. GIS values: RimElev=451.78 ft; Invert_Out=441.75 ft; Depth=10.029999999999973 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-48",
+      "lat": 35.79418953526859,
+      "lon": -78.71337423663321,
+      "coverRLm": 148.379688,
+      "historicalInvertRLm": 146.937984,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 146.937984,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 48. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: HSSM; CAD for Multi-Purpose Exhibit Building; EN8CX02.dwg.. GIS values: RimElev=486.81 ft; Invert_Out=482.08 ft; Depth=4.730000000000018 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-49",
+      "lat": 35.794307877549265,
+      "lon": -78.71344952745973,
+      "coverRLm": 148.538184,
+      "historicalInvertRLm": 146.742912,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 146.788632,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 146.742912,
+          "materialSourceText": "PVC"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 49. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: HSSM; CAD for Multi-Purpose Exhibit Building; EN8CX02.dwg.. GIS values: RimElev=487.33 ft; Invert_Out=481.44 ft; Depth=5.889999999999986 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-51",
+      "lat": 35.79434957979851,
+      "lon": -78.71410711884876,
+      "coverRLm": 143.006064,
+      "historicalInvertRLm": 141.085824,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 141.1224,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 142.091664,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "IN-03",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 141.847824,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "IN-04",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 141.177264,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 141.085824,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 51. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: HSSM; CAD for Multi-Purpose Exhibit Building; EN8CX02.dwg.. GIS values: RimElev=469.18 ft; Invert_Out=462.88 ft; Depth=6.300000000000011 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-52",
+      "lat": 35.79407288025849,
+      "lon": -78.71230126925369,
+      "coverRLm": 149.583648,
+      "historicalInvertRLm": 148.303488,
+      "historicalOpenings": [
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": 148.303488,
+          "materialSourceText": "CIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 52. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: Stantec; 2004 survey; stantec-revised Dorton Triangle Area Site Utilities.dwg.. GIS values: RimElev=490.76 ft; Invert_Out=486.56 ft; Depth=4.199999999999989 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-53",
+      "lat": 35.79676909216355,
+      "lon": -78.71450117189674,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 53. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-54",
+      "lat": 35.796598635879135,
+      "lon": -78.71518759597231,
+      "coverRLm": 137.102088,
+      "historicalInvertRLm": 135.629904,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 101.6,
+          "historicalInvertRLm": 136.21512,
+          "materialSourceText": "UNKNOWN"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 135.72744,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "IN-03",
+          "role": "inlet",
+          "nominalDiameterMm": 101.6,
+          "historicalInvertRLm": 136.379712,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 135.629904,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 54. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.. GIS values: RimElev=449.81 ft; Invert_Out=444.98 ft; Depth=4.829999999999984 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-55",
+      "lat": 35.796137536983096,
+      "lon": -78.71487195188165,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 55. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-56",
+      "lat": 35.79515693523615,
+      "lon": -78.7152707571269,
+      "coverRLm": 137.833608,
+      "historicalInvertRLm": 134.58444,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": 134.617968,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 101.6,
+          "historicalInvertRLm": 136.952736,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "IN-03",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 135.907272,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": 134.58444,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 56. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.. GIS values: RimElev=452.21 ft; Invert_Out=441.55 ft; Depth=10.659999999999968 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-57",
+      "lat": 35.79584635667361,
+      "lon": -78.71576168049414,
+      "coverRLm": 136.333992,
+      "historicalInvertRLm": 134.413752,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": 134.425944,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": 134.709408,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": 134.413752,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 57. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.. GIS values: RimElev=447.29 ft; Invert_Out=440.99 ft; Depth=6.300000000000011 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-58",
+      "lat": 35.79550726715813,
+      "lon": -78.71611743460915,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 58. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-59",
+      "lat": 35.79533331242708,
+      "lon": -78.71577213182569,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 59. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-60",
+      "lat": 35.79594863699734,
+      "lon": -78.71505450242111,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 60. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-61",
+      "lat": 35.79558339401631,
+      "lon": -78.7160359663138,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 61. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-62",
+      "lat": 35.79616423267971,
+      "lon": -78.71599223854305,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 62. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-63",
+      "lat": 35.79648188964853,
+      "lon": -78.71645724119257,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 63. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: RWK; Heritage Village Planimetric Survey; HERITAGE YESTERYEAR SURVEY.DWG.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-64",
+      "lat": 35.79458798258656,
+      "lon": -78.7154136256198,
+      "coverRLm": 141.44244,
+      "historicalInvertRLm": 138.0744,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": 138.25728,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": 139.11072,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "IN-03",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": 138.19632,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 138.0744,
+          "materialSourceText": "PVC"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 64. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: RWK; Heritage Village Drainage Improvements; NCSF Heritage for Sam 2-4-16.dwg.. GIS values: RimElev=464.05 ft; Invert_Out=453 ft; Depth=11.050000000000011 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-65",
+      "lat": 35.79746824685672,
+      "lon": -78.7135953643134,
+      "coverRLm": 138.762943,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 65. Original units: feet; elevations converted to metres with 0.3048. Source: Mapping Grade GPS Survey. GIS values: RimElev=455.259 ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-66",
+      "lat": 35.79750064939072,
+      "lon": -78.7146073088826,
+      "coverRLm": 137.238029,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "TCP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 66. Original units: feet; elevations converted to metres with 0.3048. Source: Mapping Grade GPS Survey. GIS values: RimElev=450.256 ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-67",
+      "lat": 35.79645485373924,
+      "lon": -78.71724186043419,
+      "coverRLm": 137.760456,
+      "historicalInvertRLm": 134.21868,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": 134.322312,
+          "materialSourceText": "TCP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": 134.21868,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 67. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.. GIS values: RimElev=451.97 ft; Invert_Out=440.35 ft; Depth=11.620000000000005 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-68",
+      "lat": 35.796626368658565,
+      "lon": -78.71791824683616,
+      "coverRLm": 135.46836,
+      "historicalInvertRLm": 133.209792,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": 133.237224,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": 133.209792,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 68. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.. GIS values: RimElev=444.45 ft; Invert_Out=437.04 ft; Depth=7.409999999999968 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-69",
+      "lat": 35.79683955565028,
+      "lon": -78.71850352845591,
+      "coverRLm": 131.908296,
+      "historicalInvertRLm": 129.384552,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": 129.411984,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": 129.384552,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 69. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.. GIS values: RimElev=432.77 ft; Invert_Out=424.49 ft; Depth=8.279999999999973 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Elevated. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-70",
+      "lat": 35.79702632634395,
+      "lon": -78.71967291121327,
+      "coverRLm": 128.016,
+      "historicalInvertRLm": 124.010928,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": 125.205744,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": 124.029216,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": 124.010928,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 70. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.. GIS values: RimElev=420 ft; Invert_Out=406.86 ft; Depth=13.139999999999986 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Elevated. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-71",
+      "lat": 35.79689233052236,
+      "lon": -78.72033325073062,
+      "coverRLm": 127.278384,
+      "historicalInvertRLm": 121.746264,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": 121.761504,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 122.858784,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "IN-03",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 125.39472,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": 121.746264,
+          "materialSourceText": "PVC"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 71. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.. GIS values: RimElev=417.58 ft; Invert_Out=399.43 ft; Depth=18.149999999999977 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Elevated. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-72",
+      "lat": 35.79537829075831,
+      "lon": -78.71968649289025,
+      "coverRLm": 131.969256,
+      "historicalInvertRLm": 128.713992,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": null,
+          "historicalInvertRLm": 129.591816,
+          "materialSourceText": "UNKNOWN"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": null,
+          "historicalInvertRLm": 128.738376,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 128.713992,
+          "materialSourceText": "PVC"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 72. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.. GIS values: RimElev=432.97 ft; Invert_Out=422.29 ft; Depth=10.680000000000007 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-73",
+      "lat": 35.79669122014573,
+      "lon": -78.72114214887553,
+      "coverRLm": 124.2822,
+      "historicalInvertRLm": 119.667528,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 381,
+          "historicalInvertRLm": 119.691912,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 119.667528,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 73. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.. GIS values: RimElev=407.75 ft; Invert_Out=392.61 ft; Depth=15.139999999999986 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Elevated. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-74",
+      "lat": 35.79647686819761,
+      "lon": -78.72288996493458,
+      "coverRLm": 123.93168,
+      "historicalInvertRLm": 118.463568,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 118.491,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 119.51208,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 118.463568,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 74. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.. GIS values: RimElev=406.6 ft; Invert_Out=388.66 ft; Depth=17.939999999999998 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Elevated. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-75",
+      "lat": 35.7965741052036,
+      "lon": -78.7248932380492,
+      "coverRLm": 117.677184,
+      "historicalInvertRLm": 114.952272,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 115.022376,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": 114.952272,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 75. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.. GIS values: RimElev=386.08 ft; Invert_Out=377.14 ft; Depth=8.939999999999998 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Elevated. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-76",
+      "lat": 35.796114365050485,
+      "lon": -78.72201133195748,
+      "coverRLm": 129.63144,
+      "historicalInvertRLm": 127.20828,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 127.49784,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 127.20828,
+          "materialSourceText": "PVC"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 76. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.. GIS values: RimElev=425.3 ft; Invert_Out=417.35 ft; Depth=7.949999999999989 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Elevated. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-77",
+      "lat": 35.79588974157261,
+      "lon": -78.7220133409341,
+      "coverRLm": 130.86588,
+      "historicalInvertRLm": 127.635,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 127.635,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 77. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.. GIS values: RimElev=429.35 ft; Invert_Out=418.75 ft; Depth=10.600000000000023 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-78",
+      "lat": 35.79615405903804,
+      "lon": -78.72004515230664,
+      "coverRLm": 131.774184,
+      "historicalInvertRLm": 128.165352,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 128.195832,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 128.165352,
+          "materialSourceText": "PVC"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 78. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.. GIS values: RimElev=432.33 ft; Invert_Out=420.49 ft; Depth=11.839999999999975 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-84",
+      "lat": 35.795652061614355,
+      "lon": -78.72201591365152,
+      "coverRLm": 132.8928,
+      "historicalInvertRLm": 128.192784,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": 129.06756,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 128.954784,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "IN-03",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 128.253744,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 128.192784,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 84. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.. GIS values: RimElev=436 ft; Invert_Out=420.58 ft; Depth=15.420000000000016 ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Elevated. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-85",
+      "lat": 35.79519851785212,
+      "lon": -78.72202071300464,
+      "coverRLm": 133.31952,
+      "historicalInvertRLm": 129.832608,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": 130.085592,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 129.878328,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "IN-03",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 129.832608,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 85. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.. GIS values: RimElev=437.4 ft; Invert_Out=425.96 ft; Depth=11.439999999999998 ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Elevated. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-86",
+      "lat": 35.794832112418014,
+      "lon": -78.72202163935776,
+      "coverRLm": 133.465824,
+      "historicalInvertRLm": 130.079496,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 130.113024,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "IN-03",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 130.079496,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 86. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.. GIS values: RimElev=437.88 ft; Invert_Out=426.77 ft; Depth=11.110000000000014 ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Elevated. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-87",
+      "lat": 35.79442551078092,
+      "lon": -78.72202301805424,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "IN-03",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 87. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Elevated. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-88",
+      "lat": 35.7940258395067,
+      "lon": -78.72202439283085,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "IN-02",
+          "role": "inlet",
+          "nominalDiameterMm": 152.4,
+          "historicalInvertRLm": null,
+          "materialSourceText": null
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 88. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Elevated. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-89",
+      "lat": 35.7948339220824,
+      "lon": -78.72286593896969,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 89. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Elevated. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-90",
+      "lat": 35.79565404641833,
+      "lon": -78.72288648358929,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": null,
+          "materialSourceText": "PVC"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 90. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: SEPI; CAD for Campground Improvements, Phase 3-Site/Civil; 1100100XC.dwg.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=Precast Concrete; MH_Setting=Elevated. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-91",
+      "lat": 35.79412120976249,
+      "lon": -78.71389155826236,
+      "coverRLm": 144.87144,
+      "historicalInvertRLm": 142.759176,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 143.368776,
+          "materialSourceText": "PVC"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 203.2,
+          "historicalInvertRLm": 142.759176,
+          "materialSourceText": "PVC"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 91. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: HSSM; CAD for Multi-Purpose Exhibit Building; EN8CX02.dwg.. GIS values: RimElev=475.3 ft; Invert_Out=468.37 ft; Depth=6.93 ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-92",
+      "lat": 35.79658404730746,
+      "lon": -78.72201605806319,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 92. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    },
+    {
+      "id": "NCSF-MH-93",
+      "lat": 35.796525490816606,
+      "lon": -78.72389160033659,
+      "coverRLm": null,
+      "historicalInvertRLm": null,
+      "historicalOpenings": [
+        {
+          "openingId": "IN-01",
+          "role": "inlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        },
+        {
+          "openingId": "OUT-01",
+          "role": "outlet",
+          "nominalDiameterMm": 304.8,
+          "historicalInvertRLm": null,
+          "materialSourceText": "DIP"
+        }
+      ],
+      "sourceDescription": "ArcGIS Layer 1 OBJECTID 93. Original units: feet; elevations converted to metres with 0.3048. Source: AutoCAD Data. Source detail: TWT; Utility As-Built Survey NC State Campground Phase 1-Youth Center Rd; TWT - NCStateFairgroundCampground -utility-asbuilt-100831-client.dwg.. GIS values: RimElev=not recorded ft; Invert_Out=not recorded ft; Depth=not recorded ft; MHDiameter=Unknown; MHMaterial=not recorded; MH_Setting=Flush. Main Invert RL, if populated, is copied from the documented outlet invert, not independently measured at the channel. Historical records may be outdated or incomplete; opening count is not proven by the entries."
+    }
+  ]
+}
