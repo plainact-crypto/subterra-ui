@@ -276,17 +276,33 @@
       '<div class="footnote">User acceptance is not verification of concealed pipe position.</div></section>';
   }
   function main(p,r){
-    const status=r.score===null?"Awaiting ≥ 2 surveyed manholes":r.route?.hiddenAlignmentUnquantified?"Buried route untraced — hypothesis":"Trace evidence recorded — review status required";
-    return '<header class="app-header"><div><div class="eyebrow">SANITARY / STORMWATER · XYZ RECONSTRUCTION ENGINE</div><h1>'+safe(p.name)+'</h1><p>'+safe(p.network.toUpperCase())+' · '+safe(p.control.crs)+' · '+safe(p.control.verticalDatum)+' · Total Station First</p></div><div class="header-actions"><button class="btn secondary" data-action="export">Export JSON</button><label class="file-control">Import v2 JSON<input type="file" id="importProject" accept=".json,application/json"/></label></div></header>'+
+    const status=r.score===null?"Awaiting ≥ 2 surveyed manholes":
+      r.route?.hiddenAlignmentUnquantified?"Buried route untraced — hypothesis":"Trace evidence recorded — check provenance";
+    const sim=p.demo?.synthetic===true;
+    const simBanner=sim?'<div class="sim-banner"><strong>SIMULATED — NOT A REAL FIELD SURVEY</strong><span>'+
+      'NCSF · 87 historical manhole coordinates → fictional Total Station and pen XYZ · ROUND-0'+
+      p.demo.stage+'/03. Historical GIS pipes are held out. Even 100/100 is a synthetic rubric result, not field accuracy.</span></div>':'';
+    const mapToggle=sim?'<button class="btn secondary small" data-action="map-scope">'+
+      (state.mapScope==="sector"?"View All 87 Manholes":"Zoom to Pipe 56")+'</button>':'';
+    return '<header class="app-header"><div><div class="eyebrow">SANITARY / STORMWATER · XYZ RECONSTRUCTION ENGINE</div>'+
+      '<h1>'+safe(p.name)+'</h1><p>'+safe(p.network.toUpperCase())+' · '+safe(p.control.crs)+' · '+
+      safe(p.control.verticalDatum)+' · '+(sim?'SYNTHETIC TS DATA':'Total Station First')+'</p></div>'+
+      '<div class="header-actions"><button class="btn secondary" data-action="load-ncsf-demo">NCSF Demo</button>'+
+      '<button class="btn secondary" data-action="export">Export JSON</button>'+
+      '<label class="file-control">Import v2 JSON<input type="file" id="importProject" accept=".json,application/json"/></label></div></header>'+
+      simBanner+
       '<div class="workspace"><div class="confidence-wrapper">'+dashboard(p,r)+'</div>'+
-      '<main class="workspace-main"><div class="map-panel"><div class="map-title"><strong>RECONSTRUCTED ROUTE</strong><span>'+safe(status)+'</span></div>'+mapSvg(p,r)+
-      '<div class="map-legend"><span><i style="background:'+color(r.score)+'"></i>Single active route · score '+(r.score===null?"—":n(r.score,1))+'</span><span>'+safe(r.status.replaceAll("_"," "))+'</span></div></div>'+
+      '<main class="workspace-main"><div class="map-panel"><div class="map-title"><strong>RECONSTRUCTED ROUTE</strong>'+
+      '<span>'+safe(status)+'</span>'+mapToggle+'</div>'+mapSvg(p,r)+
+      '<div class="map-legend"><span><i style="background:'+color(r.score)+'"></i>One active route · score '+
+      (r.score===null?"—":n(r.score,1))+'</span><span>'+safe(r.status.replaceAll("_"," "))+'</span></div></div>'+
       '<div class="tabs"><button data-tab="survey" class="'+(state.tab==="survey"?"active":"")+'">1 · Total Station</button>'+
       '<button data-tab="verify" class="'+(state.tab==="verify"?"active":"")+'">2 · Field Verification</button>'+
       '<button data-tab="catalog" class="'+(state.tab==="catalog"?"active":"")+'">3 · 430-Field Checklist</button>'+
       '<button data-tab="rounds" class="'+(state.tab==="rounds"?"active":"")+'">4 · Rounds</button></div>'+
-      (state.tab==="verify"?(r.route?verifyTab(p,r):surveyTab(p,r)):state.tab==="catalog"?catalogTab(p):state.tab==="rounds"?roundsTab(p,r):surveyTab(p,r))+
-      '<footer class="application-footer">SUBTERRA v2 · Deterministic geometry and verification-coverage score · NO AI · Browser-local competition build; mobile live sync is a separate backend integration.</footer></main>'+
+      (state.tab==="verify"?(r.route?verifyTab(p,r):surveyTab(p,r)):
+      state.tab==="catalog"?catalogTab(p):state.tab==="rounds"?roundsTab(p,r):surveyTab(p,r))+
+      '<footer class="application-footer">SUBTERRA v2.1 · Deterministic calculations · No AI · Simulation is NOT a real survey. Live mobile sync is not implemented.</footer></main>'+
       '<aside class="tasks-wrapper">'+tasks(p,r)+'</aside></div>';
   }
   function render(){
