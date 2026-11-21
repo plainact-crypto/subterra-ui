@@ -89,6 +89,7 @@
   }
   function surveyTab(p,r){
     const rows=p.manholes.map(m=>'<tr><td><strong>'+safe(m.id)+'</strong></td><td>'+n(m.x,3)+'</td><td>'+n(m.y,3)+'</td><td>'+n(m.z,3)+'</td><td>±'+n(m.sigmaXY,3)+' m</td></tr>').join("");
+    const stationImport='<div class="station-import"><label class="file-control">↑ Import Total Station CSV<input type="file" id="importStation" accept=".csv,text/csv"/></label><a href="data/SUBTERRA_Synthetic_Total_Station_Example.csv" download class="sample-link">Sample CSV (SIMULATED)</a><small>Required columns: id,x,y,z,sigmaXY,sigmaZ · projected metres · common vertical datum.</small></div>';
     const surveyForm=dataForm("manhole",'<div class="form-grid five">'+field("Manhole ID",txt("id","MH-01"))+
       field("Easting X (m)",number("x","XYZ"))+field("Northing Y (m)",number("y","XYZ"))+
       field("Cover RL Z (m)",number("z","XYZ"))+field("XY σ (m)",number("sigmaXY",".02",true,"any",".02"))+
@@ -98,7 +99,7 @@
       field("To manhole",'<select name="to">'+p.manholes.map((m,i)=>'<option value="'+safe(m.id)+'" '+((p.pair[1]||p.manholes[1].id)===m.id?'selected':'')+'>'+safe(m.id)+'</option>').join("")+'</select>')+'</div>','Select Sector / Recompute'):"";
     const ready=p.manholes.length>=2;const complete=!!p.surfaceSurveyComplete;
     return '<div class="block"><div class="step">01 · REQUIRED SURVEY FIRST</div><h2>Total Station XYZ — All Visible Manholes</h2>'+
-      '<p class="muted">Record each visible manhole cover position and RL from a total station. Coordinates must be in the declared projected system. Other internal points come later via calibrated detail survey.</p>'+surveyForm+
+      '<p class="muted">Record each visible manhole cover position and RL from a total station. Coordinates must be in the declared projected system. Other internal points come later via calibrated detail survey.</p>'+surveyForm+stationImport+
       '<div class="table-scroll"><table><thead><tr><th>Asset</th><th>X (m)</th><th>Y (m)</th><th>Cover Z (m)</th><th>XY uncertainty</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
       '<h3>Initial sector hypothesis</h3><p class="muted">Select at least two manholes. The line is provisional and starts with low verification coverage. Its buried Z and alignment are unknown until field evidence is added.</p>'+pairForm+
       '<div class="step-note">'+(ready?(complete?'Total Station visible-manhole inventory confirmed. Select one sector and proceed.':'Before a provisional route can be generated, explicitly confirm ALL visible manholes have been surveyed.'):'At least two total-station manholes required before route reconstruction.')+'</div>'+
@@ -270,6 +271,28 @@
     }catch(err){notify(err.message||String(err));}
   });
   document.addEventListener("change",async e=>{
+    if(e.target.id==="importStation"){
+      const file=e.target.files?.[0];if(!file||!state.p)return;
+      try{
+        if(file.size>3*1024*1024)throw Error("CSV exceeds 3 MB");
+        const raw=await file.text(),lines=raw.replace(/\r/g,"").split("\n").filter(x=>x.trim());
+        if(lines.length<2)throw Error("Empty CSV");
+        const heads=lines.shift().split(",").map(x=>x.trim().toLowerCase().replace(/[^a-z0-9]/g,""));
+        const required=["id","x","y","z","sigmaxy","sigmaz"];
+        for(const h of required)if(!heads.includes(h))throw Error("Missing CSV column "+h+"; expected id,x,y,z,sigmaXY,sigmaZ");
+        let next=state.p,count=0;
+        for(const line of lines){
+          const cells=line.split(",");if(cells.length!==heads.length)throw Error("Incorrect column count on row "+(count+2));
+          const at=k=>cells[heads.indexOf(k)].trim().replace(/^"|"$/g,"");
+          const numberStrict=k=>{const raw=at(k);if(!raw)throw Error("Missing "+k+" in row "+(count+2));return Number(raw);};
+          next=E.addManhole(next,{id:at("id"),x:numberStrict("x"),y:numberStrict("y"),z:numberStrict("z"),
+            sigmaXY:numberStrict("sigmaxy"),sigmaZ:numberStrict("sigmaz")});count++;
+        }
+        if(next.manholes.length>=2&&next.pair.length!==2)next=E.setPair(next,next.manholes[0].id,next.manholes[1].id);
+        update(next,count+" Total Station manholes imported. Confirm ALL visible assets were surveyed to enable route.");
+      }catch(err){notify("Station CSV rejected: "+String(err.message||err));}
+      return;
+    }
     if(e.target.id!=="importProject")return;
     const file=e.target.files?.[0];if(!file)return;
     try{
