@@ -1,4 +1,4 @@
-# SUBTERRA — Infrastructure Reconstruction UI (v0.6)
+# SUBTERRA — Infrastructure Reconstruction UI (v0.7)
 
 Front-end-only evidence-capture prototype for existing underground utility assets. The platform **does not design new networks or perform reverse-engineering calculations yet**.
 
@@ -8,6 +8,13 @@ Front-end-only evidence-capture prototype for existing underground utility asset
 2. **Choose infrastructure system**: sanitary sewer is the first active workspace. Other utility categories remain placeholders.
 3. **Open sewer workspace**: view the pan/zoom metric canvas and manhole schedule.
 4. **Add / select a manhole**: complete the eight-step entry wizard. Each step is available by number or Previous / Next.
+
+## Historical GIS pipe visibility & inference boundary (v0.7)
+
+- In the Sanitary Sewer canvas, the **Historical GIS Pipes** eye button toggles only the blue dashed reference pipe traces. **Visible** is the default for existing v0.5/v0.6 projects; **Hidden** removes their drawing but does not delete any historical pipes or change manhole records.
+- Toggle state is stored per-project in the existing browser storage key `subterra_ui_v1`. JSON exports still contain all imported documented pipes regardless of the display switch; reopening restores the selected state.
+- The historical GIS polyline data in `project.observedPipes` is deliberately treated as a **validation reference**. The new `SubterraInferenceEvidence.build(project)` constructs a fresh, whitelisted payload of manhole positions, measured levels, classifications and opening parameters **without** pipe geometry, source notes or other ground-truth metadata. Any future inference engine should consume **only this evidence payload**, never the raw project. This is an application-data contract, not a security boundary; no inference engine has been implemented yet. Real blind validation must also avoid deriving the engine input from unblinded geometry.
+- This release adds no inferred pipe, calculation, user data migration or changes to source records.
 
 ## Optional map backgrounds (v0.6)
 
