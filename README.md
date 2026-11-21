@@ -1,4 +1,4 @@
-# SUBTERRA — Infrastructure Reconstruction UI (v0.8)
+# SUBTERRA — Infrastructure Reconstruction UI (v0.9)
 
 Front-end-only evidence-capture prototype for existing underground utility assets. The platform **does not design new networks or perform reverse-engineering calculations yet**.
 
@@ -8,6 +8,15 @@ Front-end-only evidence-capture prototype for existing underground utility asset
 2. **Choose infrastructure system**: sanitary sewer is the first active workspace. Other utility categories remain placeholders.
 3. **Open sewer workspace**: view the pan/zoom metric canvas and manhole schedule.
 4. **Add / select a manhole**: complete the eight-step entry wizard. Each step is available by number or Previous / Next.
+
+## Multi-manhole calculated candidates (v0.9)
+
+- The v0.8 engine returned nothing if the project contained more than **two** located manholes. v0.9 removes that restriction: on the original complete **87-manhole** NC State Fairgrounds dataset, it finds **31 preliminary straight-line opening-to-opening hypotheses** from **92** gravity-compatible candidate pairs (from known outlet/inlet invert levels and matching diameters), without consulting `observedPipes`.
+- For each documented outlet/inlet opening pair it requires matching diameters, matching materials when both are known, a positive downhill gradient, distance between **1 and 180 m**, and grade between **0.01% and 15%**. The distance and grade limits are pilot *search bounds*, **not** approved engineering design criteria.
+- A greedy shortlist prefers shortest compatible 2D separation and allows each documented opening to appear in at most one displayed candidate. Other plausible alternatives are tracked in the calculation result; the selected segment is **not** established connectivity.
+- **Orange solid** = straight-line *candidate hypotheses* based on independent manhole evidence. **Blue dashed** = documented historical GIS pipe geometry for comparison. The two remain separately toggleable and no actual geometry is shifted to make the lines look different.
+- A summary shows how many candidate lines are produced, or a reason if none qualify. Candidate computations are cached until project records change to keep pan/zoom responsive.
+- No documented connection claims, hydraulic flow network solution, certainty percentages, or construction-grade pipe reconstruction have been added.
 
 ## Two-layer comparison — calculated candidate vs. historical GIS (v0.8)
 
