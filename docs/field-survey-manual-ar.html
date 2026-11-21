@@ -112,7 +112,7 @@ a{color:#0877a6;text-decoration:none}
 <tr><td dir="ltr"><code>positionClock</code></td><td>موقع تقريبي على الساعة للتوثيق البصري فقط؛ لا يعوض Bearing حقيقي.</td></tr>
 <tr><td dir="ltr"><code>bearingOutwardDeg</code></td><td>الاتجاه الأفقي من مركز المنهول إلى خارج الجدار، بالدرجات من الشمال الحقيقي مع اتجاه عقارب الساعة: 0° شمال، 90° شرق.</td></tr>
 <tr><td dir="ltr"><code>bearingAccuracyDeg</code></td><td>الخطأ التقديري في قياس الاتجاه، وليس نسبة ثقة AI.</td></tr>
-<tr><td dir="ltr"><code>radialOffsetFromChamberCenterM</code></td><td>المسافة الأفقية من مركز جسم المنهول إلى مركز فتحة الماسورة عند وجه الجدار الداخلي بالمتر.</td></tr>
+<tr><td dir="ltr"><code>radialOffsetFromChamberCenterM</code> / <code>radialOffsetAccuracyM</code></td><td>المسافة الأفقية من مركز جسم المنهول إلى مركز فتحة الماسورة عند وجه الجدار الداخلي بالمتر.</td></tr>
 <tr><td dir="ltr"><code>invertElevationRL</code></td><td>منسوب قاع الماسورة عند وجه الجدار؛ متوافق مع Benchmark مشترك.</td></tr>
 <tr><td dir="ltr"><code>nominalDiameterMm</code> / <code>insideDiameterMm</code></td><td>القطر الاسمي والقطر الداخلي المقاس؛ ليسا بالضرورة متساويين.</td></tr>
 <tr><td dir="ltr"><code>shape</code></td><td>دائري أو بيضاوي أو صندوقي أو غير معروف.</td></tr>
@@ -131,6 +131,7 @@ a{color:#0877a6;text-decoration:none}
   "bearingOutwardDeg": 291.9,
   "bearingAccuracyDeg": 1.8,
   "radialOffsetFromChamberCenterM": 0.75,
+  "radialOffsetAccuracyM": 0.025,
   "invertElevationRL": 145.047,
   "invertAccuracyM": 0.01,
   "nominalDiameterMm": 304.8,
@@ -157,7 +158,7 @@ a{color:#0877a6;text-decoration:none}
 N_opening = N_center + r * cos(theta)
 L_face = sqrt((E2 - E1)^2 + (N2 - N1)^2)
 S_face = (Invert_from - Invert_to) / L_face</pre>
-<p>ثم نفحص تناسق اتجاه فتحة الخروج مع خط الربط، واتجاه فتحة الدخول المعاكس له. إذا تجاوز الاختلاف المسموح، أو كانت المناسيب غير مشتركة المرجع، أو لا يوجد سقوط موجب، يعرض البرنامج <code>GEOMETRIC_OR_VERTICAL_CONFLICT</code> **من غير رسم خط مصحح على أنه مقبول**.</p>
+<p>نحسب كذلك هامش عدم يقين تقريبي من دقة المركز، ودقة المسافة الشعاعية، ودقة الاتجاه، دون الادعاء أنها دقة كشف الماسورة المدفونة. ثم نفحص تناسق اتجاه فتحة الخروج مع خط الربط، واتجاه فتحة الدخول المعاكس له. إذا تجاوز الاختلاف المسموح، أو كانت المناسيب غير مشتركة المرجع، أو لا يوجد سقوط موجب، يعرض البرنامج <code>GEOMETRIC_OR_VERTICAL_CONFLICT</code> **من غير رسم خط مصحح على أنه مقبول**.</p>
 <div class="warning">الخط الأخضر هو <strong>Hypothesis مصحح بين وجهي الفتحتين المرئيتين</strong>؛ ليس قياسًا لمسار مدفون بين المنهولين. الفرق في الطول بين الخط البرتقالي المركز-للمركز والخط الأخضر الوجه-للوجه يشمل نصف قطر المنهول ولا يعني أن الماسورة الحقيقية «قصرت».</div>
 
 <h2>٨. التحقق من الجودة والأمان</h2>
