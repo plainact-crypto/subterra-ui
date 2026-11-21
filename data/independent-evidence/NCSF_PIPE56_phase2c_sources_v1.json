@@ -1,0 +1,168 @@
+{
+  "schema": "subterra-independent-route-evidence/v1",
+  "caseId": "NCSF-P56-BLIND-V1",
+  "stage": "PHASE_2C_SOURCE_DISCOVERY",
+  "date": "2026-11-21",
+  "referencePolicy": "No historical underground pipe route/length used",
+  "aoi": {
+    "crs": "EPSG:4326",
+    "bbox": [
+      -78.7146,
+      35.7947,
+      -78.7119,
+      35.7964
+    ],
+    "points": [
+      {
+        "id": "MH42",
+        "wgs84": [
+          -78.7127936533158,
+          35.795386290128114
+        ],
+        "xyFt": [
+          2085170.871797,
+          744540.382976
+        ]
+      },
+      {
+        "id": "MID",
+        "wgs84": [
+          -78.7132309173893,
+          35.79552722701257
+        ],
+        "xyFt": [
+          2085041.053561,
+          744591.308284
+        ]
+      },
+      {
+        "id": "MH45",
+        "wgs84": [
+          -78.7136681814628,
+          35.79566816389703
+        ],
+        "xyFt": [
+          2084911.235776,
+          744642.234167
+        ]
+      }
+    ],
+    "pixelCRS": "EPSG:6543; points transformed from documented WGS84"
+  },
+  "roads": {
+    "source": "Wake County GIS Streets ROW centerlines",
+    "service": "https://maps.wake.gov/arcgis/rest/services/Transportation/Transportation/MapServer/1",
+    "catalog": "https://catalog.data.gov/dataset/streets-in-wake-county-nc",
+    "metadata": "https://maps.wake.gov/metadata/Streets.html",
+    "note": "This is a regularly updated ROW streets dataset, not a historic snapshot",
+    "queryNarrow": "https://maps.wake.gov/arcgis/rest/services/Transportation/Transportation/MapServer/1/query?where=1%3D1&geometry=-78.7146%2C35.7947%2C-78.7119%2C35.7964&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=OBJECTID%2CCARTONAME%2CSTNAME%2CCLASSNAME%2CSTREET_ID&returnGeometry=true&outSR=4326&f=pjson",
+    "recordsNarrow": 0,
+    "roadsGeometryInAoi": [],
+    "queryBroad": "https://maps.wake.gov/arcgis/rest/services/Transportation/Transportation/MapServer/1/query?where=1%3D1&geometry=-78.719%2C35.792%2C-78.708%2C35.799&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=OBJECTID%2CCARTONAME%2CSTNAME%2CCLASSNAME&returnGeometry=false&outSR=4326&f=pjson",
+    "recordsBroad": 29,
+    "examplesBroad": [
+      "Trinity Rd",
+      "Hillsborough St",
+      "Youth Center Dr"
+    ],
+    "assessment": "Narrow AOI has zero official street centerlines. This does not mean there is no paved internal fairground road. No mapped internal roadway can be asserted from this layer."
+  },
+  "ortho": {
+    "sources": [
+      {
+        "year": 1999,
+        "service": "https://services.gis.nc.gov/secure/rest/services/Imagery/Orthoimagery_1999/ImageServer",
+        "actualFlightDate": "NOT_VERIFIED",
+        "imageVisuallyInspected": false,
+        "samples": [
+          {
+            "point": "MH42",
+            "pixel": "133, 133, 133",
+            "status": "PIXEL_AVAILABLE",
+            "identifyUrl": "https://services.gis.nc.gov/secure/rest/services/Imagery/Orthoimagery_1999/ImageServer/identify?geometry=2085170.871797%2C744540.382976&geometryType=esriGeometryPoint&f=pjson"
+          },
+          {
+            "point": "MID",
+            "pixel": "217, 217, 217",
+            "status": "PIXEL_AVAILABLE",
+            "identifyUrl": "https://services.gis.nc.gov/secure/rest/services/Imagery/Orthoimagery_1999/ImageServer/identify?geometry=2085041.053561%2C744591.308284&geometryType=esriGeometryPoint&f=pjson"
+          },
+          {
+            "point": "MH45",
+            "pixel": "141, 141, 141",
+            "status": "PIXEL_AVAILABLE",
+            "identifyUrl": "https://services.gis.nc.gov/secure/rest/services/Imagery/Orthoimagery_1999/ImageServer/identify?geometry=2084911.235776%2C744642.234167&geometryType=esriGeometryPoint&f=pjson"
+          }
+        ]
+      },
+      {
+        "year": 2005,
+        "service": "https://services.gis.nc.gov/secure/rest/services/Imagery/Orthoimagery_2005/ImageServer",
+        "actualFlightDate": "NOT_VERIFIED",
+        "imageVisuallyInspected": false,
+        "samples": [
+          {
+            "point": "MH42",
+            "pixel": "149, 151, 150",
+            "status": "PIXEL_AVAILABLE",
+            "identifyUrl": "https://services.gis.nc.gov/secure/rest/services/Imagery/Orthoimagery_2005/ImageServer/identify?geometry=2085170.871797%2C744540.382976&geometryType=esriGeometryPoint&f=pjson"
+          },
+          {
+            "point": "MID",
+            "pixel": "207, 203, 200",
+            "status": "PIXEL_AVAILABLE",
+            "identifyUrl": "https://services.gis.nc.gov/secure/rest/services/Imagery/Orthoimagery_2005/ImageServer/identify?geometry=2085041.053561%2C744591.308284&geometryType=esriGeometryPoint&f=pjson"
+          },
+          {
+            "point": "MH45",
+            "pixel": "131, 123, 134",
+            "status": "PIXEL_AVAILABLE",
+            "identifyUrl": "https://services.gis.nc.gov/secure/rest/services/Imagery/Orthoimagery_2005/ImageServer/identify?geometry=2084911.235776%2C744642.234167&geometryType=esriGeometryPoint&f=pjson"
+          }
+        ]
+      },
+      {
+        "year": 2004,
+        "service": "https://services.gis.nc.gov/secure/rest/services/Imagery/Orthoimagery_2004/ImageServer",
+        "actualFlightDate": "NOT_VERIFIED",
+        "imageVisuallyInspected": false,
+        "samples": [
+          {
+            "point": "MH42",
+            "pixel": "NoData",
+            "status": "NO_DATA",
+            "identifyUrl": "https://services.gis.nc.gov/secure/rest/services/Imagery/Orthoimagery_2004/ImageServer/identify?geometry=2085170.871797%2C744540.382976&geometryType=esriGeometryPoint&f=pjson"
+          },
+          {
+            "point": "MID",
+            "pixel": "NoData",
+            "status": "NO_DATA",
+            "identifyUrl": "https://services.gis.nc.gov/secure/rest/services/Imagery/Orthoimagery_2004/ImageServer/identify?geometry=2085041.053561%2C744591.308284&geometryType=esriGeometryPoint&f=pjson"
+          },
+          {
+            "point": "MH45",
+            "pixel": "NoData",
+            "status": "NO_DATA",
+            "identifyUrl": "https://services.gis.nc.gov/secure/rest/services/Imagery/Orthoimagery_2004/ImageServer/identify?geometry=2084911.235776%2C744642.234167&geometryType=esriGeometryPoint&f=pjson"
+          }
+        ]
+      }
+    ],
+    "library2004": "https://www.lib.ncsu.edu/gis/wake",
+    "library2004Status": "City of Raleigh 2004 SID listed; original raster NOT obtained; tested 2004 NC OneMap service returns NoData at 3 sample points",
+    "status": "1999 and 2005 raster pixel coverage verified at all 3 sample points, image content NOT visually inspected or digitized; actual capture day unknown"
+  },
+  "engineering": {
+    "digitizedRoadAlignment": null,
+    "digitizedObstacles": null,
+    "utilityRoute": null,
+    "routeHypotheses": [],
+    "availableConstraints": "NONE: source discovery only; not enough surveyed road-edge or other features to constrain route",
+    "nextEvidenceGate": "Retrieve/view time-specific ortho crops, visually interpret road/access lanes, digitize georeferenced road-edge features with uncertainty and timestamp, keep reference pipe withheld"
+  },
+  "integrity": {
+    "blindGISPipeGeometryAbsent": true,
+    "unchangedFrozenManholes": true,
+    "notLoadedByInferenceEngine": true
+  }
+}
