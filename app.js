@@ -1,4 +1,4 @@
-/* Subterra UI v0.8 — calculated candidate and historical GIS comparison. */
+/* Subterra UI v0.9 — multi-manhole calculated candidate network overlay. */
 (() => {
   'use strict';
 
@@ -35,7 +35,10 @@
     toastTimer:null
   };
 
+  let candidateRevision=0;
+  let candidateCache=null;
   function save() {
+    candidateRevision++;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({projects:state.projects,activeId:state.activeId}));
       $('#saveStatus').innerHTML = '<span class="save-circle"></span> Saved locally';
@@ -108,36 +111,51 @@
       : '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 4.5 19.5 19.5M10.6 5.1A10.4 10.4 0 0 1 12 5c6.4 0 10 7 10 7a15 15 0 0 1-3.5 4.3M6.1 6.6C3.5 8.5 2 12 2 12s3.6 7 10 7a11.8 11.8 0 0 0 4.4-.9M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>';
     return `<button type="button" class="canvas-pill calculated-pipes-toggle ${visible?'visible':'hidden-pipes'}" id="toggleCalculatedCandidate" aria-pressed="${visible}" aria-label="${visible?'Hide':'Show'} Calculated Candidate" title="Computed from manhole locations and outlet/inlet invert levels only; straight-line hypothesis">${icon}<span>Calculated Candidate</span><span class="candidate-pipes-state">${visible?'Visible':'Hidden'}</span></button>`;
   }
+
   function computeCandidate(p){
-    if(p?.coordMode!=='geographic')return null;
+    const empty={candidates:[],eligiblePairs:0,reason:'Project has no WGS84 evidence'};
+    if(p?.coordMode!=='geographic')return empty;
+    if(candidateCache && candidateCache.project===p && candidateCache.revision===candidateRevision)
+      return candidateCache.result;
     const evidence=window.SubterraInferenceEvidence?.build(p);
-    return evidence ? window.SubterraCandidate?.candidateFromEvidence(evidence) : null;
+    const result=evidence ? window.SubterraCandidate?.candidatesFromEvidence(evidence) : empty;
+    candidateCache={project:p,revision:candidateRevision,result:result||empty};
+    return result||empty;
   }
-  function drawCalculatedCandidate(points,candidate){
+  function drawCalculatedCandidate(points,result){
     const p=active();
-    if(!candidate||!p||p.showCalculatedCandidate===false||!points.length)return;
-    const start=toWorld(p,{lat:candidate.coordinates[0][1],lon:candidate.coordinates[0][0]},points[0].mh);
-    const end=toWorld(p,{lat:candidate.coordinates[1][1],lon:candidate.coordinates[1][0]},points[0].mh);
-    const a=pos(start.x,start.y),b=pos(end.x,end.y);
+    if(!p||p.showCalculatedCandidate===false||!points.length||!result?.candidates?.length)return;
+    const origin=points[0].mh;
     ctx.save();
-    // Wide orange centerline stays on its calculated geometry.
-    // Blue dashed recorded GIS line is overlaid in a narrower stroke when coincident;
-    // no physical route is ever shifted to visually separate overlapping traces.
-    ctx.strokeStyle='#e58b24';
-    ctx.lineWidth=8;
-    ctx.lineCap='round';
-    ctx.setLineDash([]);
-    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+    // Orange candidate centerlines use ONLY manhole evidence. Historic GIS remains an
+    // independently rendered blue dashed reference overlay drawn AFTER the orange layer.
+    ctx.strokeStyle='#e58b24';ctx.lineWidth=6;ctx.lineCap='round';ctx.setLineDash([]);
+    for(const candidate of result.candidates) {
+      const vertices=candidate.coordinates;
+      if(!Array.isArray(vertices)||vertices.length!==2)continue;
+      const start=toWorld(p,{lat:vertices[0][1],lon:vertices[0][0]},origin);
+      const finish=toWorld(p,{lat:vertices[1][1],lon:vertices[1][0]},origin);
+      const a=pos(start.x,start.y),b=pos(finish.x,finish.y);
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+    }
     ctx.restore();
   }
-  function updateCandidateSummary(candidate,p){
+  function updateCandidateSummary(result,p){
     const display=$('#candidateSummary');
     if(!display)return;
-    const shown=!!candidate&&p?.showCalculatedCandidate!==false;
-    display.hidden=!shown;
-    if(shown)display.textContent=`Calculated straight-line · ${candidate.distanceM.toFixed(2)} m · S ${candidate.slopePercent.toFixed(2)}% · Hypothesis`;
+    const count=result?.candidates?.length||0;
+    const eligible=result?.eligiblePairs||0;
+    const visible=p?.showCalculatedCandidate!==false;
+    display.hidden=false;
+    if(!visible) {
+      display.textContent='Calculated Candidates hidden · '+count+' available';
+    } else if(count) {
+      display.textContent=count+' calculated candidate'+(count===1?'':'s')+
+        ' · '+eligible+' plausible opening pairs screened · HYPOTHESES ONLY';
+    } else {
+      display.textContent='0 calculated candidates · '+(result?.reason||'Insufficient documented evidence');
+    }
   }
-
   function renderWorkspace() {
     const p=active(); if(!p){navigate('projects');return;}
     const mapLayer=['none','streets','satellite'].includes(p.mapLayer)?p.mapLayer:'none';
@@ -357,7 +375,7 @@
   $('#navSystems').addEventListener('click',()=>{if(active())navigate('systems');else announce('Create a project first');});
   $('#brandHome').addEventListener('click',()=>navigate('projects'));
   $('#brandHome').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')navigate('projects');});
-  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.8 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. No reconstruction calculations or AI inferences are executed. Data is stored locally in your browser. Export JSON backups regularly.'));
+  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.9 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. No reconstruction calculations or AI inferences are executed. Data is stored locally in your browser. Export JSON backups regularly.'));
   window.SubterraDetails.setup({getSelectedMh,active,save,renderInspector,announce});
   window.SubterraWizard.setup({getSelectedMh,active,save,renderInspector,announce,drawCanvas,refreshLocation});
   render();
