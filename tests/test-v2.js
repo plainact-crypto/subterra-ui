@@ -47,4 +47,47 @@ p=E.accept(p,"Preliminary alignment accepted with unresolved risk");
 assert.equal(p.accepted.status,"USER_ACCEPTED_WITH_UNRESOLVED_RISK");
 const reject=E.project(config);
 assert.throws(()=>E.addManhole(reject,{id:"A",x:2,y:3,z:4,sigmaXY:-1,sigmaZ:.02}));
+// NCSF: four actual prebuilt JSON snapshots must parse from disk, not test mocks.
+const scenario=JSON.parse(fs.readFileSync(path.join(root,"data/demo/NCSF_87_MH_Pipe56_Four_Rounds.json"),"utf8"));
+const manholeSource=JSON.parse(fs.readFileSync(path.join(root,"data/demo/NCSF_87_Manholes_Historical_Source.json"),"utf8"));
+const historicalHoldout=JSON.parse(fs.readFileSync(path.join(root,"data/demo/NCSF_103_Historical_Pipes_HOLDOUT.json"),"utf8"));
+assert.equal(scenario.mode,"SIMULATED_DEMO_ONLY");
+assert.equal(scenario.stages.length,4);
+assert.equal(manholeSource.manholes.length,87);
+assert.equal(historicalHoldout.pipes.length,103);
+assert.deepEqual(Array.from(scenario.scoreStages.map(s=>s.score)),[14,49,70,100]);
+for(let i=0;i<scenario.stages.length;i++){
+ const stage=scenario.stages[i],project=stage.project;
+ assert.equal(project.schema,"subterra-v2");
+ assert.equal(project.demo.synthetic,true);
+ assert.equal(project.demo.pipePolylinesUsedForInference,false);
+ assert.equal(project.manholes.length,87);
+ assert.equal(project.rounds.length,i+1);
+ assert.equal(stage.id,project.rounds.at(-1).id);
+ assert.equal(E.assess(project).score,scenario.scoreStages[i].score);
+ assert.equal(project.rounds[0].result.route.gradePercent,null);
+ assert.ok(project.manholes.every(m=>m.sourceType==="SIMULATED_TOTAL_STATION_FROM_HISTORICAL_GIS_XY"));
+}
+const atStart=scenario.stages[0].project;
+assert.equal(atStart.points.length,0);
+assert.equal(atStart.rounds[0].result.score,14);
+const afterInvert=scenario.stages[2].project;
+assert.ok(E.assess(afterInvert).route.gradePercent>0);
+const fullySimulated=scenario.stages[3].project;
+const finalResult=E.assess(fullySimulated);
+assert.equal(finalResult.score,100);
+assert.equal(finalResult.route.geometry.length,7);
+assert.ok(finalResult.route.geometry.every(pt=>typeof pt.z==="number"));
+assert.ok(fullySimulated.evidence.every(x=>String(x.sourceType).includes("SIMULATED")));
+assert.ok(!JSON.stringify(scenario.stages[0]).includes("coordinatesWGS84"));
+assert.ok(scenario.disclaimer.includes("No real site visit"));
+const pipe56=historicalHoldout.pipes.find(p=>p.id==="NCSF-GIS-PIPE-56");
+assert.ok(pipe56&&pipe56.coordinatesWGS84.length===2);
+const demoUI=fs.readFileSync(path.join(root,"v2-app.js"),"utf8");
+assert.ok(demoUI.includes("loadSimulationStage"));
+assert.ok(demoUI.includes("historic-compare"));
+assert.ok(demoUI.includes("SIMULATED — NOT A REAL FIELD SURVEY"));
+assert.ok(demoUI.includes("demo=ncsf"));
+console.log("NCSF demo verified: 87 historical manholes / 103 pipes held out; 4 synthetic rounds 14→49→70→100; source-protected Z, pen and QA.");
+
 console.log("SUBTERRA v2 QA passed: full 430-field catalog; 14/100 initial; unknown pipe Z; independent 100/100 synthetic case; rounds immutable; conflict lowers score; user acceptance.");
