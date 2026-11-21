@@ -1,77 +1,22 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0b1724" />
-  <meta name="description" content="Infrastructure reconstruction — project workspace and sewer network data capture." />
-  <title>Subterra — Infrastructure Reconstruction</title>
-  <link rel="stylesheet" href="styles.css?v=0.6" />
-  <link rel="stylesheet" href="styles-details.css" />
-  <link rel="stylesheet" href="styles-wizard.css" />
-  <link rel="stylesheet" href="styles-basemap.css?v=0.16" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="theme-color" content="#102636"/>
+  <meta name="description" content="SUBTERRA — field-first deterministic XYZ sewer network reconstruction, survey confidence and adaptive verification."/>
+  <title>SUBTERRA v2 — Field-First XYZ Reconstruction</title>
+  <link rel="stylesheet" href="v2.css?v=2.0"/>
 </head>
 <body>
-  <div id="app">
-    <aside class="sidebar" aria-label="Main navigation">
-      <div class="brand" id="brandHome" role="button" tabindex="0" aria-label="Go to projects">
-        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
-        <span><strong>SUBTERRA</strong><small>ENGINEERING PLATFORM</small></span>
-      </div>
-      <div class="side-section-label">WORKSPACE</div>
-      <nav class="nav-group" id="mainNav">
-        <button class="nav-item active" id="navProjects"><span class="nav-ico">▤</span> All projects <span id="projectCount" class="nav-count">0</span></button>
-        <button class="nav-item" id="navSystems"><span class="nav-ico">▦</span> Infrastructure systems</button>
-      </nav>
-      <div class="side-section-label side-second">RECENT PROJECTS</div>
-      <div id="sideProjectList" class="side-project-list"></div>
-      <div class="side-bottom">
-        <div class="side-info"><span class="status-dot"></span> UI prototype · v0.16</div>
-        <small>Saved locally in this browser</small>
-      </div>
-    </aside>
-
-    <div class="main-shell">
-      <header class="topbar">
-        <div class="breadcrumbs" id="breadcrumbs"><span>Workspace</span><span class="crumb-arrow">/</span><b>Projects</b></div>
-        <div class="top-actions">
-          <span id="saveStatus" class="saved"><span class="save-circle"></span> Saved locally</span>
-          <button class="icon-btn" id="helpButton" aria-label="About the prototype" title="About this prototype">?</button>
-          <span class="avatar" title="Engineering workspace">SE</span>
-        </div>
-      </header>
-      <main id="mainContent" tabindex="-1"></main>
-    </div>
+  <div class="brandbar">
+    <div class="brand"><div class="brand-mark" aria-hidden="true"></div><div>SUBTERRA<span>ENGINEERING · XYZ FIELD RECONSTRUCTION</span></div></div>
+    <div class="brandbar-side">SURVEY FIRST &nbsp; / &nbsp; DETERMINISTIC &nbsp; / &nbsp; NO AI</div>
   </div>
-
-  <dialog id="projectDialog" class="modal">
-    <form id="projectForm" method="dialog">
-      <div class="modal-header"><div class="modal-eyebrow">NEW WORKSPACE</div><h2>Create a project</h2><p>Start with a project name. Add infrastructure systems afterwards.</p></div>
-      <label class="field-label" for="projectName">Project name <span class="required">*</span></label>
-      <input id="projectName" name="name" class="text-field" maxlength="90" placeholder="e.g. Damascus — Rehabilitation Zone A" required autofocus />
-      <label class="field-label" for="projectLocation">Location <span class="optional">optional</span></label>
-      <input id="projectLocation" name="location" class="text-field" maxlength="120" placeholder="City / neighborhood" />
-      <label class="field-label" for="projectCoordSystem">Coordinate format</label>
-      <select id="projectCoordSystem" name="coordMode" class="text-field select-field">
-        <option value="geographic">WGS84 — Latitude / Longitude (Google Earth)</option>
-        <option value="projected">Projected / Local XY — metres</option>
-      </select>
-      <p class="field-note">Choose the format of your survey coordinates. You can create a separate project for a different format.</p>
-      <div class="modal-actions"><button type="button" class="btn btn-ghost" id="cancelProject">Cancel</button><button type="submit" class="btn btn-primary">Create project <span aria-hidden="true">↗</span></button></div>
-    </form>
-  </dialog>
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="manhole-details.js" defer></script>
-  <script src="manhole-wizard.js" defer></script>
-  <script src="json-import.js?v=0.5" defer></script>
-  <script src="basemap.js?v=0.6" defer></script>
-  <script src="inference-evidence.js?v=0.13" defer></script>
-  <script src="candidate-baseline.js?v=0.9" defer></script>
-  <script src="blind-test-pipe56.js?v=0.13" defer></script>
-  <script src="pipe56-phase2.js?v=0.13" defer></script>
-  <script src="pipe56-hydraulics.js?v=0.13" defer></script>
-  <script src="field-survey-geometry.js?v=0.15" defer></script>
-  <script src="confidence-dashboard.js?v=0.16" defer></script>
-  <script src="app.js?v=0.16" defer></script>
+  <div id="app" aria-live="polite">
+    <main class="start"><h1>Loading field survey workspace…</h1></main>
+  </div>
+  <script src="v2-engine.js?v=2.0" defer></script>
+  <script src="v2-app.js?v=2.0" defer></script>
 </body>
 </html>
