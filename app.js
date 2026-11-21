@@ -376,6 +376,7 @@
     return '<div class="blind-record field-survey-panel">'+status+'<div class="field-survey-subtitle">'+escapeHtml(r.surveyId)+' · '+escapeHtml(r.evidenceStatus)+'</div>'
       +summary
       +'<div>Bearing: '+fmt(r.bearingConsistency.lineBearingDeg,2)+'° · Departure mismatch '+fmt(r.bearingConsistency.fromDifferenceDeg,2)+'° · Arrival mismatch '+fmt(r.bearingConsistency.toDifferenceDeg,2)+'°</div>'
+      +'<div>Combined approximate opening-position uncertainty: '+fmt(g.combinedApprox1SigmaM)+' m (input error propagation only; old baseline uncertainty unknown).</div>'
       +'<div>Original MH-42 center shift '+fmt(g.sourceCenterOffsetFromOldM)+' m · MH-45 center shift '+fmt(g.destinationCenterOffsetFromOldM)+' m</div>'
       +'<div>Face-to-face length vs original center-to-center: '+fmt(g.faceToFaceLengthDeltaVsCenterBaselineM)+' m. This includes chamber radii, NOT an as-built route length discrepancy.</div>'
       +'<div class="field-survey-warning">*Cross-offset is relative to the old mathematical line, NOT independently measured underground pipe error. A geometric check does not prove underground continuity.</div>'
