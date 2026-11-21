@@ -1,4 +1,4 @@
-/* Subterra UI v0.13 — Pipe 56 Phase 2B conditional hydraulic scenarios. */
+/* Subterra UI v0.13.1 — Phase 2B hydraulic formula display correction. */
 (() => {
   'use strict';
 
@@ -227,7 +227,8 @@
         <p>A = πD²/4 = ${fmt(r.geometry.areaM2,5)} m²</p>
         <p>R = D/4 = ${fmt(r.geometry.hydraulicRadiusM,4)} m</p>
         <p>V = (1/n) × R^(2/3) × √S</p>
-        <p>Q = A × V · S = ${fmt(r.inputs.straightLineGradient*100,4)}%</p>
+        <p>S = ΔInvert / L = ${fmt(r.inputs.straightLineGradient*100,4)}%</p>
+        <p>Q = A × V = ${fmt(base.capacityLps,1)} L/s (at n = 0.013)</p>
       </div>
       <div class="hydraulic-table-wrap"><table class="hydraulic-table">
         <thead><tr><th>Manning n</th><th>V full (m/s)</th><th>Q full (L/s)</th></tr></thead>
@@ -281,7 +282,7 @@
         <p>Documented openings: Ø ${fmt(e.documentedNominalDiameterMm,1)} mm · ${escapeHtml(e.documentedPipeMaterial)}</p>
       </div>
       <div class="blind-caution"><b>STRAIGHT-LINE HYPOTHESIS ONLY</b>
-        <p>Azimuth is derived from top positions, not a measured pipe bearing. Opening association is unverified; vertical datum unknown. Historical GIS route and pipe length remain withheld. Hydraulic velocity and confidence have not been calculated.</p>
+        <p>Azimuth is derived from top positions, not a measured pipe bearing. Opening association is unverified; vertical datum unknown. Historical GIS route and pipe length remain withheld. Actual operating velocity is not measured. Phase 2B shows a conditional theoretical full-flow scenario, not a verified operating velocity. Calibrated confidence has not been calculated.</p>
       </div>
     </div>`;
   }
@@ -608,7 +609,7 @@
   $('#navSystems').addEventListener('click',()=>{if(active())navigate('systems');else announce('Create a project first');});
   $('#brandHome').addEventListener('click',()=>navigate('projects'));
   $('#brandHome').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')navigate('projects');});
-  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.13 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. Normal projects display preliminary geometric candidate hypotheses; those are not verified buried pipes. Pipe 56 Phase 1 is a separate read-only, manhole-only fixture with calculations disabled and the historical reference withheld. Data is saved locally; export backups regularly.'));
+  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.13.1 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. Normal projects display preliminary geometric candidate hypotheses; those are not verified buried pipes. Pipe 56 Phase 1 is a separate read-only, manhole-only fixture with calculations disabled and the historical reference withheld. Data is saved locally; export backups regularly.'));
   window.SubterraDetails.setup({getSelectedMh,active,save,renderInspector,announce});
   window.SubterraWizard.setup({getSelectedMh,active,save,renderInspector,announce,drawCanvas,refreshLocation});
   render();
