@@ -1,4 +1,4 @@
-/* Subterra UI v0.10 — frozen Pipe 56 Phase 1 test case. */
+/* Subterra UI v0.11 — evidence-only Pipe 56 Phase 2A. */
 (() => {
   'use strict';
 
@@ -114,7 +114,11 @@
 
   function computeCandidate(p){
     const empty={candidates:[],eligiblePairs:0,reason:'Project has no WGS84 evidence'};
-    if(p?.blindCase?.stage==='PHASE_1_FROZEN')return {...empty,reason:'Phase 1: inputs frozen · calculations not started'};
+    if(p?.blindCase?.locked){
+      const r=pipe56StoredResult(p);
+      return r?{candidates:[r.candidate],eligiblePairs:1,reason:'Phase 2A evidence-only result'}
+        :{...empty,reason:p.blindCase.phase2?'Frozen result integrity mismatch':'Phase 1: no calculations'};
+    }
     if(p?.coordMode!=='geographic')return empty;
     if(candidateCache && candidateCache.project===p && candidateCache.revision===candidateRevision)
       return candidateCache.result;
@@ -144,7 +148,16 @@
   function updateCandidateSummary(result,p){
     const display=$('#candidateSummary');
     if(!display)return;
-    if(p?.blindCase?.locked){display.hidden=false;display.textContent='Phase 1 · Frozen manhole evidence · No inference run · Historical GIS reference withheld';return;}
+    if(p?.blindCase?.locked){
+      display.hidden=false;
+      const r=pipe56StoredResult(p);
+      display.textContent=r
+        ? (p.showCalculatedCandidate!==false
+            ? 'Calculated straight line · '+r.candidate.distanceM.toFixed(3)+' m · S '+r.candidate.slopePercent.toFixed(4)+'% · Historical GIS withheld'
+            : 'Calculated candidate hidden · Historical GIS withheld')
+        : (p.blindCase.phase2?'Calculation integrity mismatch · GIS withheld':'Phase 1 · Frozen manhole evidence · No inference run · Historical GIS reference withheld');
+      return;
+    }
     const count=result?.candidates?.length||0;
     const eligible=result?.eligiblePairs||0;
     const visible=p?.showCalculatedCandidate!==false;
@@ -157,6 +170,55 @@
     } else {
       display.textContent='0 calculated candidates · '+(result?.reason||'Insufficient documented evidence');
     }
+  }
+
+
+  function pipe56StoredResult(p){
+    if(!p?.blindCase?.phase2 || !window.SubterraBlindTest?.validate(p).pass)return null;
+    const evidence=window.SubterraInferenceEvidence.build(p);
+    return window.SubterraPipe56Phase2?.verify(evidence,p.blindCase.phase2).pass
+      ? p.blindCase.phase2 : null;
+  }
+  function runPipe56Phase2(){
+    const p=active();
+    if(!p?.blindCase?.locked)return;
+    if(p.blindCase.phase2){announce('Phase 2A is already frozen');return;}
+    if(!window.SubterraBlindTest?.validate(p).pass){announce('Frozen evidence has changed — run blocked');return;}
+    try{
+      const evidence=window.SubterraInferenceEvidence.build(p);
+      const calc=window.SubterraPipe56Phase2.compute(evidence);
+      if(!window.SubterraPipe56Phase2.verify(evidence,calc).pass)throw Error('Calculation check failed');
+      p.blindCase.phase2=calc;
+      p.showCalculatedCandidate=true;
+      save();renderWorkspace();
+      announce('Phase 2A calculated and frozen — GIS reference withheld');
+    }catch(err){announce('Phase 2A not run: '+String(err.message||err));}
+  }
+  function pipe56Phase2Html(p){
+    if(!p.blindCase.phase2)return '<div class="blind-caution">No calculations run. Press Run Phase 2A to calculate from frozen evidence.</div>';
+    const r=pipe56StoredResult(p);
+    if(!r)return '<div class="blind-caution">Calculation integrity mismatch — results cannot be verified.</div>';
+    const e=r.engineering,fmt=(v,d=3)=>Number(v).toFixed(d);
+    return `<div class="phase2-summary">
+      <strong>PHASE 2A · CALCULATED / FROZEN</strong>
+      <div class="phase2-kpis">
+        <div><small>Endpoint Distance</small><b>${fmt(e.horizontalDistanceM)} m</b></div>
+        <div><small>Endpoint Azimuth</small><b>${fmt(e.azimuthDegFromNorthClockwise,2)}°</b></div>
+        <div><small>Invert Drop</small><b>${fmt(e.straightLineInvertDropM,6)} m</b></div>
+        <div><small>Candidate Slope</small><b>${fmt(e.straightLineSlopePercent,4)}%</b></div>
+      </div>
+      <div class="phase2-equations">
+        <b>Engineering Equations</b>
+        <p>L = Haversine(MH-42 top, MH-45 top) = ${fmt(e.horizontalDistanceM)} m</p>
+        <p>ΔInvert = ${fmt(e.upstreamOutletInvertRL,6)} − ${fmt(e.downstreamInletInvertRL,6)} = ${fmt(e.straightLineInvertDropM,6)} m</p>
+        <p>S = (ΔInvert / L) × 100 = ${fmt(e.straightLineSlopePercent,4)}%</p>
+        <p>Cover-to-Invert: MH-42 ${fmt(e.upstreamCoverToInvertDepthM,3)} m · MH-45 ${fmt(e.downstreamCoverToInvertDepthM,3)} m</p>
+        <p>Documented openings: Ø ${fmt(e.documentedNominalDiameterMm,1)} mm · ${escapeHtml(e.documentedPipeMaterial)}</p>
+      </div>
+      <div class="blind-caution"><b>STRAIGHT-LINE HYPOTHESIS ONLY</b>
+        <p>Azimuth is derived from top positions, not a measured pipe bearing. Opening association is unverified; vertical datum unknown. Historical GIS route and pipe length remain withheld. Hydraulic velocity and confidence have not been calculated.</p>
+      </div>
+    </div>`;
   }
 
   function startBlindTest(){
@@ -193,6 +255,7 @@
         `<span class="blind-opening">${fmt(o.name)} · ${fmt(o.role)} · DN ${num(o.fields?.diameter)} mm · Invert ${num(o.fields?.invert)} m · Bearing ${fmt(o.fields?.bearing?.mode||'unknown')}</span>`
       ).join('')}</div>
     </div>`).join('');
+    const completed=!!pipe56StoredResult(project);
     const stageList=[
       ['01','Separate test case','Created / independent project'],
       ['02','Permitted inference evidence','Frozen manhole coordinates, recorded levels & openings only'],
@@ -200,7 +263,7 @@
       ['04','Source, units, datum','Stantec 2004 / ft×0.3048 / vertical datum unconfirmed'],
       ['05','Opening-to-pipe identity','UNVERIFIED — candidate association only'],
       ['06','Freeze and evaluation rules','V1 committed prior to controlled replay'],
-      ['07','Calculation / validation','Not run — next phase']
+      ['07','Calculation / validation',completed?'Phase 2A geometry & gravity calculated; no GIS validation yet':'Not run — next phase']
     ];
     $('#inspectorBody').innerHTML=`<div class="blind-inspector">
       <div class="panel-top"><span class="panel-title">PIPE 56 · PHASE 1</span>
@@ -209,6 +272,8 @@
       <div class="blind-status">${v.pass?'Frozen evidence verified':'Fixture mismatch: '+v.issues.map(fmt).join('; ')}</div>
       <h3>Phase 1 checklist</h3>
       <div class="blind-stage-list">${stageList.map(([n,t,d])=>`<div><b>${n} · ${t}</b><small>${d}</small></div>`).join('')}</div>
+      <h3>Phase 2A — Geometric & Gravity Results</h3>
+      ${pipe56Phase2Html(project)}
       <h3>Recorded manholes (read-only)</h3>
       ${mhCards}
       <div class="blind-caution"><b>Source:</b> ArcGIS Manhole Layer 1 OBJECTIDs 42 / 45; ${fmt(info?.source?.sourceDetail)}.
