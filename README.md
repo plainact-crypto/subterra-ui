@@ -1,4 +1,4 @@
-# SUBTERRA — Infrastructure Reconstruction UI (v0.7)
+# SUBTERRA — Infrastructure Reconstruction UI (v0.8)
 
 Front-end-only evidence-capture prototype for existing underground utility assets. The platform **does not design new networks or perform reverse-engineering calculations yet**.
 
@@ -8,6 +8,15 @@ Front-end-only evidence-capture prototype for existing underground utility asset
 2. **Choose infrastructure system**: sanitary sewer is the first active workspace. Other utility categories remain placeholders.
 3. **Open sewer workspace**: view the pan/zoom metric canvas and manhole schedule.
 4. **Add / select a manhole**: complete the eight-step entry wizard. Each step is available by number or Previous / Next.
+
+## Two-layer comparison — calculated candidate vs. historical GIS (v0.8)
+
+The canvas now shows **two independently controlled line types** for the current two-manhole NC State Fairgrounds pilot:
+- **Solid orange** = **Calculated Candidate** computed from precisely two manhole coordinates, a documented upstream outlet invert, a downstream inlet invert, and matching recorded pipe diameters. Straight-line plan hypothesis only; the independent WGS84 geodesic distance and gravitational gradient are computed. It does **not** read historical GIS geometry.
+- **Dashed blue** = **Historical GIS** geometry from `project.observedPipes`, used only as validation reference. This is an archived GIS record, not newly surveyed physical proof.
+- The orange line is drawn wide and underneath the narrow dashed blue line, so **both remain distinguishable even when their centerlines coincide**. Neither is moved or geometrically altered for presentation.
+- Independent visibility eye toggles are saved in the active project, preserving its old localStorage key and unchanged exports. No network route inference, hydraulic flow simulation, road constraints, or confidence score is claimed.
+- The calculated candidate is hidden when there are not exactly two located WGS84 manholes, when relevant invert/dimension evidence is missing, the gravity level difference is non-positive, or multiple candidates are ambiguous; no arbitrary pipes are created.
 
 ## Historical GIS pipe visibility & inference boundary (v0.7)
 
