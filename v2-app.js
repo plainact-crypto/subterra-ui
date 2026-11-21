@@ -157,7 +157,7 @@
       view.map(f=>'<tr><td>'+safe(f.id)+'</td><td><strong>'+safe(f.key)+'</strong><small>'+safe(f.description)+'</small></td><td>'+safe(f.scope)+'</td><td>'+safe(f.type)+' · '+safe(f.unit)+'</td><td>'+safe(f.requirement)+'</td></tr>').join("")+
       '</tbody></table></div><p class="muted">Showing '+view.length+' of '+list.length+' matching fields. Filter to locate any of the 430.</p>'+
       (options.length?dataForm("catalog",'<div class="form-grid">'+field("Catalog field",select("fieldId",options))+
-      field("Associated asset / scope",select("scope",[["PROJECT","Project"],[p.pair.join("|"),"Active sector"],...p.manholes.map(m=>[m.id,m.id])]))+
+      field("Associated asset / scope",select("scope",[["PROJECT","Project"],[p.pair.join("|"),"Active sector"],...p.manholes.map(m=>[m.id,m.id]),...p.manholes.flatMap(m=>m.openings.map(o=>[m.id+"|"+o.id,m.id+" / "+o.id]))]))+
       field("Value / observation",txt("value","Recorded value or UNKNOWN"))+
       field("Source reference",txt("evidenceRef","Record ID (optional)",false))+'</div>','Record Checklist Field'):"")+
       '<h3>Latest field observations</h3><div class="table-scroll"><table><thead><tr><th>Field</th><th>Scope</th><th>Value</th></tr></thead><tbody>'+saved+'</tbody></table></div></div>';
@@ -304,6 +304,8 @@
     }catch(err){notify(err.message||String(err));}
   });
   async function init(){
+    // Explicit v2 cut-over: the retired v0.16 browser project store is discarded.
+    try{localStorage.removeItem("subterra_ui_v1");}catch{}
     const old=stored();
     if(old?.schema==="subterra-v2"){try{E.assess(old);state.p=old;}catch{}}
     try{
