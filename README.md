@@ -1,4 +1,4 @@
-# SUBTERRA — Infrastructure Reconstruction UI (v0.13)
+# SUBTERRA — Infrastructure Reconstruction UI (v0.15)
 
 Front-end-only evidence-capture prototype for existing underground utility assets. The platform **does not design new networks or perform reverse-engineering calculations yet**.
 
@@ -8,6 +8,38 @@ Front-end-only evidence-capture prototype for existing underground utility asset
 2. **Choose infrastructure system**: sanitary sewer is the first active workspace. Other utility categories remain placeholders.
 3. **Open sewer workspace**: view the pan/zoom metric canvas and manhole schedule.
 4. **Add / select a manhole**: complete the eight-step entry wizard. Each step is available by number or Previous / Next.
+
+## v0.15 — Field Survey JSON + transparent non-AI geometry correction
+
+The frozen **PIPE-56** blind reconstruction now has a separate, additive **Phase 3 Field Verification** panel. Its original two manholes, Stage 2A orange center-to-center hypothesis, Stage 2B Manning results, and held-out historical GIS pipe remain unchanged.
+
+### Comprehensive data capture
+
+- [Blank schema-example JSON](data/field-survey/SUBTERRA_Field_Survey_Template_v1.json): project/date/crew, WGS84 horizontal reference, shared vertical datum/benchmark, measurement methods/accuracies, confined-space safety, two or more manholes, covers/surface, frame, chimney, cone, barrel, geometry, channel/bench, ladders/steps, corrosion, infiltration, sediment, surrounding obstacles, photos and completeness.
+- **Every visible pipe opening** has a distinct `openingId` and can record active/capped status; observed inlet/outlet role; clockwise-north outward bearing; radial distance from chamber center and measurement accuracy; invert/crown/soffit; pipe size/shape/material/type when observed; flow/debris/visible length; visible defects and photo reference. **Unknown values remain `null`**, never silently predicted.
+- [Fully labeled synthetic Pipe 56 demo](data/field-survey/SUBTERRA_PIPE56_SIMULATED_Field_Survey_v1.json): explicitly `recordType=SIMULATED_DEMO`, fictional crew and locations shifted from recorded centers, 3 synthetic openings per manhole, step counts, material uncertainty and physical issues. These are *not field observations or source imagery*.
+- [Arabic RTL user manual](docs/field-survey-manual-ar.html), plus the [generated Arabic PDF](docs/SUBTERRA_Field_Survey_JSON_Manual_AR.pdf) (built by the new workflow on `main`).
+- [PDF build script](scripts/build_field_manual.py) and [GitHub Actions workflow](.github/workflows/generate-field-survey-pdf.yml) generate the PDF with a font installed on the runner; no font binaries committed.
+
+### Deterministic correction
+
+`field-survey-geometry.js` performs **explicit geometry** only; no AI or GIS pipe benchmark. A surveyor must specify the two openings associated with the comparison. Read-only phase 2A stores the baseline orange two-center line.
+
+- Convert revised surveyed chamber centers (EPSG:4326) into local metric E/N, then each opening face = surveyed chamber center + measured radial vector `(r sin bearing, r cos bearing)`.
+- Calculate green face-to-face line **only if** both visible target openings are active, true-north outward bearings are consistent within an explicit 12° threshold, two inverts share a confirmed common vertical datum, and the source-to-destination gravity drop is positive.
+- Compute corrected face-to-face length, grade, bearing, old-to-resurveyed center shifts, geometric perpendicular offsets versus the orange baseline, and first-order propagation of declared coordinate/radial/bearing uncertainties. **Do not interpret these quantities as verified underground location errors**. Green line is a new *hypothesis at the two visible portals*, not a field tracing of a concealed line.
+- Report a deterministic manhole `TERMINAL`/`THROUGH`/`JUNCTION`/`DROP` inference based on visible active opening count and observed drop only when no observed type is provided; mark incomplete surveys `TENTATIVE`. Unknown pipe materials, connectivity, and types are never fabricated.
+- On incompatible bearings or heights, save the scenario with **GEOMETRIC_OR_VERTICAL_CONFLICT**; draw **no green line**. Historical GIS remains withheld.
+- Store incoming snapshots append-only as `project.fieldSurveyRuns[]`, while `project.blindCase.phase2` and `project.blindCase.phase2b` are left intact. Download exported scenario JSON; repeat surveys must have unique IDs, and old snapshots remain selectable. No API upload, external storage, or server-side verification of user's field data.
+- **Safety:** SUBTERRA does not authorize manhole entry. Confined-space work requires qualified teams and permits under the user's applicable safety procedures.
+
+### Calculation notes
+
+The v1 comparison includes **two distinct endpoint definitions**:
+1. Orange: original Phase 2A center-to-center line.
+2. Green: a separate corrected *inside-wall opening face-to-face* line.
+
+The difference of their total lengths includes the geometry of the manhole body; it is NOT the buried pipe's route error. The computed cross-offsets are offsets between mathematical straight lines and include original source uncertainties which were not verified. The provided example produces roughly 83.086 m between visible portals and maximum cross-offset about 0.036 m — below the illustrative 0.074 m first-order combined new-opening uncertainty; neither number proves any location shift is physically real.
 
 ## Pipe 56 Phase 2B — Hydraulic Constraints (v0.13)
 

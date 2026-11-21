@@ -72,3 +72,21 @@
 .hydraulic-table .base{background:#eaf4fa;font-weight:800}
 .hydraulic-citation{font-size:10px;line-height:1.5;color:#657d8d}
 .hydraulic-citation a{color:#126e92;text-decoration:underline}
+
+/* v0.15: independent, explicitly labelled field observation overlays */
+.field-survey-panel{background:#f8fdfb;border-left:3px solid #16a371}
+.field-survey-controls{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}
+.field-survey-links{display:flex;gap:8px;flex-wrap:wrap;font-size:11px;margin-top:9px}
+.field-survey-links a{color:#166c81;text-decoration:underline}
+.field-survey-status{display:block;color:#136e53;font-size:12px;margin-bottom:5px}
+.field-survey-blocked{display:block;color:#ab443a;font-size:12px;margin-bottom:6px}
+.field-survey-subtitle{font-size:10px;color:#6b8b83;margin-bottom:10px;overflow-wrap:anywhere}
+.field-survey-warning{padding:9px;background:#fff6e7;color:#86611e;border-left:3px solid #dfac5b;font-size:11px;line-height:1.4;margin:7px 0}
+.field-survey-warnings{padding:8px 0;font-size:11px}
+.field-survey-warnings ul{padding-left:16px;margin:4px 0 0}
+.field-survey-mh{padding:10px 0;border-top:1px solid #d7eee2}
+.field-survey-mh strong{font-size:11px;color:#225c53}
+.field-survey-openings{width:100%;border-collapse:collapse;font-size:9px;table-layout:fixed;margin-top:5px}
+.field-survey-openings th,.field-survey-openings td{text-align:left;border-bottom:1px solid #dfebe5;padding:5px 3px;word-break:break-word}
+.field-survey-openings th{color:#597a71}
+.field-survey-history{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0}
