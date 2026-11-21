@@ -1,4 +1,4 @@
-# SUBTERRA — Infrastructure Reconstruction UI (v0.15)
+# SUBTERRA — Infrastructure Reconstruction UI (v0.16)
 
 Front-end-only evidence-capture prototype for existing underground utility assets. The platform **does not design new networks or perform reverse-engineering calculations yet**.
 
@@ -8,6 +8,21 @@ Front-end-only evidence-capture prototype for existing underground utility asset
 2. **Choose infrastructure system**: sanitary sewer is the first active workspace. Other utility categories remain placeholders.
 3. **Open sewer workspace**: view the pan/zoom metric canvas and manhole schedule.
 4. **Add / select a manhole**: complete the eight-step entry wizard. Each step is available by number or Previous / Next.
+
+## v0.16 — Left-side confidence dashboard
+
+The **Pipe 56 workspace** shows a small **collapsible confidence dashboard on the left side of the canvas**, separate from the right-hand manhole inspector. The panel uses `confidence-dashboard.js`, an explicit deterministic checklist—not AI and **not a statistical probability or a percentage of positional accuracy**.
+
+| Component | Max. points | Deterministic inputs |
+|---|---:|---|
+| Observation coverage | 30 | Two surveyed chamber centers (8), two measured target openings including their accuracies (8), whether all openings were enumerated (8), surveyor completeness sign-offs (6) |
+| Geometry consistency | 30 | True-north bearing residuals relative to declared tolerance (24), common vertical datum and positive gravity drop (6) |
+| Declared input precision | 20 | Propagated first-order input uncertainty `σ`: `20 × max(0, 1 − σ / 0.20m)`; the 0.20m comparator is **an illustrative display setting, not an acceptance standard** |
+| Independently verified pipe | 20 | Always **0** in this workflow. No audited ground truth or independently confirmed physical continuity is available. User-supplied `physicalContinuityVerified` is NOT independently sufficient. |
+
+The panel displays a `score/100` **Evidence Readiness Index**, its four component bars and formula, the propagated input uncertainty, and a separate **Actual Route Confidence: NOT VERIFIED** indication. Without a valid saved field scenario the score is **NOT SCORED**. An invalid correction is capped at 35 and plainly marked a **GEOMETRY CONFLICT**.
+
+For the clearly labeled **SIMULATED_DEMO**, the checklist produces about **65.5/100** but is prominently labeled **SIMULATED INPUT**; it is **not 65.5% probable correct, not a field verification, and not a claim of underground route detection**. Inputs and snapshots stay unchanged. The dashboard recomputes when a user imports, loads or selects a different frozen field-survey scenario, and never accesses held-out historical GIS geometry.
 
 ## v0.15 — Field Survey JSON + transparent non-AI geometry correction
 
