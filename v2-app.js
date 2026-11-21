@@ -3,7 +3,7 @@
   "use strict";
   const E=window.SubterraV2, STORE="subterra_v2_survey_first";
   const el=document.getElementById("app");
-  const state={p:null,catalog:[],tab:"survey",filter:"",section:"ALL",lastError:null};
+  const state={p:null,catalog:[],tab:"survey",filter:"",section:"ALL",lastError:null,mapScope:"sector",demoBundle:null,historicalComparison:null};
   const safe=s=>String(s??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
   const n=(v,d=2)=>Number.isFinite(v)?Number(v).toFixed(d):"—";
   const color=score=>{
@@ -38,6 +38,54 @@
     if(q)list=list.filter(f=>(f.id+" "+f.key+" "+f.description+" "+f.scope).toLowerCase().includes(q));
     return list;
   }
+  async function simulationBundle(){
+    if(state.demoBundle)return state.demoBundle;
+    const res=await fetch("data/demo/NCSF_87_MH_Pipe56_Four_Rounds.json?v=2.1",{cache:"no-store"});
+    if(!res.ok)throw Error("Cannot fetch NCSF simulation: HTTP "+res.status);
+    const bundle=await res.json();
+    if(bundle.schema!=="subterra-ncsf-multiround-simulation/v1"||
+       bundle.mode!=="SIMULATED_DEMO_ONLY"||
+       !Array.isArray(bundle.stages)||bundle.stages.length!==4||
+       bundle.stages[0].project.manholes.length!==87)
+       throw Error("Unexpected NCSF simulation package");
+    state.demoBundle=bundle;
+    return bundle;
+  }
+  async function loadSimulationStage(index,askBeforeReplace=false){
+    const bundle=await simulationBundle();
+    if(!Number.isInteger(index)||index<0||index>=bundle.stages.length)throw Error("Invalid simulation round");
+    if(askBeforeReplace&&state.p&&!window.confirm("Replace your active project with the prebuilt NCSF demo? Export your project first if required."))return;
+    if(state.p?.demo?.synthetic && index!==state.p.demo.stage){
+      const current=JSON.stringify(state.p);
+      const expected=JSON.stringify(bundle.stages[state.p.demo.stage].project);
+      if(current!==expected&&!window.confirm("Switching to a prebuilt simulated round replaces edits made to this demo stage. Continue?"))return;
+    }
+    const project=JSON.parse(JSON.stringify(bundle.stages[index].project));
+    if(project.demo?.synthetic!==true||project.id!=="NCSF-87-MH-PIPE56-SIM-V21")throw Error("Not a valid synthetic NCSF scenario");
+    const actual=E.assess(project),snapshot=project.rounds.at(-1)?.result;
+    if(actual.score!==snapshot?.score)throw Error("NCSF scenario score integrity mismatch");
+    state.mapScope="sector";state.historicalComparison=null;
+    state.tab=index===0?"survey":index===3?"rounds":"verify";
+    update(project,"SIMULATION ONLY — "+bundle.stages[index].id+" loaded. "+bundle.stages[index].title+". No new site measurements exist.");
+  }
+  async function compareHistoricalPipe56(){
+    const p=state.p;
+    if(!p?.demo?.synthetic||p.demo.stage<3)throw Error("Historical GIS comparison unlocks only after ROUND-03");
+    const res=await fetch("data/demo/NCSF_103_Historical_Pipes_HOLDOUT.json?v=2.1",{cache:"no-store"});
+    if(!res.ok)throw Error("Historical reference could not be loaded");
+    const ref=await res.json();
+    if(ref.schema!=="subterra-ncsf-historical-pipe-holdout/v1")throw Error("Unexpected historic source format");
+    const pipe=ref.pipes.find(x=>x.id==="NCSF-GIS-PIPE-56");
+    if(!pipe)throw Error("Historic Pipe 56 unavailable");
+    const match=String(pipe.source).match(/Shape__Length=([\d.]+) ft/);
+    if(!match)throw Error("Source historic pipe length missing");
+    const historicLengthM=Number(match[1])*.3048;
+    const revised=E.assess(p);
+    state.historicalComparison={pipeId:pipe.id,historicalLengthM:historicLengthM,modeledFaceLengthM:revised.route.lengthM,
+      historicYear:"2004 GIS / AutoCAD reference",deltaM:revised.route.lengthM-historicLengthM,
+      disclaimer:"Historical centerline length and current simulated opening-face length are not the same endpoint definition. Their delta is NOT field measured positional error. GIS source is NOT ground truth."};
+    render();
+  }
   function projectView(){
     return '<section class="start"><div class="eyebrow">SUBTERRA ENGINEERING / VERSION 2</div><h1>Start with what the surveyor actually measures.</h1>'+
       '<p class="intro">The first input is accurate <strong>Total Station X, Y, Z for every visible manhole</strong>. SUBTERRA proposes a low-evidence connection and asks for targeted measurements between at least two manholes. No historical GIS route is used in the first pass.</p>'+
@@ -49,12 +97,18 @@
       field("Project Z target σ (m)",number("targetZ","Specify target",true,"any",".025"))+
       field("Total Station instrument / serial",txt("instrumentId","Instrument identifier",false))+
       field("Surveyor",txt("surveyor","Survey team",false))+'</div>','Create Field Survey Project')+
+      '<div class="demo-cta"><div class="demo-label">READY COMPETITION PROJECT · SIMULATED</div><h2>NC State Fairgrounds · 87 manholes · Pipe 56</h2><p>Four reproducible survey rounds (14 → 49 → 70 → 100). Historical manhole records anchor a <strong>fictional</strong> Total Station survey. All pen, CCTV and sonde measurements are generated; no field visit occurred.</p><button type="button" class="btn btn-primary" data-action="load-ncsf-demo">Open NCSF Project & Start Simulation</button></div>'+
       '<div class="start-foot">Old application data are not imported. This is a new survey-first product. No AI is used for geometry or scoring.</div></section>';
   }
   function mapSvg(p,r){
     const all=p.manholes;
     if(!all.length)return '<div class="map-empty">Survey visible manholes with Total Station XYZ to see the plan.</div>';
-    const xs=all.map(m=>m.x),ys=all.map(m=>m.y);
+    const focus=p.demo?.synthetic===true&&state.mapScope!=="site"&&r.route&&p.pair?.length===2;
+    const a=all.find(m=>m.id===p.pair?.[0]),b=all.find(m=>m.id===p.pair?.[1]);
+    const mid=focus&&a&&b?{x:(a.x+b.x)/2,y:(a.y+b.y)/2}:null;
+    const radius=focus&&a&&b?Math.max(145,Math.hypot(b.x-a.x,b.y-a.y)*1.4):Infinity;
+    const shown=mid?all.filter(m=>p.pair.includes(m.id)||Math.hypot(m.x-mid.x,m.y-mid.y)<radius):all;
+    const xs=shown.map(m=>m.x),ys=shown.map(m=>m.y);
     if(r.route)for(const q of r.route.geometry){xs.push(q.x);ys.push(q.y);}
     const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
     const sx=Math.max(maxX-minX,18),sy=Math.max(maxY-minY,18);
@@ -64,9 +118,10 @@
     const grid='<path d="M0 105H900 M0 210H900 M0 315H900 M225 0V420 M450 0V420 M675 0V420" fill="none" stroke="#e5edf2" stroke-width="1"/>';
     const line=r.route&&r.route.geometry.length>1?
       '<polyline points="'+r.route.geometry.map(q=>xy(q).map(v=>v.toFixed(1)).join(",")).join(" ")+'" fill="none" stroke="'+color(r.score)+'" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" '+(r.status==="PROVISIONAL_ENDPOINT_CONNECTOR"?'stroke-dasharray="10 7"':'')+'/>' : "";
-    const markers=all.map(m=>{
-      const c=xy(m);return '<g><circle cx="'+c[0]+'" cy="'+c[1]+'" r="9" fill="#fff" stroke="#173d59" stroke-width="3"/>'+
-      '<text x="'+(c[0]+14)+'" y="'+(c[1]-12)+'" fill="#183d57" font-size="15" font-weight="700">'+safe(m.id)+'</text></g>';
+    const markers=shown.map(m=>{
+      const c=xy(m),selected=p.pair?.includes(m.id);
+      return '<g><circle cx="'+c[0]+'" cy="'+c[1]+'" r="'+(selected?9:4)+'" fill="'+(selected?'#fff':'#aec6d2')+'" stroke="#173d59" stroke-width="'+(selected?3:1)+'"/>'+
+      (selected?'<text x="'+(c[0]+14)+'" y="'+(c[1]-12)+'" fill="#183d57" font-size="15" font-weight="700">'+safe(m.id)+'</text>':'')+'</g>';
     }).join("");
     const stamp=r.route?'<text x="18" y="392" font-size="12" fill="#667b89">'+safe(r.status.replaceAll("_"," "))+' · '+n(r.route.lengthM,2)+' m plan · Bearing '+n(r.route.bearingDeg,1)+'° · Z pipe '+(r.route.gradePercent===null?"UNKNOWN":"Measured fall")+'</text>':
       '<text x="18" y="392" font-size="13" fill="#687e91">Add at least two manholes and select a pair</text>';
