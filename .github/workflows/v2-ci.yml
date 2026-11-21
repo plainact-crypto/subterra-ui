@@ -8,6 +8,10 @@ on:
       - 'v2-app.js'
       - 'index.html'
       - 'data/field-catalog-v2.json'
+      - 'data/demo/NCSF_87_MH_Pipe56_Four_Rounds.json'
+      - 'data/demo/NCSF_87_Manholes_Historical_Source.json'
+      - 'data/demo/NCSF_103_Historical_Pipes_HOLDOUT.json'
+      - 'v2.css'
       - 'tests/test-v2.js'
       - '.github/workflows/v2-ci.yml'
 jobs:
