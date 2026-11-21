@@ -1,4 +1,4 @@
-# SUBTERRA — Infrastructure Reconstruction UI (v0.9)
+# SUBTERRA — Infrastructure Reconstruction UI (v0.10)
 
 Front-end-only evidence-capture prototype for existing underground utility assets. The platform **does not design new networks or perform reverse-engineering calculations yet**.
 
@@ -8,6 +8,20 @@ Front-end-only evidence-capture prototype for existing underground utility asset
 2. **Choose infrastructure system**: sanitary sewer is the first active workspace. Other utility categories remain placeholders.
 3. **Open sewer workspace**: view the pan/zoom metric canvas and manhole schedule.
 4. **Add / select a manhole**: complete the eight-step entry wizard. Each step is available by number or Previous / Next.
+
+## Pipe 56 — isolated, frozen Phase 1 evidence test (v0.10)
+
+One-click **Pipe 56 Blind Test** opens (or creates, once) a **separate local project** with precisely the documented NC State Fairgrounds manholes 42 and 45. The existing 87-manhole test project and all browser data remain intact.
+
+- **Source**: ArcGIS `Sanitary Sewer Manhole Layer 1` OBJECTIDs **42** and **45**, historical `AutoCAD Data` (Stantec 2004). Coordinates WGS84. Historical recorded elevations in feet are copied at the prior **0.3048 m/ft** conversion. No field survey or vertical datum was verified.
+- **Read-only / frozen**: the project is marked `blindCase.stage=PHASE_1_FROZEN`; wizard editing, JSON import, add-manholes and automatic calculated lines are disabled. The project can be exported. Creation is append-only and idempotent by `caseId`; it never migrates or overwrites an existing project.
+- **Allowed evidence**: 2 manhole WGS84 top points, cover and known invert levels, documented openings, diameters/materials and explicit uncertainty states. "Known/measured" is the wizard's legacy enum but the values here are **historical source-recorded, not contemporary field measurements**.
+- **Forbidden inference inputs**: layer-4 pipe route vertices, reference length, inferred bearings or route geometry. A separate JSON snapshot under `data/validation-reference/NCSF_PIPE56_reference_v1.json` contains the **benchmark only**, never automatically loaded by the Phase 1 app. The reference is **public in GitHub**, so this is only an application/workflow holdout, **not cryptographically secure blinding**.
+- **Protocol frozen before next run**: `data/validation-protocol/NCSF_PIPE56_phase1_protocol_v1.json` documents constraints, evaluation rules and limitations. **Retrospective controlled replay**: the reference pipe was seen in earlier sessions, so future testing cannot be advertised as a genuinely previously-unseen blind study.
+- **Opening association**: MH-42 OUT-01 → MH-45 IN-01 is a **hypothesis**. Historical Layer 1 itself does not identify that specific inter-manhole pipe link.
+- **Acceptance**: integrity checks for the two records, no pipe geometry/length in input, stage1 inference not run, source and uncertainty fields present, separate benchmark, and pre-registered reporting. Plan deviation targets in the protocol are internal **historical GIS agreement benchmarks**, not claimed detection accuracy or competition compliance.
+- **Exports**: **Evidence JSON** returns the existing `SubterraInferenceEvidence.build(project)` whitelist payload; **Protocol** returns the frozen rules; **Project JSON** exports the entire isolated project, which contains no historical pipes.
+- **Phase 1 is preparation, not proof of pipe reconstruction**; its evidence integrity can be checked immediately. Phase 2 still needs to implement its own locked result snapshot and then validation.
 
 ## Multi-manhole calculated candidates (v0.9)
 
