@@ -1,4 +1,4 @@
-/* SUBTERRA v0.10 — frozen, reference-free Phase 1 evidence fixture.
+/* SUBTERRA v0.12 — frozen Phase 1 / 2A evidence validator (cache refresh).
    The HISTORICAL GIS PIPE 56 geometry is deliberately NOT present in this file.
    One-click creation is append-only to existing browser projects. */
 (() => {
@@ -367,6 +367,7 @@
     return {pass:!issues.length,issues};
   }
   window.SubterraBlindTest={
+    validatorVersion:2,
     caseId:CASE_ID,
     buildTemplate,
     getProtocol:()=>copy(protocol),
