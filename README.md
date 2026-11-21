@@ -1,6 +1,30 @@
-# SUBTERRA v2 — Total Station First / Adaptive XYZ Reconstruction
+# SUBTERRA v2.1 — Total Station First / Adaptive XYZ Reconstruction
 
 This is a **new implementation**. The old v0.16 interface, Pipe 56 phase buttons, orange/green comparison and old scoring scripts are retired. The application root loads only `index.html`, `v2.css`, `v2-engine.js`, `v2-app.js` and the 430-field dictionary `data/field-catalog-v2.json`.
+
+## Ready-to-open NCSF 87-manhole competition simulation (v2.1)
+
+Open **`https://plainact-crypto.github.io/subterra-ui/?demo=ncsf&v=2.1`** to load a real saved `subterra-v2` project **with explicitly SIMULATED observation data**, not an uploaded historic drawing and not a contemporary field survey.
+
+Dataset provenance and separation:
+
+- `data/demo/NCSF_87_Manholes_Historical_Source.json`: 87 historical NCSF manhole locations, original WGS84 lat/lon and attribute references extracted from commit `92486ace69b87d134cf9504d250cbafc3a7b72ba`. 38 cover elevations recorded; **49 missing covers are synthetically interpolated** strictly for competition demonstration. Original vertical datum unconfirmed. WGS84 manhole positions convert to metres under **EPSG:32617**, with synthetic centimeter-scale measurement perturbation.
+- `data/demo/NCSF_87_MH_Pipe56_Four_Rounds.json`: fully serialized, replayable four-stage project. Every staged "total station" and "survey pen" observation is **invented** (no real instrument visit). Pipe 56 is scoped `NCSF-MH-42 → NCSF-MH-45`; other 85 known manholes provide survey context.
+- `data/demo/NCSF_103_Historical_Pipes_HOLDOUT.json`: all 103 historical GIS pipe geometries held separately. **Never loaded or used by the reconstruction engine or the scenario builder.** The UI only fetches this file on user request **after Round 03**, when it presents a table comparing differently defined lengths, not a misleading second route line.
+- Synthetic CCTV/Sonde and "reviewed" claims are **fictional benchmark fixtures**, not evidence that any physical pipe has been found, exposed, viewed, or independently certified.
+
+Replay sequence:
+
+| Stage | Verification index | What the simulation adds |
+|---|---:|---|
+| ROUND-00 | 14/100 | 87 simulated Total Station cover XYZ observations; provisional segment; pipe invert Z UNKNOWN |
+| ROUND-01 | 49/100 | Register six opening records across MH-42/MH-45, simulated chamber/pipe-face XYZ, five ladder-step points per chamber and associated atomic checklist fields |
+| ROUND-02 | 70/100 | Independently recorded **synthetic** invert XYZ, synthetic flow-channel points and constraint notes; newly calculable pipe gradient (~3.12% in current fixture) |
+| ROUND-03 | 100/100 | Five fictional intermediate trace XYZ points, simulated CCTV and sonde "review" and simulated QA; score is 100% of the versioned *fictional evidence-coverage rubric*, NOT actual route accuracy |
+
+Use the **Run Next Synthetic Survey Round** control to advance; select any of the frozen rounds from **Rounds**, switch between **Pipe 56 sector** and **all 87 manholes**, and optionally unlock the historical comparison only in final stage. The regular Total Station-first workflow for real projects is unchanged; the simulation opens only by explicit link/button. Existing browser-local projects are not replaced silently.
+
+See Node tests `tests/test-v2.js` for exact four-stage score and geometry assertions. No AI/ML models calculate route positions or scores.
 
 ## Correct survey-first user sequence
 

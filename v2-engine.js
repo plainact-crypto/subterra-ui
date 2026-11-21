@@ -82,7 +82,7 @@ function assess(p){
  const trace=traceRef&&tracePts.length>=2;
  const vec=[qB.x-qA.x,qB.y-qA.y],vecLength=Math.hypot(...vec);
  const middle=trace?tracePts.slice().sort((u,v)=>((u.x-qA.x)*vec[0]+(u.y-qA.y)*vec[1])-((v.x-qA.x)*vec[0]+(v.y-qA.y)*vec[1])||u.id.localeCompare(v.id)):[];
- const routeGeom=[qA,...middle,qB].map(pt=>({x:pt.x,y:pt.y,z:null}));
+ const routeGeom=[{x:qA.x,y:qA.y,z:invA?.z??null},...middle.map(pt=>({x:pt.x,y:pt.y,z:pt.z})),{x:qB.x,y:qB.y,z:invB?.z??null}];
  let length=0;for(let i=1;i<routeGeom.length;i++)length+=Math.hypot(routeGeom[i].x-routeGeom[i-1].x,routeGeom[i].y-routeGeom[i-1].y);
  const dz=invA&&invB?invA.z-invB.z:null,conflict=num(dz)&&dz<=0;
  const match=opA&&opB&&opA.material&&opB.material&&opA.diameterMm&&opA.diameterMm===opB.diameterMm&&opA.material.toLowerCase()===String(opB.material).toLowerCase();

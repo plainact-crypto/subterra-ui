@@ -3,7 +3,7 @@
   "use strict";
   const E=window.SubterraV2, STORE="subterra_v2_survey_first";
   const el=document.getElementById("app");
-  const state={p:null,catalog:[],tab:"survey",filter:"",section:"ALL",lastError:null};
+  const state={p:null,catalog:[],tab:"survey",filter:"",section:"ALL",lastError:null,mapScope:"sector",demoBundle:null,historicalComparison:null};
   const safe=s=>String(s??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
   const n=(v,d=2)=>Number.isFinite(v)?Number(v).toFixed(d):"—";
   const color=score=>{
@@ -38,6 +38,54 @@
     if(q)list=list.filter(f=>(f.id+" "+f.key+" "+f.description+" "+f.scope).toLowerCase().includes(q));
     return list;
   }
+  async function simulationBundle(){
+    if(state.demoBundle)return state.demoBundle;
+    const res=await fetch("data/demo/NCSF_87_MH_Pipe56_Four_Rounds.json?v=2.1",{cache:"no-store"});
+    if(!res.ok)throw Error("Cannot fetch NCSF simulation: HTTP "+res.status);
+    const bundle=await res.json();
+    if(bundle.schema!=="subterra-ncsf-multiround-simulation/v1"||
+       bundle.mode!=="SIMULATED_DEMO_ONLY"||
+       !Array.isArray(bundle.stages)||bundle.stages.length!==4||
+       bundle.stages[0].project.manholes.length!==87)
+       throw Error("Unexpected NCSF simulation package");
+    state.demoBundle=bundle;
+    return bundle;
+  }
+  async function loadSimulationStage(index,askBeforeReplace=false){
+    const bundle=await simulationBundle();
+    if(!Number.isInteger(index)||index<0||index>=bundle.stages.length)throw Error("Invalid simulation round");
+    if(askBeforeReplace&&state.p&&!window.confirm("Replace your active project with the prebuilt NCSF demo? Export your project first if required."))return;
+    if(state.p?.demo?.synthetic && index!==state.p.demo.stage){
+      const current=JSON.stringify(state.p);
+      const expected=JSON.stringify(bundle.stages[state.p.demo.stage].project);
+      if(current!==expected&&!window.confirm("Switching to a prebuilt simulated round replaces edits made to this demo stage. Continue?"))return;
+    }
+    const project=JSON.parse(JSON.stringify(bundle.stages[index].project));
+    if(project.demo?.synthetic!==true||project.id!=="NCSF-87-MH-PIPE56-SIM-V21")throw Error("Not a valid synthetic NCSF scenario");
+    const actual=E.assess(project),snapshot=project.rounds.at(-1)?.result;
+    if(actual.score!==snapshot?.score)throw Error("NCSF scenario score integrity mismatch");
+    state.mapScope="sector";state.historicalComparison=null;
+    state.tab=index===0?"survey":index===3?"rounds":"verify";
+    update(project,"SIMULATION ONLY — "+bundle.stages[index].id+" loaded. "+bundle.stages[index].title+". No new site measurements exist.");
+  }
+  async function compareHistoricalPipe56(){
+    const p=state.p;
+    if(!p?.demo?.synthetic||p.demo.stage<3)throw Error("Historical GIS comparison unlocks only after ROUND-03");
+    const res=await fetch("data/demo/NCSF_103_Historical_Pipes_HOLDOUT.json?v=2.1",{cache:"no-store"});
+    if(!res.ok)throw Error("Historical reference could not be loaded");
+    const ref=await res.json();
+    if(ref.schema!=="subterra-ncsf-historical-pipe-holdout/v1")throw Error("Unexpected historic source format");
+    const pipe=ref.pipes.find(x=>x.id==="NCSF-GIS-PIPE-56");
+    if(!pipe)throw Error("Historic Pipe 56 unavailable");
+    const match=String(pipe.source).match(/Shape__Length=([\d.]+) ft/);
+    if(!match)throw Error("Source historic pipe length missing");
+    const historicLengthM=Number(match[1])*.3048;
+    const revised=E.assess(p);
+    state.historicalComparison={pipeId:pipe.id,historicalLengthM:historicLengthM,modeledFaceLengthM:revised.route.lengthM,
+      historicYear:"2004 GIS / AutoCAD reference",deltaM:revised.route.lengthM-historicLengthM,
+      disclaimer:"Historical centerline length and current simulated opening-face length are not the same endpoint definition. Their delta is NOT field measured positional error. GIS source is NOT ground truth."};
+    render();
+  }
   function projectView(){
     return '<section class="start"><div class="eyebrow">SUBTERRA ENGINEERING / VERSION 2</div><h1>Start with what the surveyor actually measures.</h1>'+
       '<p class="intro">The first input is accurate <strong>Total Station X, Y, Z for every visible manhole</strong>. SUBTERRA proposes a low-evidence connection and asks for targeted measurements between at least two manholes. No historical GIS route is used in the first pass.</p>'+
@@ -49,12 +97,18 @@
       field("Project Z target σ (m)",number("targetZ","Specify target",true,"any",".025"))+
       field("Total Station instrument / serial",txt("instrumentId","Instrument identifier",false))+
       field("Surveyor",txt("surveyor","Survey team",false))+'</div>','Create Field Survey Project')+
+      '<div class="demo-cta"><div class="demo-label">READY COMPETITION PROJECT · SIMULATED</div><h2>NC State Fairgrounds · 87 manholes · Pipe 56</h2><p>Four reproducible survey rounds (14 → 49 → 70 → 100). Historical manhole records anchor a <strong>fictional</strong> Total Station survey. All pen, CCTV and sonde measurements are generated; no field visit occurred.</p><button type="button" class="btn btn-primary" data-action="load-ncsf-demo">Open NCSF Project & Start Simulation</button></div>'+
       '<div class="start-foot">Old application data are not imported. This is a new survey-first product. No AI is used for geometry or scoring.</div></section>';
   }
   function mapSvg(p,r){
     const all=p.manholes;
     if(!all.length)return '<div class="map-empty">Survey visible manholes with Total Station XYZ to see the plan.</div>';
-    const xs=all.map(m=>m.x),ys=all.map(m=>m.y);
+    const focus=p.demo?.synthetic===true&&state.mapScope!=="site"&&r.route&&p.pair?.length===2;
+    const a=all.find(m=>m.id===p.pair?.[0]),b=all.find(m=>m.id===p.pair?.[1]);
+    const mid=focus&&a&&b?{x:(a.x+b.x)/2,y:(a.y+b.y)/2}:null;
+    const radius=focus&&a&&b?Math.max(145,Math.hypot(b.x-a.x,b.y-a.y)*1.4):Infinity;
+    const shown=mid?all.filter(m=>p.pair.includes(m.id)||Math.hypot(m.x-mid.x,m.y-mid.y)<radius):all;
+    const xs=shown.map(m=>m.x),ys=shown.map(m=>m.y);
     if(r.route)for(const q of r.route.geometry){xs.push(q.x);ys.push(q.y);}
     const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
     const sx=Math.max(maxX-minX,18),sy=Math.max(maxY-minY,18);
@@ -64,9 +118,10 @@
     const grid='<path d="M0 105H900 M0 210H900 M0 315H900 M225 0V420 M450 0V420 M675 0V420" fill="none" stroke="#e5edf2" stroke-width="1"/>';
     const line=r.route&&r.route.geometry.length>1?
       '<polyline points="'+r.route.geometry.map(q=>xy(q).map(v=>v.toFixed(1)).join(",")).join(" ")+'" fill="none" stroke="'+color(r.score)+'" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" '+(r.status==="PROVISIONAL_ENDPOINT_CONNECTOR"?'stroke-dasharray="10 7"':'')+'/>' : "";
-    const markers=all.map(m=>{
-      const c=xy(m);return '<g><circle cx="'+c[0]+'" cy="'+c[1]+'" r="9" fill="#fff" stroke="#173d59" stroke-width="3"/>'+
-      '<text x="'+(c[0]+14)+'" y="'+(c[1]-12)+'" fill="#183d57" font-size="15" font-weight="700">'+safe(m.id)+'</text></g>';
+    const markers=shown.map(m=>{
+      const c=xy(m),selected=p.pair?.includes(m.id);
+      return '<g><circle cx="'+c[0]+'" cy="'+c[1]+'" r="'+(selected?9:4)+'" fill="'+(selected?'#fff':'#aec6d2')+'" stroke="#173d59" stroke-width="'+(selected?3:1)+'"/>'+
+      (selected?'<text x="'+(c[0]+14)+'" y="'+(c[1]-12)+'" fill="#183d57" font-size="15" font-weight="700">'+safe(m.id)+'</text>':'')+'</g>';
     }).join("");
     const stamp=r.route?'<text x="18" y="392" font-size="12" fill="#667b89">'+safe(r.status.replaceAll("_"," "))+' · '+n(r.route.lengthM,2)+' m plan · Bearing '+n(r.route.bearingDeg,1)+'° · Z pipe '+(r.route.gradePercent===null?"UNKNOWN":"Measured fall")+'</text>':
       '<text x="18" y="392" font-size="13" fill="#687e91">Add at least two manholes and select a pair</text>';
@@ -75,14 +130,15 @@
   function dashboard(p,r){
     const points=r.score===null?"—":n(r.score,1),pct=r.score===null?0:r.score;
     const bars=r.factors?.length?r.factors.map(f=>'<div class="score-factor"><div><span>'+safe(f.label)+'</span><b>'+n(f.score,1)+' / '+f.max+'</b></div><div class="track"><i style="width:'+(100*f.score/f.max)+'%;background:'+color(pct)+'"></i></div></div>').join(""):"";
-    return '<aside class="confidence-col"><div class="panel-head">ROUTE CONFIDENCE</div><div class="score-big" style="color:'+color(pct)+'">'+points+'<span>/100</span></div>'+
-      '<p class="score-sub">Verification coverage · not probability</p><div class="track track-main"><i style="width:'+pct+'%;background:'+color(pct)+'"></i></div>'+
+    return '<aside class="confidence-col"><div class="panel-head">ROUTE CONFIDENCE'+(p.demo?.synthetic?' · SIMULATED':'')+'</div><div class="score-big" style="color:'+color(pct)+'">'+points+'<span>/100</span></div>'+
+      '<p class="score-sub">Verification coverage · not probability'+(p.demo?.synthetic?' · NOT SITE VERIFIED':'')+'</p><div class="track track-main"><i style="width:'+pct+'%;background:'+color(pct)+'"></i></div>'+
       '<div class="metric-line"><span>Key field survey progress</span><b>'+((r.completeness===null)?"—":n(r.completeness,0)+"%")+'</b></div>'+
       '<div class="metric-line"><span>Active route</span><b>'+safe(r.status.replaceAll("_"," "))+'</b></div>'+
       '<div class="metric-line"><span>Surveyed manholes</span><b>'+p.manholes.length+'</b></div>'+
       '<div class="metric-line"><span>Checklist fields available</span><b>'+state.catalog.length+'</b></div>'+
       '<div class="metric-line"><span>Checklist observations</span><b>'+p.fieldValues.length+'</b></div>'+
       '<hr/><div class="factors">'+bars+'</div>'+
+      (p.demo?.synthetic?'<div class="sim-score-alert">All evidence is synthetic. Even 100/100 does not prove physical pipe geometry.</div>':'')+
       '<p class="technical-note">Score is based on declared evidence conditions and measurement availability. Total Station cover Z is NOT pipe invert Z. Buried path uncertainty remains unquantified until traced.</p>'+
       (p.accepted?'<div class="accepted"><strong>USER ACCEPTED</strong><p>Score '+n(p.accepted.score,1)+'/100 with '+p.accepted.remaining.length+' unresolved evidence tasks.</p></div>':'')+
       '<div class="side-actions"><button class="btn secondary" data-action="export">Export Project JSON</button><button class="btn subtle" data-action="reset">Start Another Project</button></div></aside>';
@@ -163,34 +219,90 @@
       '<h3>Latest field observations</h3><div class="table-scroll"><table><thead><tr><th>Field</th><th>Scope</th><th>Value</th></tr></thead><tbody>'+saved+'</tbody></table></div></div>';
   }
   function roundsTab(p,r){
-    const rows=p.rounds.slice().reverse().map(x=>'<article class="round-card"><b>'+safe(x.id)+'</b><span>'+safe(new Date(x.at).toLocaleString())+'</span><strong>'+n(x.result.score,1)+'/100</strong><small>'+safe(x.result.status)+'</small></article>').join("");
+    const rows=p.rounds.slice().reverse().map(x=>
+      '<article class="round-card"><b>'+safe(x.id)+'</b><span>'+safe(new Date(x.at).toLocaleString())+
+      '</span><strong>'+n(x.result.score,1)+'/100</strong><small>'+safe(x.result.status)+'</small></article>').join("");
+    let demo="";
+    if(p.demo?.synthetic){
+      demo='<section class="demo-round-buttons"><h3>Replay the four simulated rounds</h3>'+
+        '<p class="muted">Select a frozen synthetic snapshot. The 103 historical GIS pipe lines were not used in the calculations.</p>'+
+        [0,1,2,3].map(i=>'<button class="btn '+(p.demo.stage===i?'btn-primary':'secondary')+
+          '" data-action="demo-stage" data-index="'+i+'">ROUND-0'+i+(p.demo.stage===i?' · CURRENT':'')+'</button>').join("")+
+        '</section>';
+      if(p.demo.stage===3){
+        demo+='<section class="historical-review"><h3>Historical GIS: late validation only</h3>'+
+          '<p>Historical Pipe 56 reference unlocks only after Round 03 and is not drawn as a competing route.</p>'+
+          '<button class="btn secondary" data-action="historic-compare">Compare with held-out GIS Pipe 56</button></section>';
+      }
+      if(state.historicalComparison){
+        const x=state.historicalComparison;
+        demo+='<section class="historical-result"><b>HISTORICAL RECORD / NOT GROUND TRUTH</b>'+
+          '<div>2004 recorded GIS centerline length: '+n(x.historicalLengthM,3)+' m</div>'+
+          '<div>Current simulated opening-face length: '+n(x.modeledFaceLengthM,3)+' m</div>'+
+          '<div>Length-definition difference: '+n(x.deltaM,3)+' m</div>'+
+          '<p>'+safe(x.disclaimer)+'</p></section>';
+      }
+    }
     return '<div class="block"><div class="step">04 · EVIDENCE-BASED ITERATION</div><h2>Reconstruction Rounds</h2>'+
-    '<p class="muted">Every completed round stores its raw input snapshot, selected sector, score breakdown, one current route and the next missing survey tasks. Existing rounds are never overwritten.</p>'+
-    '<div class="rounds">'+(rows||'<p>No completed verification rounds yet. The initial route is only a provisional estimate.</p>')+'</div>'+
-    '<div class="next-footer"><button class="btn btn-primary" data-action="next-round">Save Next Assessment Round</button><button class="btn secondary" data-tab="verify">Add more observations</button></div></div>';
+      '<p class="muted">Each round freezes its raw XYZ and attribute observations. Demo evidence is SIMULATED, not independently verified field truth.</p>'+
+      '<div class="rounds">'+(rows||'<p>No completed verification rounds.</p>')+'</div>'+demo+
+      '<div class="next-footer"><button class="btn btn-primary" data-action="next-round">Save Next Assessment Round</button>'+
+      '<button class="btn secondary" data-tab="verify">Add more observations</button></div></div>';
   }
   function tasks(p,r){
-    if(!r.route)return '<section class="block tasks"><h2>What to measure next</h2><p>Record ALL visible manholes with Total Station XYZ, then confirm survey completion to generate the first low-confidence route.</p></section>';
-    if(p.accepted)return '<section class="block tasks"><div class="step">USER ACCEPTANCE</div><h2>Accepted at '+n(p.accepted.score,1)+'/100</h2><p class="muted">You accepted the current reconstruction while '+p.accepted.remaining.length+' verification tasks remain. No additional rounds are forced.</p><button class="btn secondary" data-action="resume">Resume Verification</button></section>';
-    return '<section class="block tasks"><div class="step">NEXT BEST MEASUREMENTS</div><h2>Raise confidence with evidence</h2>'+
-      '<p class="muted">Deterministic ranking by unfulfilled rubric weight divided by indicative effort. This is a task priority, not a promise of percentage gain.</p>'+
-      '<div class="task-list">'+r.tasks.slice(0,5).map((t,i)=>'<div class="task"><span class="task-index">'+(i+1).toString().padStart(2,"0")+'</span><div><strong>'+safe(t.label)+'</strong><small>'+safe(t.method)+' · up to '+n(t.maxMissing,1)+' remaining points</small></div></div>').join("")+
-      '</div><button class="btn btn-primary" data-tab="verify">Collect next measurement</button>'+
+    if(!r.route)return '<section class="block tasks"><h2>What to measure next</h2><p>First record all visible manholes with Total Station XYZ.</p></section>';
+    if(p.accepted)return '<section class="block tasks"><div class="step">USER ACCEPTANCE</div><h2>Accepted at '+
+      n(p.accepted.score,1)+'/100</h2><p class="muted">Accepted with '+p.accepted.remaining.length+
+      ' outstanding requirements. This is not a field certificate.</p><button class="btn secondary" data-action="resume">Resume Verification</button></section>';
+    let demo="";
+    if(p.demo?.synthetic){
+      demo='<div class="demo-next"><b>SIMULATED · ROUND-0'+p.demo.stage+' / ROUND-03</b>'+
+        '<p>No contemporary Total Station, smart pen, CCTV or sonde fieldwork occurred.</p>';
+      if(p.demo.stage<3){
+        demo+='<button class="btn btn-primary" data-action="demo-next">▶ Run Next Simulated Survey Round</button>';
+      }else{
+        demo+='<div class="sim-finished">All 4 demonstration rounds completed. 100/100 means the fictional evidence rubric is satisfied.</div>';
+      }
+      demo+='<button class="btn secondary" data-tab="rounds">Replay / inspect saved rounds</button></div>';
+    }
+    return '<section class="block tasks">'+demo+'<div class="step">NEXT BEST MEASUREMENTS</div><h2>Raise confidence with evidence</h2>'+
+      '<p class="muted">Missing field tasks ranked by unfulfilled rubric and indicative effort, not by a validated accuracy-gain model.</p>'+
+      '<div class="task-list">'+r.tasks.slice(0,5).map((t,i)=>
+        '<div class="task"><span class="task-index">'+(i+1).toString().padStart(2,"0")+
+        '</span><div><strong>'+safe(t.label)+'</strong><small>'+safe(t.method)+' · up to '+
+        n(t.maxMissing,1)+' remaining points</small></div></div>').join("")+'</div>'+
+      '<button class="btn btn-primary" data-tab="verify">Collect next measurement</button>'+
       '<button class="btn secondary" data-action="accept">Accept current confidence & stop</button>'+
-      '<div class="footnote">Acceptance is a user decision, not a professional certification or proof of hidden pipe position.</div></section>';
+      '<div class="footnote">User acceptance is not verification of concealed pipe position.</div></section>';
   }
   function main(p,r){
-    const status=r.score===null?"Awaiting ≥ 2 surveyed manholes":r.route?.hiddenAlignmentUnquantified?"Buried route untraced — hypothesis":"Trace evidence recorded — review status required";
-    return '<header class="app-header"><div><div class="eyebrow">SANITARY / STORMWATER · XYZ RECONSTRUCTION ENGINE</div><h1>'+safe(p.name)+'</h1><p>'+safe(p.network.toUpperCase())+' · '+safe(p.control.crs)+' · '+safe(p.control.verticalDatum)+' · Total Station First</p></div><div class="header-actions"><button class="btn secondary" data-action="export">Export JSON</button><label class="file-control">Import v2 JSON<input type="file" id="importProject" accept=".json,application/json"/></label></div></header>'+
+    const status=r.score===null?"Awaiting ≥ 2 surveyed manholes":
+      r.route?.hiddenAlignmentUnquantified?"Buried route untraced — hypothesis":"Trace evidence recorded — check provenance";
+    const sim=p.demo?.synthetic===true;
+    const simBanner=sim?'<div class="sim-banner"><strong>SIMULATED — NOT A REAL FIELD SURVEY</strong><span>'+
+      'NCSF · 87 historical manhole coordinates → fictional Total Station and pen XYZ · ROUND-0'+
+      p.demo.stage+'/03. Historical GIS pipes are held out. Even 100/100 is a synthetic rubric result, not field accuracy.</span></div>':'';
+    const mapToggle=sim?'<button class="btn secondary small" data-action="map-scope">'+
+      (state.mapScope==="sector"?"View All 87 Manholes":"Zoom to Pipe 56")+'</button>':'';
+    return '<header class="app-header"><div><div class="eyebrow">SANITARY / STORMWATER · XYZ RECONSTRUCTION ENGINE</div>'+
+      '<h1>'+safe(p.name)+'</h1><p>'+safe(p.network.toUpperCase())+' · '+safe(p.control.crs)+' · '+
+      safe(p.control.verticalDatum)+' · '+(sim?'SYNTHETIC TS DATA':'Total Station First')+'</p></div>'+
+      '<div class="header-actions"><button class="btn secondary" data-action="load-ncsf-demo">NCSF Demo</button>'+
+      '<button class="btn secondary" data-action="export">Export JSON</button>'+
+      '<label class="file-control">Import v2 JSON<input type="file" id="importProject" accept=".json,application/json"/></label></div></header>'+
+      simBanner+
       '<div class="workspace"><div class="confidence-wrapper">'+dashboard(p,r)+'</div>'+
-      '<main class="workspace-main"><div class="map-panel"><div class="map-title"><strong>RECONSTRUCTED ROUTE</strong><span>'+safe(status)+'</span></div>'+mapSvg(p,r)+
-      '<div class="map-legend"><span><i style="background:'+color(r.score)+'"></i>Single active route · score '+(r.score===null?"—":n(r.score,1))+'</span><span>'+safe(r.status.replaceAll("_"," "))+'</span></div></div>'+
+      '<main class="workspace-main"><div class="map-panel"><div class="map-title"><strong>RECONSTRUCTED ROUTE</strong>'+
+      '<span>'+safe(status)+'</span>'+mapToggle+'</div>'+mapSvg(p,r)+
+      '<div class="map-legend"><span><i style="background:'+color(r.score)+'"></i>One active route · score '+
+      (r.score===null?"—":n(r.score,1))+'</span><span>'+safe(r.status.replaceAll("_"," "))+'</span></div></div>'+
       '<div class="tabs"><button data-tab="survey" class="'+(state.tab==="survey"?"active":"")+'">1 · Total Station</button>'+
       '<button data-tab="verify" class="'+(state.tab==="verify"?"active":"")+'">2 · Field Verification</button>'+
       '<button data-tab="catalog" class="'+(state.tab==="catalog"?"active":"")+'">3 · 430-Field Checklist</button>'+
       '<button data-tab="rounds" class="'+(state.tab==="rounds"?"active":"")+'">4 · Rounds</button></div>'+
-      (state.tab==="verify"?(r.route?verifyTab(p,r):surveyTab(p,r)):state.tab==="catalog"?catalogTab(p):state.tab==="rounds"?roundsTab(p,r):surveyTab(p,r))+
-      '<footer class="application-footer">SUBTERRA v2 · Deterministic geometry and verification-coverage score · NO AI · Browser-local competition build; mobile live sync is a separate backend integration.</footer></main>'+
+      (state.tab==="verify"?(r.route?verifyTab(p,r):surveyTab(p,r)):
+      state.tab==="catalog"?catalogTab(p):state.tab==="rounds"?roundsTab(p,r):surveyTab(p,r))+
+      '<footer class="application-footer">SUBTERRA v2.1 · Deterministic calculations · No AI · Simulation is NOT a real survey. Live mobile sync is not implemented.</footer></main>'+
       '<aside class="tasks-wrapper">'+tasks(p,r)+'</aside></div>';
   }
   function render(){
@@ -242,6 +354,17 @@
     if(target.dataset.tab){state.tab=target.dataset.tab;render();return;}
     const action=target.dataset.action,p=state.p;
     try{
+      if(action==="load-ncsf-demo"){void loadSimulationStage(0,!!p).catch(err=>notify(err.message||String(err)));return;}
+      if(action==="demo-next"){
+        if(!p?.demo?.synthetic)throw Error("No synthetic demonstration project is active");
+        void loadSimulationStage(p.demo.stage+1,false).catch(err=>notify(err.message||String(err)));return;
+      }
+      if(action==="demo-stage"){
+        if(!p?.demo?.synthetic)throw Error("No synthetic demonstration project is active");
+        void loadSimulationStage(Number(target.dataset.index),false).catch(err=>notify(err.message||String(err)));return;
+      }
+      if(action==="historic-compare"){void compareHistoricalPipe56().catch(err=>notify(err.message||String(err)));return;}
+      if(action==="map-scope"){state.mapScope=state.mapScope==="sector"?"site":"sector";render();return;}
       if(action==="surface-complete"){
         if(window.confirm("Confirm Total Station XYZ has been captured for ALL visible manholes in this survey area?")){let next=E.setSurfaceSurveyComplete(p,true);next=E.nextRound(next);update(next,"Round 0 frozen. Low-confidence route created; buried pipe Z remains unknown.");}
         return;
@@ -315,7 +438,14 @@
       if(cat.count!==430||!Array.isArray(cat.fields)||cat.fields.length!==430)throw Error("Incomplete field dictionary");
       state.catalog=cat.fields;
     }catch(err){state.lastError=String(err.message||err);}
-    render();if(state.lastError)notify(state.lastError);
+    const directDemo=/(?:[?&])demo=ncsf(?:&|$)/i.test(window.location?.search||"");
+    if(directDemo&&!state.p?.demo?.synthetic){
+      try{await loadSimulationStage(0,!!state.p);}
+      catch(err){render();notify("NCSF demo could not be opened: "+String(err.message||err));}
+    }else{
+      if(state.p?.demo?.synthetic){state.mapScope="sector";state.tab=state.p.demo.stage>0?"rounds":"survey";}
+      render();if(state.lastError)notify(state.lastError);
+    }
   }
   init();
 })();
