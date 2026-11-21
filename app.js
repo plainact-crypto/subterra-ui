@@ -1,4 +1,4 @@
-/* Subterra UI v0.7 — historical GIS pipe visibility, basemaps and evidence capture. */
+/* Subterra UI v0.8 — calculated candidate and historical GIS comparison. */
 (() => {
   'use strict';
 
@@ -100,10 +100,48 @@
     return `<button type="button" class="canvas-pill historical-pipes-toggle ${visible?'visible':'hidden-pipes'}" id="toggleHistoricalPipes" aria-pressed="${visible}" aria-label="${visible?'Hide':'Show'} Historical GIS Pipes" title="Historical GIS pipes are validation reference, not inferred results">${icon}<span>Historical GIS Pipes</span><span class="historical-pipes-state">${visible?'Visible':'Hidden'}</span></button>`;
   }
 
+
+  function calculatedCandidateButton(p){
+    const visible=p.showCalculatedCandidate!==false;
+    const icon=visible
+      ? '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>'
+      : '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 4.5 19.5 19.5M10.6 5.1A10.4 10.4 0 0 1 12 5c6.4 0 10 7 10 7a15 15 0 0 1-3.5 4.3M6.1 6.6C3.5 8.5 2 12 2 12s3.6 7 10 7a11.8 11.8 0 0 0 4.4-.9M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>';
+    return `<button type="button" class="canvas-pill calculated-pipes-toggle ${visible?'visible':'hidden-pipes'}" id="toggleCalculatedCandidate" aria-pressed="${visible}" aria-label="${visible?'Hide':'Show'} Calculated Candidate" title="Computed from manhole locations and outlet/inlet invert levels only; straight-line hypothesis">${icon}<span>Calculated Candidate</span><span class="candidate-pipes-state">${visible?'Visible':'Hidden'}</span></button>`;
+  }
+  function computeCandidate(p){
+    if(p?.coordMode!=='geographic')return null;
+    const evidence=window.SubterraInferenceEvidence?.build(p);
+    return evidence ? window.SubterraCandidate?.candidateFromEvidence(evidence) : null;
+  }
+  function drawCalculatedCandidate(points,candidate){
+    const p=active();
+    if(!candidate||!p||p.showCalculatedCandidate===false||!points.length)return;
+    const start=toWorld(p,{lat:candidate.coordinates[0][1],lon:candidate.coordinates[0][0]},points[0].mh);
+    const end=toWorld(p,{lat:candidate.coordinates[1][1],lon:candidate.coordinates[1][0]},points[0].mh);
+    const a=pos(start.x,start.y),b=pos(end.x,end.y);
+    ctx.save();
+    // Wide orange centerline stays on its calculated geometry.
+    // Blue dashed recorded GIS line is overlaid in a narrower stroke when coincident;
+    // no physical route is ever shifted to visually separate overlapping traces.
+    ctx.strokeStyle='#e58b24';
+    ctx.lineWidth=8;
+    ctx.lineCap='round';
+    ctx.setLineDash([]);
+    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+    ctx.restore();
+  }
+  function updateCandidateSummary(candidate,p){
+    const display=$('#candidateSummary');
+    if(!display)return;
+    const shown=!!candidate&&p?.showCalculatedCandidate!==false;
+    display.hidden=!shown;
+    if(shown)display.textContent=`Calculated straight-line · ${candidate.distanceM.toFixed(2)} m · S ${candidate.slopePercent.toFixed(2)}% · Hypothesis`;
+  }
+
   function renderWorkspace() {
     const p=active(); if(!p){navigate('projects');return;}
     const mapLayer=['none','streets','satellite'].includes(p.mapLayer)?p.mapLayer:'none';
-    $('#mainContent').innerHTML=`<div class="workspace"><div class="ws-header"><div><h1>Sanitary Sewer <span style="font-size:12px;color:#80a3a3;font-weight:600">/ Data Workspace</span></h1><div class="ws-sub">${escapeHtml(p.name)} · Surveyed evidence & manhole classification · No design calculations</div></div><div class="ws-actions"><button class="btn btn-outline btn-sm hide-sm" id="exportCsv">↓ Export CSV</button><button class="btn btn-outline btn-sm" id="importJson">↑ Import JSON</button><input id="importJsonFile" type="file" accept=".json,application/json" hidden aria-label="Select Subterra observation JSON" /><button class="btn btn-outline btn-sm" id="exportJson">↓ JSON</button><button class="btn btn-outline btn-sm hide-sm" id="exportKml">↗ Google Earth KML</button><button class="btn btn-primary btn-sm" id="topAddMh">＋ Manhole</button></div></div><div class="ws-main"><section class="canvas-pane"><canvas class="canvas-surface" id="mapCanvas" aria-label="Infinite canvas with surveyed manholes. Drag to pan, scroll to zoom."></canvas><div class="canvas-toolbar"><span class="canvas-pill green">● Sewer / Manholes</span><span class="canvas-pill">${p.coordMode==='geographic'?'WGS84 · Local metric view':'Local XY · Metres'}</span><label class="canvas-pill map-layer-control">Background <select id="mapLayerPicker" aria-label="Background map layer" ${p.coordMode==='geographic'?'':'disabled title="Basemaps require WGS84 coordinates"'}><option value="none" ${mapLayer==='none'?'selected':''}>None</option><option value="streets" ${mapLayer==='streets'?'selected':''}>Streets · OSM</option><option value="satellite" ${mapLayer==='satellite'?'selected':''}>Satellite · USGS (USA)</option></select></label>${historicalPipesButton(p)}</div><div class="basemap-attribution" id="basemapAttribution" hidden></div><div class="canvas-controls"><button id="zoomIn" title="Zoom in">＋</button><button id="zoomOut" title="Zoom out">−</button><button class="fit" id="fitCanvas" title="Fit all manholes">FIT</button></div><div id="canvasEmpty" class="canvas-overlay-empty"><div class="ghost-icon">⌖</div><strong>Your survey canvas is ready</strong><p>Add a manhole and enter its surveyed top coordinates. It will appear here automatically.</p></div><div class="canvas-hint">✥ Drag to pan <span style="opacity:.35">·</span> Scroll to zoom <span style="opacity:.35">·</span> Click a manhole to select</div><div class="canvas-legend"><span class="dot-legend"></span> Recorded top point · <span style="color:#377bd2">┄</span> Imported historical GIS pipe</div></section><aside class="inspector"><div class="inspector-tabs"><span class="inspector-caption">MANHOLE RECORDS &amp; CLASSIFICATION</span></div><div class="inspector-scroll" id="inspectorBody"></div></aside></div></div>`;
+    $('#mainContent').innerHTML=`<div class="workspace"><div class="ws-header"><div><h1>Sanitary Sewer <span style="font-size:12px;color:#80a3a3;font-weight:600">/ Data Workspace</span></h1><div class="ws-sub">${escapeHtml(p.name)} · Surveyed evidence & manhole classification · No design calculations</div></div><div class="ws-actions"><button class="btn btn-outline btn-sm hide-sm" id="exportCsv">↓ Export CSV</button><button class="btn btn-outline btn-sm" id="importJson">↑ Import JSON</button><input id="importJsonFile" type="file" accept=".json,application/json" hidden aria-label="Select Subterra observation JSON" /><button class="btn btn-outline btn-sm" id="exportJson">↓ JSON</button><button class="btn btn-outline btn-sm hide-sm" id="exportKml">↗ Google Earth KML</button><button class="btn btn-primary btn-sm" id="topAddMh">＋ Manhole</button></div></div><div class="ws-main"><section class="canvas-pane"><canvas class="canvas-surface" id="mapCanvas" aria-label="Infinite canvas with surveyed manholes. Drag to pan, scroll to zoom."></canvas><div class="canvas-toolbar"><span class="canvas-pill green">● Sewer / Manholes</span><span class="canvas-pill">${p.coordMode==='geographic'?'WGS84 · Local metric view':'Local XY · Metres'}</span><label class="canvas-pill map-layer-control">Background <select id="mapLayerPicker" aria-label="Background map layer" ${p.coordMode==='geographic'?'':'disabled title="Basemaps require WGS84 coordinates"'}><option value="none" ${mapLayer==='none'?'selected':''}>None</option><option value="streets" ${mapLayer==='streets'?'selected':''}>Streets · OSM</option><option value="satellite" ${mapLayer==='satellite'?'selected':''}>Satellite · USGS (USA)</option></select></label>${historicalPipesButton(p)}${calculatedCandidateButton(p)}</div><div class="basemap-attribution" id="basemapAttribution" hidden></div><div class="canvas-controls"><button id="zoomIn" title="Zoom in">＋</button><button id="zoomOut" title="Zoom out">−</button><button class="fit" id="fitCanvas" title="Fit all manholes">FIT</button></div><div class="candidate-summary" id="candidateSummary" hidden></div><div id="canvasEmpty" class="canvas-overlay-empty"><div class="ghost-icon">⌖</div><strong>Your survey canvas is ready</strong><p>Add a manhole and enter its surveyed top coordinates. It will appear here automatically.</p></div><div class="canvas-hint">✥ Drag to pan <span style="opacity:.35">·</span> Scroll to zoom <span style="opacity:.35">·</span> Click a manhole to select</div><div class="canvas-legend"><span class="dot-legend"></span> Manholes · <span class="legend-route-orange">━━</span> Calculated Candidate · <span class="legend-route-blue">┄┄</span> Historical GIS</div></section><aside class="inspector"><div class="inspector-tabs"><span class="inspector-caption">MANHOLE RECORDS &amp; CLASSIFICATION</span></div><div class="inspector-scroll" id="inspectorBody"></div></aside></div></div>`;
     renderInspector(); setupCanvas(); requestAnimationFrame(()=>{if(state.canvas.dirtyFit)fitCanvas();else drawCanvas();});
   }
   function renderInspector(){renderManholes();}
@@ -250,7 +288,7 @@
       window.SubterraBasemap?.draw({ctx,layer:basemapLayer,project,view:v,width:w,height:h,origin:basePoints[0].mh,redraw:drawCanvas});
     }
     const step=gridStep(50/v.scale),spacing=step*v.scale;const pointA=invPos(0,h),pointB=invPos(w,0);if(Number.isFinite(spacing)&&spacing>2){ctx.lineWidth=1;ctx.strokeStyle='#dce7ed';ctx.beginPath();const startX=Math.floor(pointA.x/step)*step;for(let x=startX;x<pointB.x+step;x+=step){const sx=pos(x,0).x;ctx.moveTo(sx,0);ctx.lineTo(sx,h);}const startY=Math.floor(pointA.y/step)*step;for(let y=startY;y<pointB.y+step;y+=step){const sy=pos(0,y).y;ctx.moveTo(0,sy);ctx.lineTo(w,sy);}ctx.stroke();ctx.font='10px ui-sans-serif, sans-serif';ctx.fillStyle='#a4b6c2';ctx.textBaseline='bottom';for(let x=startX;x<pointB.x+step;x+=step){const sx=pos(x,0).x;if(sx>10&&sx<w-30)ctx.fillText(Math.round(x*10)/10+' m',sx+4,h-10);}}const origin=pos(0,0);ctx.strokeStyle='#b7d0d4';ctx.lineWidth=1.1;ctx.beginPath();ctx.moveTo(origin.x,0);ctx.lineTo(origin.x,h);ctx.moveTo(0,origin.y);ctx.lineTo(w,origin.y);ctx.stroke();
-    const points=locatedPoints();$('#canvasEmpty')?.style.setProperty('display',points.length?'none':'block');drawObservedPipes(points);for(const pt of points){const at=pos(pt.x,pt.y);if(at.x < -120||at.x>w+120||at.y < -80||at.y>h+80)continue;const selected=pt.mh.id===state.selectedMh;ctx.beginPath();ctx.arc(at.x,at.y,selected?15:12,0,Math.PI*2);ctx.fillStyle=selected?'rgba(12,129,120,.16)':'rgba(12,129,120,.10)';ctx.fill();ctx.beginPath();ctx.arc(at.x,at.y,selected?7.5:6,0,Math.PI*2);ctx.fillStyle=selected?'#075c58':'#0c8178';ctx.fill();ctx.lineWidth=2;ctx.strokeStyle='#fff';ctx.stroke();ctx.font=(selected?'700 ':'600 ')+'12px ui-sans-serif, sans-serif';const title=String(pt.mh.name||'Manhole');const tw=ctx.measureText(title).width;const lx=at.x+13,ly=at.y-16;ctx.fillStyle='#fff';ctx.beginPath();ctx.roundRect(lx-6,ly-12,tw+12,22,5);ctx.fill();ctx.fillStyle='#213e50';ctx.fillText(title,lx,ly+3);}
+    const points=locatedPoints();$('#canvasEmpty')?.style.setProperty('display',points.length?'none':'block');const candidate=computeCandidate(project);drawCalculatedCandidate(points,candidate);drawObservedPipes(points);updateCandidateSummary(candidate,project);for(const pt of points){const at=pos(pt.x,pt.y);if(at.x < -120||at.x>w+120||at.y < -80||at.y>h+80)continue;const selected=pt.mh.id===state.selectedMh;ctx.beginPath();ctx.arc(at.x,at.y,selected?15:12,0,Math.PI*2);ctx.fillStyle=selected?'rgba(12,129,120,.16)':'rgba(12,129,120,.10)';ctx.fill();ctx.beginPath();ctx.arc(at.x,at.y,selected?7.5:6,0,Math.PI*2);ctx.fillStyle=selected?'#075c58':'#0c8178';ctx.fill();ctx.lineWidth=2;ctx.strokeStyle='#fff';ctx.stroke();ctx.font=(selected?'700 ':'600 ')+'12px ui-sans-serif, sans-serif';const title=String(pt.mh.name||'Manhole');const tw=ctx.measureText(title).width;const lx=at.x+13,ly=at.y-16;ctx.fillStyle='#fff';ctx.beginPath();ctx.roundRect(lx-6,ly-12,tw+12,22,5);ctx.fill();ctx.fillStyle='#213e50';ctx.fillText(title,lx,ly+3);}
     // Scale bar: visually supports metric view only, not a precision survey scale.
     const real=gridStep(100/v.scale);const sw=real*v.scale;if(sw>24&&sw<300){ctx.strokeStyle='#4e6e7a';ctx.fillStyle='#4e6e7a';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(22,h-67);ctx.lineTo(22+sw,h-67);ctx.moveTo(22,h-72);ctx.lineTo(22,h-62);ctx.moveTo(22+sw,h-72);ctx.lineTo(22+sw,h-62);ctx.stroke();ctx.font='11px sans-serif';ctx.fillText(`${real} m (approx.)`,22,h-77);}}
   function canvasWheel(e){e.preventDefault();const r=canvas.getBoundingClientRect(),sx=e.clientX-r.left,sy=e.clientY-r.top,before=invPos(sx,sy);state.canvas.scale=Math.max(.0002,Math.min(80,state.canvas.scale*Math.exp(-e.deltaY*.0012)));const after=pos(before.x,before.y);state.canvas.panX+=sx-after.x;state.canvas.panY+=sy-after.y;drawCanvas();}
@@ -272,6 +310,15 @@
     if(target.matches('#deleteMh')){const p=active(),m=getSelectedMh();if(m&&confirm(`Delete ${m.name||'this manhole'}?`)){p.manholes=p.manholes.filter(x=>x.id!==m.id);state.selectedMh=p.manholes.at(-1)?.id||null;window.SubterraWizard.resetStep();save();renderInspector();drawCanvas();}return;}
     if(target.matches('#fitCanvas'))return fitCanvas();
     if(target.matches('#zoomIn,#zoomOut')){state.canvas.scale=Math.max(.0002,Math.min(80,state.canvas.scale*(target.id==='zoomIn'?1.4:1/1.4)));drawCanvas();return;}
+    if(target.matches('#toggleCalculatedCandidate')){
+      const p=active();if(!p)return;
+      const visible=p.showCalculatedCandidate===false;
+      p.showCalculatedCandidate=visible;
+      target.outerHTML=calculatedCandidateButton(p);
+      save();drawCanvas();
+      announce(visible?'Calculated candidate visible':'Calculated candidate hidden');
+      return;
+    }
     if(target.matches('#toggleHistoricalPipes')){
       const p=active();if(!p)return;
       const nowVisible=p.showHistoricalPipes===false;
@@ -310,7 +357,7 @@
   $('#navSystems').addEventListener('click',()=>{if(active())navigate('systems');else announce('Create a project first');});
   $('#brandHome').addEventListener('click',()=>navigate('projects'));
   $('#brandHome').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')navigate('projects');});
-  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.7 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. No reconstruction calculations or AI inferences are executed. Data is stored locally in your browser. Export JSON backups regularly.'));
+  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.8 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. No reconstruction calculations or AI inferences are executed. Data is stored locally in your browser. Export JSON backups regularly.'));
   window.SubterraDetails.setup({getSelectedMh,active,save,renderInspector,announce});
   window.SubterraWizard.setup({getSelectedMh,active,save,renderInspector,announce,drawCanvas,refreshLocation});
   render();

@@ -16,3 +16,16 @@
 .historical-pipes-toggle:focus-visible{outline:2px solid #0c8178;outline-offset:2px}
 @media (max-width:1250px){.canvas-toolbar{flex-wrap:wrap;max-width:calc(100% - 133px)}}
 @media (max-width:750px){.historical-pipes-toggle span:not(.historical-pipes-state){display:none}.historical-pipes-toggle{gap:5px}}
+
+/* v0.8 — explicit calculated-vs-historical line comparison */
+.calculated-pipes-toggle{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;color:#805016;cursor:pointer}
+.calculated-pipes-toggle svg{flex:none}
+.calculated-pipes-toggle .candidate-pipes-state{font-size:10px;color:#b46d18;font-weight:800}
+.calculated-pipes-toggle.hidden-pipes .candidate-pipes-state{color:#7c8d99}
+.calculated-pipes-toggle:hover{background:#fff7eb;border-color:#e8bb77}
+.calculated-pipes-toggle:focus-visible{outline:2px solid #e58b24;outline-offset:2px}
+.legend-route-orange{color:#e58b24;font-weight:900;font-size:14px}
+.legend-route-blue{color:#377bd2;font-weight:900;font-size:14px}
+.candidate-summary{position:absolute;right:20px;top:70px;z-index:2;max-width:calc(100% - 40px);border:1px solid #e8c795;background:rgba(255,251,244,.95);padding:8px 10px;border-radius:8px;font-size:11px;font-weight:700;color:#875217;pointer-events:none}
+.candidate-summary[hidden]{display:none}
+@media (max-width:850px){.canvas-legend{max-width:85%;line-height:1.6}.candidate-summary{top:110px}.calculated-pipes-toggle span:not(.candidate-pipes-state){display:none}}
