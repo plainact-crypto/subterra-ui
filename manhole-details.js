@@ -20,7 +20,7 @@
   ];
   const PRESENCE = [['present','Present'],['absent','Not present'],['unknown','Unknown']];
   const KNOWLEDGE = [['measured','Known / measured'],['unknown','Unknown'],['infer','Request inference']];
-  const PIPE_MATERIALS = ['','uPVC','HDPE','GRP','Reinforced Concrete','Vitrified Clay','Ductile Iron','Steel','Other / unspecified'];
+  const PIPE_MATERIALS = ['','uPVC','HDPE','GRP','Reinforced Concrete','Vitrified Clay','Terra Cotta Pipe (TCP)','Ductile Iron','Steel','Other / unspecified'];
   const esc = s => String(s ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
   const uid = () => (globalThis.crypto?.randomUUID?.() || ('op-' + Date.now() + '-' + Math.random().toString(36).slice(2)));
   const num = v => v === '' || v === null || v === undefined ? '' : String(v);

@@ -1,4 +1,4 @@
-/* Subterra UI v0.4 — confirmable full project deletion. No design calculations. */
+/* Subterra UI v0.5 — additive evidence JSON import; no design calculations. */
 (() => {
   'use strict';
 
@@ -92,7 +92,7 @@
   }
   function renderWorkspace() {
     const p=active(); if(!p){navigate('projects');return;}
-    $('#mainContent').innerHTML=`<div class="workspace"><div class="ws-header"><div><h1>Sanitary Sewer <span style="font-size:12px;color:#80a3a3;font-weight:600">/ Data Workspace</span></h1><div class="ws-sub">${escapeHtml(p.name)} · Surveyed evidence & manhole classification · No design calculations</div></div><div class="ws-actions"><button class="btn btn-outline btn-sm hide-sm" id="exportCsv">↓ Export CSV</button><button class="btn btn-outline btn-sm" id="exportJson">↓ JSON</button><button class="btn btn-outline btn-sm hide-sm" id="exportKml">↗ Google Earth KML</button><button class="btn btn-primary btn-sm" id="topAddMh">＋ Manhole</button></div></div><div class="ws-main"><section class="canvas-pane"><canvas class="canvas-surface" id="mapCanvas" aria-label="Infinite canvas with surveyed manholes. Drag to pan, scroll to zoom."></canvas><div class="canvas-toolbar"><span class="canvas-pill green">● Sewer / Manholes</span><span class="canvas-pill">${p.coordMode==='geographic'?'WGS84 · Local metric view':'Local XY · Metres'}</span></div><div class="canvas-controls"><button id="zoomIn" title="Zoom in">＋</button><button id="zoomOut" title="Zoom out">−</button><button class="fit" id="fitCanvas" title="Fit all manholes">FIT</button></div><div id="canvasEmpty" class="canvas-overlay-empty"><div class="ghost-icon">⌖</div><strong>Your survey canvas is ready</strong><p>Add a manhole and enter its surveyed top coordinates. It will appear here automatically.</p></div><div class="canvas-hint">✥ Drag to pan <span style="opacity:.35">·</span> Scroll to zoom <span style="opacity:.35">·</span> Click a manhole to select</div><div class="canvas-legend"><span class="dot-legend"></span> Surveyed top point</div></section><aside class="inspector"><div class="inspector-tabs"><span class="inspector-caption">MANHOLE RECORDS &amp; CLASSIFICATION</span></div><div class="inspector-scroll" id="inspectorBody"></div></aside></div></div>`;
+    $('#mainContent').innerHTML=`<div class="workspace"><div class="ws-header"><div><h1>Sanitary Sewer <span style="font-size:12px;color:#80a3a3;font-weight:600">/ Data Workspace</span></h1><div class="ws-sub">${escapeHtml(p.name)} · Surveyed evidence & manhole classification · No design calculations</div></div><div class="ws-actions"><button class="btn btn-outline btn-sm hide-sm" id="exportCsv">↓ Export CSV</button><button class="btn btn-outline btn-sm" id="importJson">↑ Import JSON</button><input id="importJsonFile" type="file" accept=".json,application/json" hidden aria-label="Select Subterra observation JSON" /><button class="btn btn-outline btn-sm" id="exportJson">↓ JSON</button><button class="btn btn-outline btn-sm hide-sm" id="exportKml">↗ Google Earth KML</button><button class="btn btn-primary btn-sm" id="topAddMh">＋ Manhole</button></div></div><div class="ws-main"><section class="canvas-pane"><canvas class="canvas-surface" id="mapCanvas" aria-label="Infinite canvas with surveyed manholes. Drag to pan, scroll to zoom."></canvas><div class="canvas-toolbar"><span class="canvas-pill green">● Sewer / Manholes</span><span class="canvas-pill">${p.coordMode==='geographic'?'WGS84 · Local metric view':'Local XY · Metres'}</span></div><div class="canvas-controls"><button id="zoomIn" title="Zoom in">＋</button><button id="zoomOut" title="Zoom out">−</button><button class="fit" id="fitCanvas" title="Fit all manholes">FIT</button></div><div id="canvasEmpty" class="canvas-overlay-empty"><div class="ghost-icon">⌖</div><strong>Your survey canvas is ready</strong><p>Add a manhole and enter its surveyed top coordinates. It will appear here automatically.</p></div><div class="canvas-hint">✥ Drag to pan <span style="opacity:.35">·</span> Scroll to zoom <span style="opacity:.35">·</span> Click a manhole to select</div><div class="canvas-legend"><span class="dot-legend"></span> Recorded top point · <span style="color:#377bd2">┄</span> Imported historical GIS pipe</div></section><aside class="inspector"><div class="inspector-tabs"><span class="inspector-caption">MANHOLE RECORDS &amp; CLASSIFICATION</span></div><div class="inspector-scroll" id="inspectorBody"></div></aside></div></div>`;
     renderInspector(); setupCanvas(); requestAnimationFrame(()=>{if(state.canvas.dirtyFit)fitCanvas();else drawCanvas();});
   }
   function renderInspector(){renderManholes();}
@@ -156,6 +156,62 @@
     exportFile(`${safeFilename(p.name)}_manholes.kml`,`<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>${xmlEscape(p.name)}</name>${placemarks}</Document></kml>`,'application/vnd.google-earth.kml+xml');announce('KML ready for Google Earth');
   }
 
+
+  // Only documented, explicitly imported GIS traces are drawn. No connection is inferred by proximity.
+  function drawObservedPipes(points) {
+    const p=active();if(!p||p.coordMode!=='geographic'||!points.length||!Array.isArray(p.observedPipes))return;
+    const origin=points[0].mh;
+    ctx.save();ctx.strokeStyle='#377bd2';ctx.lineWidth=2.5;ctx.setLineDash([7,5]);
+    for(const line of p.observedPipes){
+      if(!Array.isArray(line.coordinates)||line.coordinates.length<2)continue;
+      ctx.beginPath();
+      for(let i=0;i<line.coordinates.length;i++){
+        const point=line.coordinates[i];
+        const w=toWorld(p,{lon:point[0],lat:point[1]},origin),at=pos(w.x,w.y);
+        if(i===0)ctx.moveTo(at.x,at.y);else ctx.lineTo(at.x,at.y);
+      }
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+  async function importJsonFile(file){
+    const p=active();if(!p)return;
+    if(file.size>5*1024*1024){announce('JSON exceeds 5 MB. Split the observation file.');return;}
+    try {
+      const payload=window.SubterraJsonImport.parse(await file.text(),p.coordMode);
+      const existingNames=new Set(p.manholes.map(m=>String(m.name||'').trim().toLowerCase()).filter(Boolean));
+      const existing=[...p.manholes],added=[];
+      let skipped=0,nextIndex=Math.max(0,...p.manholes.map(m=>m.autoIndex||0))+1;
+      const samePosition=(a,b)=>{
+        if(!validMh(p,a)||!validMh(p,b))return false;
+        if(p.coordMode==='geographic')return Math.abs(+a.lat - +b.lat)<1e-7 && Math.abs(+a.lon - +b.lon)<1e-7;
+        return Math.hypot(+a.x - +b.x,+a.y - +b.y)<0.01;
+      };
+      for(const record of payload.manholes){
+        const name=String(record.customName||record.name||'').trim().toLowerCase();
+        if((name&&existingNames.has(name))||existing.some(m=>samePosition(m,record))){
+          skipped++;continue;
+        }
+        const m={...record,id:uid(),autoIndex:nextIndex++};
+        window.SubterraWizard.ensure(m,p);
+        added.push(m);existing.push(m);
+        existingNames.add(m.name.trim().toLowerCase());
+      }
+      const pipes=Array.isArray(p.observedPipes)?p.observedPipes:[];
+      const ids=new Set(pipes.map(x=>String(x.id).toLowerCase()));
+      const addedPipes=payload.observedPipes.filter(x=>{
+        const k=x.id.toLowerCase();if(ids.has(k))return false;ids.add(k);return true;
+      });
+      if(!added.length&&!addedPipes.length){announce('No new observations: existing records were preserved ('+skipped+' duplicates).');return;}
+      p.manholes.push(...added);
+      p.observedPipes=[...pipes,...addedPipes];
+      if(added.length){state.selectedMh=added.at(-1).id;window.SubterraWizard.resetStep();}
+      state.canvas.dirtyFit=true;
+      save();renderWorkspace();
+      announce('Imported '+added.length+' manholes and '+addedPipes.length+' historical GIS pipes'+(skipped?' · '+skipped+' duplicates skipped':''));
+    }catch(err){announce('Import rejected: '+(err?.message||'Invalid file'));}
+  }
+
   // Canvas — Cartesian metre coordinates with WGS84 values converted to a local equirectangular view.
   // This is for plotting only; it is NOT survey-grade projection/georeferencing.
   let canvas=null,ctx=null,ro=null;
@@ -169,7 +225,7 @@
   function fitCanvas(){const pts=locatedPoints(),v=state.canvas,{w,h}=dims();if(!pts.length){v.scale=2;v.panX=0;v.panY=0;}else{const minX=Math.min(...pts.map(p=>p.x)),maxX=Math.max(...pts.map(p=>p.x)),minY=Math.min(...pts.map(p=>p.y)),maxY=Math.max(...pts.map(p=>p.y));const xrange=Math.max(maxX-minX,32),yrange=Math.max(maxY-minY,32);v.scale=Math.min(12,Math.max(.003,Math.min((w-130)/xrange,(h-130)/yrange)));v.panX=-(minX+maxX)/2*v.scale;v.panY=(minY+maxY)/2*v.scale;}v.dirtyFit=false;drawCanvas();}
   function gridStep(raw){const p=Math.pow(10,Math.floor(Math.log10(raw)));const n=raw/p;return(n<1.5?1:n<3.5?2:n<7.5?5:10)*p;}
   function drawCanvas(){if(!canvas?.isConnected||!ctx)return;const{w,h}=dims();ctx.clearRect(0,0,w,h);ctx.fillStyle='#f2f6f8';ctx.fillRect(0,0,w,h);const v=state.canvas;const step=gridStep(50/v.scale),spacing=step*v.scale;const pointA=invPos(0,h),pointB=invPos(w,0);if(Number.isFinite(spacing)&&spacing>2){ctx.lineWidth=1;ctx.strokeStyle='#dce7ed';ctx.beginPath();const startX=Math.floor(pointA.x/step)*step;for(let x=startX;x<pointB.x+step;x+=step){const sx=pos(x,0).x;ctx.moveTo(sx,0);ctx.lineTo(sx,h);}const startY=Math.floor(pointA.y/step)*step;for(let y=startY;y<pointB.y+step;y+=step){const sy=pos(0,y).y;ctx.moveTo(0,sy);ctx.lineTo(w,sy);}ctx.stroke();ctx.font='10px ui-sans-serif, sans-serif';ctx.fillStyle='#a4b6c2';ctx.textBaseline='bottom';for(let x=startX;x<pointB.x+step;x+=step){const sx=pos(x,0).x;if(sx>10&&sx<w-30)ctx.fillText(Math.round(x*10)/10+' m',sx+4,h-10);}}const origin=pos(0,0);ctx.strokeStyle='#b7d0d4';ctx.lineWidth=1.1;ctx.beginPath();ctx.moveTo(origin.x,0);ctx.lineTo(origin.x,h);ctx.moveTo(0,origin.y);ctx.lineTo(w,origin.y);ctx.stroke();
-    const points=locatedPoints();$('#canvasEmpty')?.style.setProperty('display',points.length?'none':'block');for(const pt of points){const at=pos(pt.x,pt.y);if(at.x < -120||at.x>w+120||at.y < -80||at.y>h+80)continue;const selected=pt.mh.id===state.selectedMh;ctx.beginPath();ctx.arc(at.x,at.y,selected?15:12,0,Math.PI*2);ctx.fillStyle=selected?'rgba(12,129,120,.16)':'rgba(12,129,120,.10)';ctx.fill();ctx.beginPath();ctx.arc(at.x,at.y,selected?7.5:6,0,Math.PI*2);ctx.fillStyle=selected?'#075c58':'#0c8178';ctx.fill();ctx.lineWidth=2;ctx.strokeStyle='#fff';ctx.stroke();ctx.font=(selected?'700 ':'600 ')+'12px ui-sans-serif, sans-serif';const title=String(pt.mh.name||'Manhole');const tw=ctx.measureText(title).width;const lx=at.x+13,ly=at.y-16;ctx.fillStyle='#fff';ctx.beginPath();ctx.roundRect(lx-6,ly-12,tw+12,22,5);ctx.fill();ctx.fillStyle='#213e50';ctx.fillText(title,lx,ly+3);}
+    const points=locatedPoints();$('#canvasEmpty')?.style.setProperty('display',points.length?'none':'block');drawObservedPipes(points);for(const pt of points){const at=pos(pt.x,pt.y);if(at.x < -120||at.x>w+120||at.y < -80||at.y>h+80)continue;const selected=pt.mh.id===state.selectedMh;ctx.beginPath();ctx.arc(at.x,at.y,selected?15:12,0,Math.PI*2);ctx.fillStyle=selected?'rgba(12,129,120,.16)':'rgba(12,129,120,.10)';ctx.fill();ctx.beginPath();ctx.arc(at.x,at.y,selected?7.5:6,0,Math.PI*2);ctx.fillStyle=selected?'#075c58':'#0c8178';ctx.fill();ctx.lineWidth=2;ctx.strokeStyle='#fff';ctx.stroke();ctx.font=(selected?'700 ':'600 ')+'12px ui-sans-serif, sans-serif';const title=String(pt.mh.name||'Manhole');const tw=ctx.measureText(title).width;const lx=at.x+13,ly=at.y-16;ctx.fillStyle='#fff';ctx.beginPath();ctx.roundRect(lx-6,ly-12,tw+12,22,5);ctx.fill();ctx.fillStyle='#213e50';ctx.fillText(title,lx,ly+3);}
     // Scale bar: visually supports metric view only, not a precision survey scale.
     const real=gridStep(100/v.scale);const sw=real*v.scale;if(sw>24&&sw<300){ctx.strokeStyle='#4e6e7a';ctx.fillStyle='#4e6e7a';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(22,h-67);ctx.lineTo(22+sw,h-67);ctx.moveTo(22,h-72);ctx.lineTo(22,h-62);ctx.moveTo(22+sw,h-72);ctx.lineTo(22+sw,h-62);ctx.stroke();ctx.font='11px sans-serif';ctx.fillText(`${real} m (approx.)`,22,h-77);}}
   function canvasWheel(e){e.preventDefault();const r=canvas.getBoundingClientRect(),sx=e.clientX-r.left,sy=e.clientY-r.top,before=invPos(sx,sy);state.canvas.scale=Math.max(.0002,Math.min(80,state.canvas.scale*Math.exp(-e.deltaY*.0012)));const after=pos(before.x,before.y);state.canvas.panX+=sx-after.x;state.canvas.panY+=sy-after.y;drawCanvas();}
@@ -191,17 +247,19 @@
     if(target.matches('#deleteMh')){const p=active(),m=getSelectedMh();if(m&&confirm(`Delete ${m.name||'this manhole'}?`)){p.manholes=p.manholes.filter(x=>x.id!==m.id);state.selectedMh=p.manholes.at(-1)?.id||null;window.SubterraWizard.resetStep();save();renderInspector();drawCanvas();}return;}
     if(target.matches('#fitCanvas'))return fitCanvas();
     if(target.matches('#zoomIn,#zoomOut')){state.canvas.scale=Math.max(.0002,Math.min(80,state.canvas.scale*(target.id==='zoomIn'?1.4:1/1.4)));drawCanvas();return;}
+    if(target.matches('#importJson'))return $('#importJsonFile')?.click();
     if(target.matches('#exportCsv'))return exportCsv();
     if(target.matches('#exportJson'))return exportJson();
     if(target.matches('#exportKml'))return exportKml();
   });
+  document.addEventListener('change',e=>{if(e.target.id!=='importJsonFile')return;const file=e.target.files?.[0];e.target.value='';if(file)void importJsonFile(file);});
   $('#projectForm').addEventListener('submit',e=>{e.preventDefault();createProject(e.currentTarget);});
   $('#cancelProject').addEventListener('click',()=>$('#projectDialog').close());
   $('#navProjects').addEventListener('click',()=>navigate('projects'));
   $('#navSystems').addEventListener('click',()=>{if(active())navigate('systems');else announce('Create a project first');});
   $('#brandHome').addEventListener('click',()=>navigate('projects'));
   $('#brandHome').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')navigate('projects');});
-  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.4 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. No reconstruction calculations or AI inferences are executed. Data is stored locally in your browser. Export JSON backups regularly.'));
+  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.5 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. No reconstruction calculations or AI inferences are executed. Data is stored locally in your browser. Export JSON backups regularly.'));
   window.SubterraDetails.setup({getSelectedMh,active,save,renderInspector,announce});
   window.SubterraWizard.setup({getSelectedMh,active,save,renderInspector,announce,drawCanvas,refreshLocation});
   render();
