@@ -1,4 +1,4 @@
-/* Subterra UI v0.13.1 — Phase 2B hydraulic formula display correction. */
+/* Subterra UI v0.14 — independent Phase 2C evidence source register (read-only). */
 (() => {
   'use strict';
 
@@ -342,6 +342,18 @@
       <h3>Phase 2A — Geometric & Gravity Results</h3>
       ${pipe56Phase2Html(project)}
       ${project.blindCase.phase2?'<h3>Phase 2B — Conditional Hydraulic Checks</h3>'+pipe56HydraulicsHtml(project):''}
+      ${project.blindCase?.phase2b?`<h3>Phase 2C · Independent Route Evidence</h3>
+      <div class="blind-record">
+        <strong>Source Register · Discovery only</strong>
+        <div>Wake County Street Centerlines: <b>0</b> official ROW features in Pipe 56 study area (does not mean no internal paved road).</div>
+        <div>NC OneMap Orthoimagery 1999: <b>3/3</b> sampling points returned raster values.</div>
+        <div>NC OneMap Orthoimagery 2005: <b>3/3</b> sampling points returned raster values.</div>
+        <div>NC OneMap Orthoimagery 2004: <b>NoData</b> at all three sample points (this service only).</div>
+        <div><b>Road alignment, obstacle polygons and route constraints: NOT YET DIGITIZED.</b></div>
+        <div>Images are not visually interpreted yet. No extra historical pipe geometry is imported into the frozen project.</div>
+        <a class="blind-source-link" href="data/independent-evidence/NCSF_PIPE56_phase2c_sources_v1.json" target="_blank" rel="noopener noreferrer">Open Independent Evidence JSON</a>
+        <a class="blind-source-link" href="https://github.com/plainact-crypto/subterra-ui/blob/main/data/independent-evidence/README_PIPE56_Phase2C.md" target="_blank" rel="noopener noreferrer">Open Source Assessment Report</a>
+      </div>`:''}
       <h3>Recorded manholes (read-only)</h3>
       ${mhCards}
       <div class="blind-caution"><b>Source:</b> ArcGIS Manhole Layer 1 OBJECTIDs 42 / 45; ${fmt(info?.source?.sourceDetail)}.
@@ -609,7 +621,7 @@
   $('#navSystems').addEventListener('click',()=>{if(active())navigate('systems');else announce('Create a project first');});
   $('#brandHome').addEventListener('click',()=>navigate('projects'));
   $('#brandHome').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')navigate('projects');});
-  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.13.1 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. Normal projects display preliminary geometric candidate hypotheses; those are not verified buried pipes. Pipe 56 Phase 1 is a separate read-only, manhole-only fixture with calculations disabled and the historical reference withheld. Data is saved locally; export backups regularly.'));
+  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.14 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. Normal projects display preliminary geometric candidate hypotheses; those are not verified buried pipes. Pipe 56 Phase 1 is a separate read-only, manhole-only fixture with calculations disabled and the historical reference withheld. Data is saved locally; export backups regularly.'));
   window.SubterraDetails.setup({getSelectedMh,active,save,renderInspector,announce});
   window.SubterraWizard.setup({getSelectedMh,active,save,renderInspector,announce,drawCanvas,refreshLocation});
   render();
