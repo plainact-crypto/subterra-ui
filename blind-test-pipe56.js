@@ -356,8 +356,14 @@
     for(const key of ['inferredPipes','candidateResults','validationReference','historicalPipe','pipeRoutes']){
       if(project[key]!==undefined)issues.push('Unexpected reference or calculated field: '+key);
     }
-    if(project.blindCase?.locked!==true||project.blindCase?.stage!=='PHASE_1_FROZEN')
-      issues.push('Case is not frozen');
+    const stage=project.blindCase?.stage;
+    if(project.blindCase?.locked!==true ||
+      !['PHASE_1_FROZEN','PHASE_2A_CALCULATED'].includes(stage))
+      issues.push('Case is not in an allowed frozen stage');
+    if(stage==='PHASE_2A_CALCULATED'&&!project.blindCase?.phase2)
+      issues.push('Phase 2A stage missing frozen calculation');
+    if(stage==='PHASE_1_FROZEN'&&project.blindCase?.phase2)
+      issues.push('Phase 2A output exists before declared run');
     return {pass:!issues.length,issues};
   }
   window.SubterraBlindTest={

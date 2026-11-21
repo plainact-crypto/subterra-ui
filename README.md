@@ -1,4 +1,4 @@
-# SUBTERRA — Infrastructure Reconstruction UI (v0.10)
+# SUBTERRA — Infrastructure Reconstruction UI (v0.11)
 
 Front-end-only evidence-capture prototype for existing underground utility assets. The platform **does not design new networks or perform reverse-engineering calculations yet**.
 
@@ -8,6 +8,14 @@ Front-end-only evidence-capture prototype for existing underground utility asset
 2. **Choose infrastructure system**: sanitary sewer is the first active workspace. Other utility categories remain placeholders.
 3. **Open sewer workspace**: view the pan/zoom metric canvas and manhole schedule.
 4. **Add / select a manhole**: complete the eight-step entry wizard. Each step is available by number or Previous / Next.
+
+## Pipe 56 Phase 2A — Geometry & Gravity (v0.11)
+
+- In the isolated **PIPE-56 Blind Reconstruction** project, click **Run Phase 2A** to calculate and freeze an orange **straight-line geometric candidate** between documented MH-42 and MH-45 WGS84 top coordinates. No inference is run automatically on project open.
+- Engine `pipe56-phase2.js` consumes `SubterraInferenceEvidence.build(project)` only, which has already omitted historical pipe polylines. It does not request or access Layer 4 GIS, reference route geometry, historic pipe length, source images, or field geometry.
+- Results include Haversine shortest endpoint distance (~84.874216 m), endpoint azimuth (291.67193° clockwise from north), hypothesized opening-to-opening invert drop (2.60604 m), straight-line gradient (~3.070473%), nominal diameter (304.8 mm), TCP material and recorded cover-to-invert differences. Values are recomputed from supplied manhole evidence; no hydraulic flow or velocity is calculated.
+- The historical GIS route stays explicitly withheld. A permanent copy of the calculation and input assumptions is stored inside the isolated project as `blindCase.phase2`, can be exported independently as JSON, and is verified by recalculation upon display. No calculation overwrites the Phase 1 source or the 87-manhole project. Re-running does not change frozen results.
+- The physical connection between specific openings, vertical datum, actual buried alignment and depth between endpoints remain **unverified**. The orange line shows a mathematical endpoint baseline and is NOT evidence that the actual buried pipe takes that route. No confidence or field accuracy is claimed. Hydraulic checks and alternative routes are future tasks.
 
 ## Pipe 56 — isolated, frozen Phase 1 evidence test (v0.10)
 

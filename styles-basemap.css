@@ -44,3 +44,16 @@
 .blind-opening{display:block;margin:6px 0;background:#edf2f6;border-radius:5px;padding:6px;font-size:10px;line-height:1.5}
 .blind-caution{border:1px solid #e8d8b6;background:#fffaf0;border-radius:8px;font-size:11px;line-height:1.7;color:#7a5c2e;padding:12px}
 .blind-source-link{color:#0d6d88;font-size:11px;text-decoration:underline}
+
+/* v0.11 — transparent engineering result presentation */
+.phase2-summary{border:1px solid #e6c58e;border-radius:10px;background:#fffdfa;padding:12px;display:flex;flex-direction:column;gap:10px}
+.phase2-summary>strong{font-size:12px;color:#9a6019;letter-spacing:.025em}
+.phase2-kpis{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.phase2-kpis>div{border:1px solid #ecd8b9;background:#fff9ef;padding:10px 8px;border-radius:7px;display:flex;flex-direction:column;gap:4px}
+.phase2-kpis small{font-size:10px;color:#896d4f}
+.phase2-kpis b{font-size:16px;color:#8b4e10;white-space:nowrap}
+.phase2-equations{display:flex;flex-direction:column;gap:5px;border-top:1px solid #e8d6ba;padding-top:10px;font-size:11px;color:#425d6b;line-height:1.5;overflow-wrap:anywhere}
+.phase2-equations b{color:#2b4a5a}
+.phase2-equations p{margin:0}
+.phase2-summary .blind-caution{padding:10px}
+.phase2-summary .blind-caution p{margin:5px 0 0}
