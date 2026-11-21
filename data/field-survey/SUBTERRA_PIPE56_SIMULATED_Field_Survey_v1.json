@@ -218,7 +218,8 @@
             "SIM-MH42-IN01"
           ],
           "visualClues": [],
-          "notes": "DEMO ONLY"
+          "notes": "DEMO ONLY",
+          "radialOffsetAccuracyM": 0.025
         },
         {
           "openingId": "OUT-01",
@@ -257,7 +258,8 @@
             "SIM-MH42-OUT01"
           ],
           "visualClues": [],
-          "notes": "DEMO ONLY"
+          "notes": "DEMO ONLY",
+          "radialOffsetAccuracyM": 0.025
         },
         {
           "openingId": "LAT-01",
@@ -296,7 +298,8 @@
             "SIM-MH42-LAT"
           ],
           "visualClues": [],
-          "notes": "Role and material intentionally unknown; don't invent"
+          "notes": "Role and material intentionally unknown; don't invent",
+          "radialOffsetAccuracyM": null
         }
       ],
       "media": {
@@ -470,7 +473,8 @@
             "SIM-MH45-IN01"
           ],
           "visualClues": [],
-          "notes": "DEMO ONLY"
+          "notes": "DEMO ONLY",
+          "radialOffsetAccuracyM": 0.025
         },
         {
           "openingId": "OUT-01",
@@ -509,7 +513,8 @@
             "SIM-MH45-OUT01"
           ],
           "visualClues": [],
-          "notes": "DEMO ONLY"
+          "notes": "DEMO ONLY",
+          "radialOffsetAccuracyM": 0.025
         },
         {
           "openingId": "STUB-01",
@@ -548,7 +553,8 @@
             "SIM-MH45-STUB"
           ],
           "visualClues": [],
-          "notes": "DEMO ONLY"
+          "notes": "DEMO ONLY",
+          "radialOffsetAccuracyM": null
         }
       ],
       "media": {
