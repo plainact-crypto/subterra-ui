@@ -250,14 +250,30 @@
       '<button class="btn secondary" data-tab="verify">Add more observations</button></div></div>';
   }
   function tasks(p,r){
-    if(!r.route)return '<section class="block tasks"><h2>What to measure next</h2><p>Record ALL visible manholes with Total Station XYZ, then confirm survey completion to generate the first low-confidence route.</p></section>';
-    if(p.accepted)return '<section class="block tasks"><div class="step">USER ACCEPTANCE</div><h2>Accepted at '+n(p.accepted.score,1)+'/100</h2><p class="muted">You accepted the current reconstruction while '+p.accepted.remaining.length+' verification tasks remain. No additional rounds are forced.</p><button class="btn secondary" data-action="resume">Resume Verification</button></section>';
-    return '<section class="block tasks"><div class="step">NEXT BEST MEASUREMENTS</div><h2>Raise confidence with evidence</h2>'+
-      '<p class="muted">Deterministic ranking by unfulfilled rubric weight divided by indicative effort. This is a task priority, not a promise of percentage gain.</p>'+
-      '<div class="task-list">'+r.tasks.slice(0,5).map((t,i)=>'<div class="task"><span class="task-index">'+(i+1).toString().padStart(2,"0")+'</span><div><strong>'+safe(t.label)+'</strong><small>'+safe(t.method)+' · up to '+n(t.maxMissing,1)+' remaining points</small></div></div>').join("")+
-      '</div><button class="btn btn-primary" data-tab="verify">Collect next measurement</button>'+
+    if(!r.route)return '<section class="block tasks"><h2>What to measure next</h2><p>First record all visible manholes with Total Station XYZ.</p></section>';
+    if(p.accepted)return '<section class="block tasks"><div class="step">USER ACCEPTANCE</div><h2>Accepted at '+
+      n(p.accepted.score,1)+'/100</h2><p class="muted">Accepted with '+p.accepted.remaining.length+
+      ' outstanding requirements. This is not a field certificate.</p><button class="btn secondary" data-action="resume">Resume Verification</button></section>';
+    let demo="";
+    if(p.demo?.synthetic){
+      demo='<div class="demo-next"><b>SIMULATED · ROUND-0'+p.demo.stage+' / ROUND-03</b>'+
+        '<p>No contemporary Total Station, smart pen, CCTV or sonde fieldwork occurred.</p>';
+      if(p.demo.stage<3){
+        demo+='<button class="btn btn-primary" data-action="demo-next">▶ Run Next Simulated Survey Round</button>';
+      }else{
+        demo+='<div class="sim-finished">All 4 demonstration rounds completed. 100/100 means the fictional evidence rubric is satisfied.</div>';
+      }
+      demo+='<button class="btn secondary" data-tab="rounds">Replay / inspect saved rounds</button></div>';
+    }
+    return '<section class="block tasks">'+demo+'<div class="step">NEXT BEST MEASUREMENTS</div><h2>Raise confidence with evidence</h2>'+
+      '<p class="muted">Missing field tasks ranked by unfulfilled rubric and indicative effort, not by a validated accuracy-gain model.</p>'+
+      '<div class="task-list">'+r.tasks.slice(0,5).map((t,i)=>
+        '<div class="task"><span class="task-index">'+(i+1).toString().padStart(2,"0")+
+        '</span><div><strong>'+safe(t.label)+'</strong><small>'+safe(t.method)+' · up to '+
+        n(t.maxMissing,1)+' remaining points</small></div></div>').join("")+'</div>'+
+      '<button class="btn btn-primary" data-tab="verify">Collect next measurement</button>'+
       '<button class="btn secondary" data-action="accept">Accept current confidence & stop</button>'+
-      '<div class="footnote">Acceptance is a user decision, not a professional certification or proof of hidden pipe position.</div></section>';
+      '<div class="footnote">User acceptance is not verification of concealed pipe position.</div></section>';
   }
   function main(p,r){
     const status=r.score===null?"Awaiting ≥ 2 surveyed manholes":r.route?.hiddenAlignmentUnquantified?"Buried route untraced — hypothesis":"Trace evidence recorded — review status required";
