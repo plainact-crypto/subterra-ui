@@ -1,4 +1,4 @@
-/* SUBTERRA v0.12 — frozen Phase 1 / 2A evidence validator (cache refresh).
+/* SUBTERRA v0.13 — frozen Phase 1 / 2A / 2B evidence validator.
    The HISTORICAL GIS PIPE 56 geometry is deliberately NOT present in this file.
    One-click creation is append-only to existing browser projects. */
 (() => {
@@ -358,16 +358,20 @@
     }
     const stage=project.blindCase?.stage;
     if(project.blindCase?.locked!==true ||
-      !['PHASE_1_FROZEN','PHASE_2A_CALCULATED'].includes(stage))
+      !['PHASE_1_FROZEN','PHASE_2A_CALCULATED','PHASE_2B_HYDRAULIC_SCENARIO'].includes(stage))
       issues.push('Case is not in an allowed frozen stage');
-    if(stage==='PHASE_2A_CALCULATED'&&!project.blindCase?.phase2)
-      issues.push('Phase 2A stage missing frozen calculation');
-    if(stage==='PHASE_1_FROZEN'&&project.blindCase?.phase2)
-      issues.push('Phase 2A output exists before declared run');
+    if(stage!=='PHASE_1_FROZEN'&&!project.blindCase?.phase2)
+      issues.push('Post-Phase-1 stage missing frozen Phase 2A calculation');
+    if(stage==='PHASE_1_FROZEN' && (project.blindCase?.phase2||project.blindCase?.phase2b))
+      issues.push('Calculation output exists before declared run');
+    if(stage==='PHASE_2A_CALCULATED'&&project.blindCase?.phase2b)
+      issues.push('Phase 2B result exists before declared hydraulic stage');
+    if(stage==='PHASE_2B_HYDRAULIC_SCENARIO'&&!project.blindCase?.phase2b)
+      issues.push('Phase 2B stage missing frozen hydraulic scenarios');
     return {pass:!issues.length,issues};
   }
   window.SubterraBlindTest={
-    validatorVersion:2,
+    validatorVersion:3,
     caseId:CASE_ID,
     buildTemplate,
     getProtocol:()=>copy(protocol),
