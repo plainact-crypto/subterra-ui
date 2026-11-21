@@ -438,7 +438,14 @@
       if(cat.count!==430||!Array.isArray(cat.fields)||cat.fields.length!==430)throw Error("Incomplete field dictionary");
       state.catalog=cat.fields;
     }catch(err){state.lastError=String(err.message||err);}
-    render();if(state.lastError)notify(state.lastError);
+    const directDemo=/(?:[?&])demo=ncsf(?:&|$)/i.test(window.location?.search||"");
+    if(directDemo&&!state.p?.demo?.synthetic){
+      try{await loadSimulationStage(0,!!state.p);}
+      catch(err){render();notify("NCSF demo could not be opened: "+String(err.message||err));}
+    }else{
+      if(state.p?.demo?.synthetic){state.mapScope="sector";state.tab=state.p.demo.stage>0?"rounds":"survey";}
+      render();if(state.lastError)notify(state.lastError);
+    }
   }
   init();
 })();
