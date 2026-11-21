@@ -1,0 +1,42 @@
+{
+  "schema": "subterra-pipe56-phase2a-method/v1",
+  "caseId": "NCSF-P56-BLIND-V1",
+  "phase": "PHASE_2A_GEOMETRY_GRAVITY",
+  "frozenOn": "2026-11-21",
+  "engineFile": "pipe56-phase2.js",
+  "allowedInput": "subterra-inference-evidence/v1",
+  "sourceRecords": [
+    "Sanitary Sewer Manhole Layer 1 OBJECTID=42",
+    "Sanitary Sewer Manhole Layer 1 OBJECTID=45"
+  ],
+  "forbiddenInputs": [
+    "Historical Gravity Main Pipe Layer 4 geometry or measured/recorded polyline length",
+    "Historical pipe orientation, shape, route, benchmark comparison",
+    "Geographic basemap pixels as an engineering route prior"
+  ],
+  "formulas": {
+    "length": "Spherical Haversine shortest WGS84 endpoint distance using R = 6,371,008.8 m. Appropriate as short-scale geometric baseline, not survey-grade measurement.",
+    "bearing": "Initial great-circle azimuth, degrees clockwise from geographic north. Computed from two manhole top positions, NOT a documented pipe opening bearing.",
+    "invertDrop": "MH-42 OUT-01 invert RL - MH-45 IN-01 invert RL",
+    "slope": "invertDrop / endpoint straight-line distance * 100. This is a hypothetical straight-line segment gradient, not a surveyed pipe slope.",
+    "coverDepth": "Manhole top/cover RL minus selected documented opening invert RL; not vertical pipe cover over crown."
+  },
+  "checks": [
+    "Exactly two documented manholes and WGS84 coordinates present",
+    "One matching OUT-01 on MH-42 and IN-01 on MH-45",
+    "Both opening invert levels documented",
+    "Diameter values match within 0.1 mm and are strictly positive",
+    "Documented pipe materials match",
+    "Invert difference positive for selected direction",
+    "No current field measurement or vertical datum verified"
+  ],
+  "caveats": [
+    "Manholes and their outlet/inlet roles were preselected using earlier exploration, so connectivity is not a discovery by the algorithm.",
+    "Straight-line segment lies on endpoints by construction; benchmark agreement is not independent proof of route detection.",
+    "No hydraulic flow, roughness, terrain, alternative-route calculation, pipe-penetration survey, or accuracy calibration is performed in Phase 2A.",
+    "Original Pipe 56 historical geometry is withheld by app workflow, but public GitHub reference and earlier exposure prevent calling this a genuinely prospective blind study.",
+    "A structural GIS agreement target does not establish real-world buried utility accuracy."
+  ],
+  "evaluationStep": "Validation stays disabled. Do not reveal withheld GIS geometry until calculations are frozen and a validation stage is started separately.",
+  "output": "subterra-pipe56-phase2a-result/v1 — stored once in local project blindCase.phase2 and independently exportable as JSON"
+}
