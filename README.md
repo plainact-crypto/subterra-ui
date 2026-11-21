@@ -1,4 +1,4 @@
-# SUBTERRA — Infrastructure Reconstruction UI (v0.4)
+# SUBTERRA — Infrastructure Reconstruction UI (v0.5)
 
 Front-end-only evidence-capture prototype for existing underground utility assets. The platform **does not design new networks or perform reverse-engineering calculations yet**.
 
@@ -8,6 +8,12 @@ Front-end-only evidence-capture prototype for existing underground utility asset
 2. **Choose infrastructure system**: sanitary sewer is the first active workspace. Other utility categories remain placeholders.
 3. **Open sewer workspace**: view the pan/zoom metric canvas and manhole schedule.
 4. **Add / select a manhole**: complete the eight-step entry wizard. Each step is available by number or Previous / Next.
+
+## Additive JSON observation import (v0.5)
+
+The Sanitary Sewer workspace includes **Import JSON**. Choose a JSON object with a `manholes` array and a matching optional `coordMode` (`geographic` or `projected`). The existing **Export JSON** project file also works as an import source. The importer validates observed values and wizard evidence status, adds only new records to the **currently open project**, skips duplicate names/coordinates, then fits the canvas to show imported manholes. It never replaces a project or resets local browser storage.
+
+Optional `observedPipes` contain externally documented WGS84 pipe traces with `id`, `source`, and `coordinates` as `[longitude, latitude]` vertices. These are rendered dashed blue as historical GIS evidence, not engineered/inferred connections. No pipes are generated from proximity. Export JSON also includes imported observed pipes.
 
 ## Manhole wizard: exact engineering taxonomy
 
