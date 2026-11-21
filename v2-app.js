@@ -354,6 +354,17 @@
     if(target.dataset.tab){state.tab=target.dataset.tab;render();return;}
     const action=target.dataset.action,p=state.p;
     try{
+      if(action==="load-ncsf-demo"){void loadSimulationStage(0,!!p).catch(err=>notify(err.message||String(err)));return;}
+      if(action==="demo-next"){
+        if(!p?.demo?.synthetic)throw Error("No synthetic demonstration project is active");
+        void loadSimulationStage(p.demo.stage+1,false).catch(err=>notify(err.message||String(err)));return;
+      }
+      if(action==="demo-stage"){
+        if(!p?.demo?.synthetic)throw Error("No synthetic demonstration project is active");
+        void loadSimulationStage(Number(target.dataset.index),false).catch(err=>notify(err.message||String(err)));return;
+      }
+      if(action==="historic-compare"){void compareHistoricalPipe56().catch(err=>notify(err.message||String(err)));return;}
+      if(action==="map-scope"){state.mapScope=state.mapScope==="sector"?"site":"sector";render();return;}
       if(action==="surface-complete"){
         if(window.confirm("Confirm Total Station XYZ has been captured for ALL visible manholes in this survey area?")){let next=E.setSurfaceSurveyComplete(p,true);next=E.nextRound(next);update(next,"Round 0 frozen. Low-confidence route created; buried pipe Z remains unknown.");}
         return;
