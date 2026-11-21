@@ -1,4 +1,4 @@
-/* Subterra UI v0.12 — Phase 2A stale validator cache fix. */
+/* Subterra UI v0.13 — Pipe 56 Phase 2B conditional hydraulic scenarios. */
 (() => {
   'use strict';
 
@@ -174,12 +174,73 @@
 
 
   function pipe56StoredResult(p){
-    if(!p?.blindCase?.phase2 || window.SubterraBlindTest?.validatorVersion!==2)return null;
+    if(!p?.blindCase?.phase2 || window.SubterraBlindTest?.validatorVersion!==3)return null;
     if(!window.SubterraBlindTest.validate(p).pass)return null;
     const evidence=window.SubterraInferenceEvidence.build(p);
     return window.SubterraPipe56Phase2?.verify(evidence,p.blindCase.phase2).pass
       ? p.blindCase.phase2 : null;
   }
+
+  function pipe56StoredHydraulics(p) {
+    if(!p?.blindCase?.phase2b || window.SubterraBlindTest?.validatorVersion!==3)return null;
+    const prior=pipe56StoredResult(p);
+    if(!prior)return null;
+    return window.SubterraPipe56Hydraulics?.verify(prior,p.blindCase.phase2b).pass
+      ? p.blindCase.phase2b : null;
+  }
+  function runPipe56Hydraulics(){
+    const p=active();
+    if(!p?.blindCase?.locked || !p.blindCase.phase2)return;
+    if(p.blindCase.phase2b){announce('Frozen hydraulic scenarios already exist — kept unchanged');return;}
+    if(p.blindCase.stage!=='PHASE_2A_CALCULATED'){announce('Phase 2A stage required first');return;}
+    const prior=pipe56StoredResult(p);
+    if(!prior){announce('Phase 2A integrity mismatch — hydraulics blocked');return;}
+    try{
+      const result=window.SubterraPipe56Hydraulics.compute(prior);
+      if(!window.SubterraPipe56Hydraulics.verify(prior,result).pass)throw Error('Hydraulic recalculation mismatch');
+      p.blindCase.phase2b=result;
+      p.blindCase.stage='PHASE_2B_HYDRAULIC_SCENARIO';
+      save();renderWorkspace();
+      announce('Phase 2B hydraulic scenarios frozen · historical GIS still withheld');
+    }catch(err){announce('Phase 2B blocked: '+String(err?.message||err));}
+  }
+  function pipe56HydraulicsHtml(p){
+    const saved=p.blindCase?.phase2b;
+    if(!saved)return '<div class="blind-caution">No hydraulic scenario run. The Phase 2A evidence and calculation stay frozen.</div>';
+    if(window.SubterraBlindTest?.validatorVersion!==3)
+      return '<div class="blind-caution">Outdated validator. Refresh the application; stored calculations have not been erased.</div>';
+    const r=pipe56StoredHydraulics(p);
+    if(!r)return '<div class="blind-caution">Hydraulic scenario integrity mismatch — existing snapshot preserved for inspection, not displayed as verified.</div>';
+    const fmt=(x,d=3)=>Number(x).toFixed(d);
+    const base=r.scenarios.find(x=>x.manningN===0.013);
+    return `<div class="phase2-summary hydraulic-results">
+      <strong>PHASE 2B · MANNING SCENARIO / FROZEN</strong>
+      <p class="hydraulic-muted">Theoretical uniform full-flow capacity using ${fmt(r.inputs.nominalDiameterMm,1)} mm <b>nominal</b> diameter as assumed internal diameter and the Phase 2A straight-line slope.</p>
+      <div class="phase2-kpis">
+        <div><small>Base Manning n</small><b>0.013</b></div>
+        <div><small>Assumed hydraulic radius</small><b>${fmt(r.geometry.hydraulicRadiusM,4)} m</b></div>
+        <div><small>Theoretical full-flow velocity</small><b>${fmt(base.velocityMps,3)} m/s</b></div>
+        <div><small>Theoretical full-flow capacity</small><b>${fmt(base.capacityLps,1)} L/s</b></div>
+      </div>
+      <div class="phase2-equations">
+        <b>Equations and scenario assumptions</b>
+        <p>A = πD²/4 = ${fmt(r.geometry.areaM2,5)} m²</p>
+        <p>R = D/4 = ${fmt(r.geometry.hydraulicRadiusM,4)} m</p>
+        <p>V = (1/n) × R^(2/3) × √S</p>
+        <p>Q = A × V · S = ${fmt(r.inputs.straightLineGradient*100,4)}%</p>
+      </div>
+      <div class="hydraulic-table-wrap"><table class="hydraulic-table">
+        <thead><tr><th>Manning n</th><th>V full (m/s)</th><th>Q full (L/s)</th></tr></thead>
+        <tbody>${r.scenarios.map(x=>`<tr class="${x.manningN===0.013?'base':''}"><td>${fmt(x.manningN,3)}</td><td>${fmt(x.velocityMps,3)}</td><td>${fmt(x.capacityLps,1)}</td></tr>`).join('')}</tbody>
+      </table></div>
+      <div class="blind-caution">
+        <b>NO MEASURED FLOW / NO COMPLIANCE CLAIM</b>
+        <p>Actual Q, V, flow depth, roughness, bore and pipe condition are unknown. The hydraulic slope and assumed connection are not independently verified. These numbers are conditional capacity scenarios only, not actual operating performance or proof of buried alignment.</p>
+      </div>
+      <div class="hydraulic-citation">Literature: <a href="${r.source.url}" target="_blank" rel="noopener noreferrer">EPA SWMM 5.1 Appendix A.7</a> · clay n = 0.011–0.015. Source is not a historic acceptance record.</div>
+    </div>`;
+  }
+
   function runPipe56Phase2(){
     const p=active();
     if(!p?.blindCase?.locked)return;
@@ -198,7 +259,7 @@
   }
   function pipe56Phase2Html(p){
     if(!p.blindCase.phase2)return '<div class="blind-caution">No calculations run. Press Run Phase 2A to calculate from frozen evidence.</div>';
-    if(window.SubterraBlindTest?.validatorVersion!==2)
+    if(window.SubterraBlindTest?.validatorVersion!==3)
       return '<div class="blind-caution">Outdated validator loaded. Reload the latest app version; the saved Phase 2A result has not been erased.</div>';
     const r=pipe56StoredResult(p);
     if(!r)return '<div class="blind-caution">Calculation integrity mismatch — results cannot be verified.</div>';
@@ -260,6 +321,7 @@
       ).join('')}</div>
     </div>`).join('');
     const completed=!!pipe56StoredResult(project);
+    const hydraulicComplete=!!pipe56StoredHydraulics(project);
     const stageList=[
       ['01','Separate test case','Created / independent project'],
       ['02','Permitted inference evidence','Frozen manhole coordinates, recorded levels & openings only'],
@@ -267,10 +329,10 @@
       ['04','Source, units, datum','Stantec 2004 / ft×0.3048 / vertical datum unconfirmed'],
       ['05','Opening-to-pipe identity','UNVERIFIED — candidate association only'],
       ['06','Freeze and evaluation rules','V1 committed prior to controlled replay'],
-      ['07','Calculation / validation',completed?'Phase 2A geometry & gravity calculated; no GIS validation yet':'Not run — next phase']
+      ['07','Calculation / validation',hydraulicComplete?'Phase 2A / 2B calculations frozen · GIS validation not run':completed?'Phase 2A geometry & gravity calculated; no GIS validation yet':'Not run — next phase']
     ];
     $('#inspectorBody').innerHTML=`<div class="blind-inspector">
-      <div class="panel-top"><span class="panel-title">${project.blindCase.phase2?'PIPE 56 · PHASE 2A':'PIPE 56 · PHASE 1'}</span>
+      <div class="panel-top"><span class="panel-title">${hydraulicComplete?'PIPE 56 · PHASE 2B':project.blindCase.phase2?'PIPE 56 · PHASE 2A':'PIPE 56 · PHASE 1'}</span>
         <span class="panel-counter">${v.pass?'Inputs locked':'Integrity warning'}</span></div>
       <p class="panel-desc">Retrospective controlled replay. The earlier reference was already seen; no prospective-blind claim.</p>
       <div class="blind-status">${v.pass?'Frozen evidence verified':'Fixture mismatch: '+v.issues.map(fmt).join('; ')}</div>
@@ -278,6 +340,7 @@
       <div class="blind-stage-list">${stageList.map(([n,t,d])=>`<div><b>${n} · ${t}</b><small>${d}</small></div>`).join('')}</div>
       <h3>Phase 2A — Geometric & Gravity Results</h3>
       ${pipe56Phase2Html(project)}
+      ${project.blindCase.phase2?'<h3>Phase 2B — Conditional Hydraulic Checks</h3>'+pipe56HydraulicsHtml(project):''}
       <h3>Recorded manholes (read-only)</h3>
       ${mhCards}
       <div class="blind-caution"><b>Source:</b> ArcGIS Manhole Layer 1 OBJECTIDs 42 / 45; ${fmt(info?.source?.sourceDetail)}.
