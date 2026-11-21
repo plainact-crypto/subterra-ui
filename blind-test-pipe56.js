@@ -346,9 +346,16 @@
         if(String(m[key])!==String(ref[key]))issues.push(name+' '+key+' deviated from frozen evidence');
       }
       const orig=fixture.manholes.find(x=>x.name===name);
-      if(JSON.stringify(m.evidence)!==JSON.stringify(orig.evidence))issues.push(name+' opening attributes changed');
+      for(const key of ['customName','x','y','invertPosition','classification','notes','evidence']){
+        if(JSON.stringify(m[key])!==JSON.stringify(orig[key]))
+          issues.push(name+' frozen field '+key+' changed');
+      }
     }
-    if(project.observedPipes?.length)issues.push('Historical pipe geometry leaked into project');
+    if(!Array.isArray(project.observedPipes)||project.observedPipes.length)
+      issues.push('Historical pipe geometry must be absent from test project');
+    for(const key of ['inferredPipes','candidateResults','validationReference','historicalPipe','pipeRoutes']){
+      if(project[key]!==undefined)issues.push('Unexpected reference or calculated field: '+key);
+    }
     if(project.blindCase?.locked!==true||project.blindCase?.stage!=='PHASE_1_FROZEN')
       issues.push('Case is not frozen');
     return {pass:!issues.length,issues};
