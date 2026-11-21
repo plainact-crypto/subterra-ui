@@ -93,7 +93,7 @@
       field("Z σ (m)",number("sigmaZ",".01",true,"any",".01"))+'</div>','Add Total Station Manhole');
     const pairForm=p.manholes.length>1?dataForm("pair",'<div class="form-grid">'+
       field("From manhole",select("from",p.manholes.map(m=>[m.id,m.id])))+
-      field("To manhole",select("to",p.manholes.map((m,i)=>[m.id,m.id]),'data-pair-target'))+'</div>','Select Sector / Recompute'):"";
+      field("To manhole",'<select name="to">'+p.manholes.map((m,i)=>'<option value="'+safe(m.id)+'" '+((p.pair[1]||p.manholes[1].id)===m.id?'selected':'')+'>'+safe(m.id)+'</option>').join("")+'</select>')+'</div>','Select Sector / Recompute'):"";
     const ready=p.manholes.length>=2;const complete=!!p.surfaceSurveyComplete;
     return '<div class="block"><div class="step">01 · REQUIRED SURVEY FIRST</div><h2>Total Station XYZ — All Visible Manholes</h2>'+
       '<p class="muted">Record each visible manhole cover position and RL from a total station. Coordinates must be in the declared projected system. Other internal points come later via calibrated detail survey.</p>'+surveyForm+
@@ -240,7 +240,7 @@
     const action=target.dataset.action,p=state.p;
     try{
       if(action==="surface-complete"){
-        if(window.confirm("Confirm Total Station XYZ has been captured for ALL visible manholes in this survey area?"))update(E.setSurfaceSurveyComplete(p,true),"Round 0 provisional route created with low evidence and unknown pipe invert Z.");
+        if(window.confirm("Confirm Total Station XYZ has been captured for ALL visible manholes in this survey area?")){let next=E.setSurfaceSurveyComplete(p,true);next=E.nextRound(next);update(next,"Round 0 frozen. Low-confidence route created; buried pipe Z remains unknown.");}
         return;
       }
       if(action==="inventory"){
