@@ -219,11 +219,35 @@
       '<h3>Latest field observations</h3><div class="table-scroll"><table><thead><tr><th>Field</th><th>Scope</th><th>Value</th></tr></thead><tbody>'+saved+'</tbody></table></div></div>';
   }
   function roundsTab(p,r){
-    const rows=p.rounds.slice().reverse().map(x=>'<article class="round-card"><b>'+safe(x.id)+'</b><span>'+safe(new Date(x.at).toLocaleString())+'</span><strong>'+n(x.result.score,1)+'/100</strong><small>'+safe(x.result.status)+'</small></article>').join("");
+    const rows=p.rounds.slice().reverse().map(x=>
+      '<article class="round-card"><b>'+safe(x.id)+'</b><span>'+safe(new Date(x.at).toLocaleString())+
+      '</span><strong>'+n(x.result.score,1)+'/100</strong><small>'+safe(x.result.status)+'</small></article>').join("");
+    let demo="";
+    if(p.demo?.synthetic){
+      demo='<section class="demo-round-buttons"><h3>Replay the four simulated rounds</h3>'+
+        '<p class="muted">Select a frozen synthetic snapshot. The 103 historical GIS pipe lines were not used in the calculations.</p>'+
+        [0,1,2,3].map(i=>'<button class="btn '+(p.demo.stage===i?'btn-primary':'secondary')+
+          '" data-action="demo-stage" data-index="'+i+'">ROUND-0'+i+(p.demo.stage===i?' · CURRENT':'')+'</button>').join("")+
+        '</section>';
+      if(p.demo.stage===3){
+        demo+='<section class="historical-review"><h3>Historical GIS: late validation only</h3>'+
+          '<p>Historical Pipe 56 reference unlocks only after Round 03 and is not drawn as a competing route.</p>'+
+          '<button class="btn secondary" data-action="historic-compare">Compare with held-out GIS Pipe 56</button></section>';
+      }
+      if(state.historicalComparison){
+        const x=state.historicalComparison;
+        demo+='<section class="historical-result"><b>HISTORICAL RECORD / NOT GROUND TRUTH</b>'+
+          '<div>2004 recorded GIS centerline length: '+n(x.historicalLengthM,3)+' m</div>'+
+          '<div>Current simulated opening-face length: '+n(x.modeledFaceLengthM,3)+' m</div>'+
+          '<div>Length-definition difference: '+n(x.deltaM,3)+' m</div>'+
+          '<p>'+safe(x.disclaimer)+'</p></section>';
+      }
+    }
     return '<div class="block"><div class="step">04 · EVIDENCE-BASED ITERATION</div><h2>Reconstruction Rounds</h2>'+
-    '<p class="muted">Every completed round stores its raw input snapshot, selected sector, score breakdown, one current route and the next missing survey tasks. Existing rounds are never overwritten.</p>'+
-    '<div class="rounds">'+(rows||'<p>No completed verification rounds yet. The initial route is only a provisional estimate.</p>')+'</div>'+
-    '<div class="next-footer"><button class="btn btn-primary" data-action="next-round">Save Next Assessment Round</button><button class="btn secondary" data-tab="verify">Add more observations</button></div></div>';
+      '<p class="muted">Each round freezes its raw XYZ and attribute observations. Demo evidence is SIMULATED, not independently verified field truth.</p>'+
+      '<div class="rounds">'+(rows||'<p>No completed verification rounds.</p>')+'</div>'+demo+
+      '<div class="next-footer"><button class="btn btn-primary" data-action="next-round">Save Next Assessment Round</button>'+
+      '<button class="btn secondary" data-tab="verify">Add more observations</button></div></div>';
   }
   function tasks(p,r){
     if(!r.route)return '<section class="block tasks"><h2>What to measure next</h2><p>Record ALL visible manholes with Total Station XYZ, then confirm survey completion to generate the first low-confidence route.</p></section>';
