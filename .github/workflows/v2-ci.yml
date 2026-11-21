@@ -27,4 +27,6 @@ jobs:
           node --check v2-engine.js
           node --check v2-app.js
       - name: Run deterministic engineering tests
-        run: node tests/test-v2.js
+        run: |
+          node tests/test-v2.js
+          node tests/test-ncsf-ui.js
