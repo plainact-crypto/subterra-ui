@@ -1,4 +1,4 @@
-/* Subterra UI v0.6 — opt-in georeferenced basemaps, evidence import and plotting. */
+/* Subterra UI v0.7 — historical GIS pipe visibility, basemaps and evidence capture. */
 (() => {
   'use strict';
 
@@ -90,10 +90,20 @@
     const p=active(); if(!p){navigate('projects');return;}
     $('#mainContent').innerHTML=`<section class="page"><div class="eyebrow">PROJECT / ${escapeHtml(p.name)}</div><div class="page-header"><div><h1>Infrastructure systems</h1><p class="page-subtitle">Choose a system to open its data workspace. The first prototype supports sanitary sewer manholes.</p></div><div class="project-header-actions"><button class="btn btn-outline" data-all-projects>← All projects</button><button class="btn btn-danger-outline" data-delete-project="${escapeHtml(p.id)}">${TRASH_ICON} Delete project</button></div></div><div class="project-summary"><strong>${escapeHtml(p.name)}</strong><span class="summary-divider"></span><span>${escapeHtml(p.location||'Location not set')}</span><span class="summary-divider"></span><span>${escapeHtml(p.coordMode==='geographic'?'WGS84 · Latitude / Longitude':'Projected coordinates · XY metres')}</span></div><div class="system-grid">${SYSTEMS.map(([id,name,desc,sym,ready])=>`<button class="system-card" data-open-system="${id}" ${ready?'':'disabled'}><div class="system-head"><span class="system-symbol">${sym}</span><span class="${ready?'ready':'coming'}">${ready?'OPEN WORKSPACE':'COMING LATER'}</span></div><div><div class="system-title">${escapeHtml(name)}</div><div class="system-desc">${escapeHtml(desc)}</div></div></button>`).join('')}</div></section>`;
   }
+
+  // Visualization only: never mutates the documented GIS pipe geometries.
+  function historicalPipesButton(p){
+    const visible=p.showHistoricalPipes!==false;
+    const icon=visible
+      ? '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>'
+      : '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 4.5 19.5 19.5M10.6 5.1A10.4 10.4 0 0 1 12 5c6.4 0 10 7 10 7a15 15 0 0 1-3.5 4.3M6.1 6.6C3.5 8.5 2 12 2 12s3.6 7 10 7a11.8 11.8 0 0 0 4.4-.9M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>';
+    return `<button type="button" class="canvas-pill historical-pipes-toggle ${visible?'visible':'hidden-pipes'}" id="toggleHistoricalPipes" aria-pressed="${visible}" aria-label="${visible?'Hide':'Show'} Historical GIS Pipes" title="Historical GIS pipes are validation reference, not inferred results">${icon}<span>Historical GIS Pipes</span><span class="historical-pipes-state">${visible?'Visible':'Hidden'}</span></button>`;
+  }
+
   function renderWorkspace() {
     const p=active(); if(!p){navigate('projects');return;}
     const mapLayer=['none','streets','satellite'].includes(p.mapLayer)?p.mapLayer:'none';
-    $('#mainContent').innerHTML=`<div class="workspace"><div class="ws-header"><div><h1>Sanitary Sewer <span style="font-size:12px;color:#80a3a3;font-weight:600">/ Data Workspace</span></h1><div class="ws-sub">${escapeHtml(p.name)} · Surveyed evidence & manhole classification · No design calculations</div></div><div class="ws-actions"><button class="btn btn-outline btn-sm hide-sm" id="exportCsv">↓ Export CSV</button><button class="btn btn-outline btn-sm" id="importJson">↑ Import JSON</button><input id="importJsonFile" type="file" accept=".json,application/json" hidden aria-label="Select Subterra observation JSON" /><button class="btn btn-outline btn-sm" id="exportJson">↓ JSON</button><button class="btn btn-outline btn-sm hide-sm" id="exportKml">↗ Google Earth KML</button><button class="btn btn-primary btn-sm" id="topAddMh">＋ Manhole</button></div></div><div class="ws-main"><section class="canvas-pane"><canvas class="canvas-surface" id="mapCanvas" aria-label="Infinite canvas with surveyed manholes. Drag to pan, scroll to zoom."></canvas><div class="canvas-toolbar"><span class="canvas-pill green">● Sewer / Manholes</span><span class="canvas-pill">${p.coordMode==='geographic'?'WGS84 · Local metric view':'Local XY · Metres'}</span><label class="canvas-pill map-layer-control">Background <select id="mapLayerPicker" aria-label="Background map layer" ${p.coordMode==='geographic'?'':'disabled title="Basemaps require WGS84 coordinates"'}><option value="none" ${mapLayer==='none'?'selected':''}>None</option><option value="streets" ${mapLayer==='streets'?'selected':''}>Streets · OSM</option><option value="satellite" ${mapLayer==='satellite'?'selected':''}>Satellite · USGS (USA)</option></select></label></div><div class="basemap-attribution" id="basemapAttribution" hidden></div><div class="canvas-controls"><button id="zoomIn" title="Zoom in">＋</button><button id="zoomOut" title="Zoom out">−</button><button class="fit" id="fitCanvas" title="Fit all manholes">FIT</button></div><div id="canvasEmpty" class="canvas-overlay-empty"><div class="ghost-icon">⌖</div><strong>Your survey canvas is ready</strong><p>Add a manhole and enter its surveyed top coordinates. It will appear here automatically.</p></div><div class="canvas-hint">✥ Drag to pan <span style="opacity:.35">·</span> Scroll to zoom <span style="opacity:.35">·</span> Click a manhole to select</div><div class="canvas-legend"><span class="dot-legend"></span> Recorded top point · <span style="color:#377bd2">┄</span> Imported historical GIS pipe</div></section><aside class="inspector"><div class="inspector-tabs"><span class="inspector-caption">MANHOLE RECORDS &amp; CLASSIFICATION</span></div><div class="inspector-scroll" id="inspectorBody"></div></aside></div></div>`;
+    $('#mainContent').innerHTML=`<div class="workspace"><div class="ws-header"><div><h1>Sanitary Sewer <span style="font-size:12px;color:#80a3a3;font-weight:600">/ Data Workspace</span></h1><div class="ws-sub">${escapeHtml(p.name)} · Surveyed evidence & manhole classification · No design calculations</div></div><div class="ws-actions"><button class="btn btn-outline btn-sm hide-sm" id="exportCsv">↓ Export CSV</button><button class="btn btn-outline btn-sm" id="importJson">↑ Import JSON</button><input id="importJsonFile" type="file" accept=".json,application/json" hidden aria-label="Select Subterra observation JSON" /><button class="btn btn-outline btn-sm" id="exportJson">↓ JSON</button><button class="btn btn-outline btn-sm hide-sm" id="exportKml">↗ Google Earth KML</button><button class="btn btn-primary btn-sm" id="topAddMh">＋ Manhole</button></div></div><div class="ws-main"><section class="canvas-pane"><canvas class="canvas-surface" id="mapCanvas" aria-label="Infinite canvas with surveyed manholes. Drag to pan, scroll to zoom."></canvas><div class="canvas-toolbar"><span class="canvas-pill green">● Sewer / Manholes</span><span class="canvas-pill">${p.coordMode==='geographic'?'WGS84 · Local metric view':'Local XY · Metres'}</span><label class="canvas-pill map-layer-control">Background <select id="mapLayerPicker" aria-label="Background map layer" ${p.coordMode==='geographic'?'':'disabled title="Basemaps require WGS84 coordinates"'}><option value="none" ${mapLayer==='none'?'selected':''}>None</option><option value="streets" ${mapLayer==='streets'?'selected':''}>Streets · OSM</option><option value="satellite" ${mapLayer==='satellite'?'selected':''}>Satellite · USGS (USA)</option></select></label>${historicalPipesButton(p)}</div><div class="basemap-attribution" id="basemapAttribution" hidden></div><div class="canvas-controls"><button id="zoomIn" title="Zoom in">＋</button><button id="zoomOut" title="Zoom out">−</button><button class="fit" id="fitCanvas" title="Fit all manholes">FIT</button></div><div id="canvasEmpty" class="canvas-overlay-empty"><div class="ghost-icon">⌖</div><strong>Your survey canvas is ready</strong><p>Add a manhole and enter its surveyed top coordinates. It will appear here automatically.</p></div><div class="canvas-hint">✥ Drag to pan <span style="opacity:.35">·</span> Scroll to zoom <span style="opacity:.35">·</span> Click a manhole to select</div><div class="canvas-legend"><span class="dot-legend"></span> Recorded top point · <span style="color:#377bd2">┄</span> Imported historical GIS pipe</div></section><aside class="inspector"><div class="inspector-tabs"><span class="inspector-caption">MANHOLE RECORDS &amp; CLASSIFICATION</span></div><div class="inspector-scroll" id="inspectorBody"></div></aside></div></div>`;
     renderInspector(); setupCanvas(); requestAnimationFrame(()=>{if(state.canvas.dirtyFit)fitCanvas();else drawCanvas();});
   }
   function renderInspector(){renderManholes();}
@@ -160,7 +170,7 @@
 
   // Only documented, explicitly imported GIS traces are drawn. No connection is inferred by proximity.
   function drawObservedPipes(points) {
-    const p=active();if(!p||p.coordMode!=='geographic'||!points.length||!Array.isArray(p.observedPipes))return;
+    const p=active();if(!p||p.coordMode!=='geographic'||p.showHistoricalPipes===false||!points.length||!Array.isArray(p.observedPipes))return;
     const origin=points[0].mh;
     ctx.save();ctx.strokeStyle='#377bd2';ctx.lineWidth=2.5;ctx.setLineDash([7,5]);
     for(const line of p.observedPipes){
@@ -262,6 +272,16 @@
     if(target.matches('#deleteMh')){const p=active(),m=getSelectedMh();if(m&&confirm(`Delete ${m.name||'this manhole'}?`)){p.manholes=p.manholes.filter(x=>x.id!==m.id);state.selectedMh=p.manholes.at(-1)?.id||null;window.SubterraWizard.resetStep();save();renderInspector();drawCanvas();}return;}
     if(target.matches('#fitCanvas'))return fitCanvas();
     if(target.matches('#zoomIn,#zoomOut')){state.canvas.scale=Math.max(.0002,Math.min(80,state.canvas.scale*(target.id==='zoomIn'?1.4:1/1.4)));drawCanvas();return;}
+    if(target.matches('#toggleHistoricalPipes')){
+      const p=active();if(!p)return;
+      const nowVisible=p.showHistoricalPipes===false;
+      p.showHistoricalPipes=nowVisible;
+      target.outerHTML=historicalPipesButton(p);
+      save();
+      drawCanvas();
+      announce(nowVisible?'Historical GIS pipes visible':'Historical GIS pipes hidden (reference data preserved)');
+      return;
+    }
     if(target.matches('#importJson'))return $('#importJsonFile')?.click();
     if(target.matches('#exportCsv'))return exportCsv();
     if(target.matches('#exportJson'))return exportJson();
@@ -290,7 +310,7 @@
   $('#navSystems').addEventListener('click',()=>{if(active())navigate('systems');else announce('Create a project first');});
   $('#brandHome').addEventListener('click',()=>navigate('projects'));
   $('#brandHome').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')navigate('projects');});
-  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.6 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. No reconstruction calculations or AI inferences are executed. Data is stored locally in your browser. Export JSON backups regularly.'));
+  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.7 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. No reconstruction calculations or AI inferences are executed. Data is stored locally in your browser. Export JSON backups regularly.'));
   window.SubterraDetails.setup({getSelectedMh,active,save,renderInspector,announce});
   window.SubterraWizard.setup({getSelectedMh,active,save,renderInspector,announce,drawCanvas,refreshLocation});
   render();
