@@ -1,4 +1,4 @@
-# SUBTERRA — Infrastructure Reconstruction UI (v0.11)
+# SUBTERRA — Infrastructure Reconstruction UI (v0.12)
 
 Front-end-only evidence-capture prototype for existing underground utility assets. The platform **does not design new networks or perform reverse-engineering calculations yet**.
 
@@ -8,6 +8,13 @@ Front-end-only evidence-capture prototype for existing underground utility asset
 2. **Choose infrastructure system**: sanitary sewer is the first active workspace. Other utility categories remain placeholders.
 3. **Open sewer workspace**: view the pan/zoom metric canvas and manhole schedule.
 4. **Add / select a manhole**: complete the eight-step entry wizard. Each step is available by number or Previous / Next.
+
+## Pipe 56 v0.12 — Phase 2A validator cache fix
+
+- Fixes the deployment mismatch where v0.11 loaded `blind-test-pipe56.js?v=0.10` from the browser cache. The old validator understood `PHASE_1_FROZEN` but not `PHASE_2A_CALCULATED`, causing a false "Case is not frozen" error and hiding saved orange calculated results.
+- Cache-bust the version of the manhole evidence validator, inference evidence module, Phase 2A calculation module and main app together. The validator exposes `validatorVersion: 2`; on mismatch, the UI reports an outdated validator rather than silently invalidating the computation.
+- Existing `blindCase.phase2` calculations are **reused and verified on reload**, without rerunning, deleting, migrating or overwriting local browser projects. Historical GIS remains withheld from the frozen test.
+- Confirmed fix against persisted Phase 2A fixture and first-time Phase 1 → Phase 2A workflow.
 
 ## Pipe 56 Phase 2A — Geometry & Gravity (v0.11)
 
