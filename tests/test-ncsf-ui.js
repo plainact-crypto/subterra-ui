@@ -57,7 +57,7 @@ const tab=name=>handlers.click({target:{closest:()=>({dataset:{tab:name}})}});
  assert.ok(page.innerHTML.includes("Zoom to Pipe 56"));
  tab("rounds");
  assert.ok(page.innerHTML.includes("Replay the four simulated rounds"));
- assert.ok(page.innerHTML.includes("Compare with Historic GIS Pipe 56"));
+ assert.ok(page.innerHTML.includes("Compare with held-out GIS Pipe 56"));
  click("historic-compare");await tick();
  assert.ok(page.innerHTML.includes("HISTORICAL RECORD / NOT GROUND TRUTH"));
  assert.ok(page.innerHTML.includes("2004 recorded GIS centerline length"));
