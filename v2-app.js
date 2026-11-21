@@ -94,12 +94,13 @@
     const pairForm=p.manholes.length>1?dataForm("pair",'<div class="form-grid">'+
       field("From manhole",select("from",p.manholes.map(m=>[m.id,m.id])))+
       field("To manhole",select("to",p.manholes.map((m,i)=>[m.id,m.id]),'data-pair-target'))+'</div>','Select Sector / Recompute'):"";
-    const ready=p.manholes.length>=2;
+    const ready=p.manholes.length>=2;const complete=!!p.surfaceSurveyComplete;
     return '<div class="block"><div class="step">01 · REQUIRED SURVEY FIRST</div><h2>Total Station XYZ — All Visible Manholes</h2>'+
       '<p class="muted">Record each visible manhole cover position and RL from a total station. Coordinates must be in the declared projected system. Other internal points come later via calibrated detail survey.</p>'+surveyForm+
       '<div class="table-scroll"><table><thead><tr><th>Asset</th><th>X (m)</th><th>Y (m)</th><th>Cover Z (m)</th><th>XY uncertainty</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
       '<h3>Initial sector hypothesis</h3><p class="muted">Select at least two manholes. The line is provisional and starts with low verification coverage. Its buried Z and alignment are unknown until field evidence is added.</p>'+pairForm+
-      '<div class="step-note">'+(ready?'Select the two manholes to inspect in the next field round.':'At least two total-station manholes required before route reconstruction.')+'</div>'+
+      '<div class="step-note">'+(ready?(complete?'Total Station visible-manhole inventory confirmed. Select one sector and proceed.':'Before a provisional route can be generated, explicitly confirm ALL visible manholes have been surveyed.'):'At least two total-station manholes required before route reconstruction.')+'</div>'+
+      (ready&&!complete?'<button class="btn btn-primary" data-action="surface-complete">Confirm All Visible Manholes Surveyed</button>':'')+
       (r.route?'<button class="btn btn-primary" data-tab="verify">Continue to Field Checklist →</button>':'')+'</div>';
   }
   const mhOptions=p=>p.manholes.map(m=>[m.id,m.id]);
@@ -118,7 +119,7 @@
         ["OPENING_CENTER","Pipe opening center XYZ"],["PIPE_INVERT","Pipe invert XYZ"],["CHAMBER_CENTER","Chamber center XYZ"],["CHANNEL_POINT","Channel XYZ"],["BENCH_POINT","Bench XYZ"],["STEP_POINT","Step / ladder XYZ"],["PIPE_TRACE_POINT","Intermediate pipe trace XYZ"],["OTHER_POINT","Other visible feature XYZ"]]))+
       field("Manhole",select("manholeId",mhOptions(p)))+
       field("Associated opening",select("openingRef",[["","Not applicable / choose if opening point"],...openingRefs]))+
-      field("Measurement method",select("method",[["SURVEY_PEN_SIMULATED","Simulated Pen Click (DEMO)"],["TOTAL_STATION","Total Station"],["PEN_CALIBRATED","Calibrated Pen"],["LASER_SCAN","Laser Scan"],["SONDE","Sonde / trace"],["DIRECT_EXPOSURE","Direct exposure"],["OTHER","Other"]]))+
+      field("Measurement method",select("method",[["TOTAL_STATION","Total Station"],["SURVEY_PEN_SIMULATED","Simulated Pen Click (DEMO)"],["PEN_CALIBRATED","Calibrated Pen"],["LASER_SCAN","Laser Scan"],["SONDE","Sonde / trace"],["DIRECT_EXPOSURE","Direct exposure"],["OTHER","Other"]]))+
       field("X / Easting (m)",number("x"))+field("Y / Northing (m)",number("y"))+field("Z / RL (m)",number("z"))+
       field("XY σ (m)",number("sigmaXY","",true,"any",".025"))+
       field("Z σ (m)",number("sigmaZ","",true,"any",".025"))+
@@ -166,7 +167,7 @@
     '<div class="next-footer"><button class="btn btn-primary" data-action="next-round">Save Next Assessment Round</button><button class="btn secondary" data-tab="verify">Add more observations</button></div></div>';
   }
   function tasks(p,r){
-    if(!r.route)return '<section class="block tasks"><h2>What to measure next</h2><p>First record two or more manholes with Total Station XYZ.</p></section>';
+    if(!r.route)return '<section class="block tasks"><h2>What to measure next</h2><p>Record ALL visible manholes with Total Station XYZ, then confirm survey completion to generate the first low-confidence route.</p></section>';
     if(p.accepted)return '<section class="block tasks"><div class="step">USER ACCEPTANCE</div><h2>Accepted at '+n(p.accepted.score,1)+'/100</h2><p class="muted">You accepted the current reconstruction while '+p.accepted.remaining.length+' verification tasks remain. No additional rounds are forced.</p><button class="btn secondary" data-action="resume">Resume Verification</button></section>';
     return '<section class="block tasks"><div class="step">NEXT BEST MEASUREMENTS</div><h2>Raise confidence with evidence</h2>'+
       '<p class="muted">Deterministic ranking by unfulfilled rubric weight divided by indicative effort. This is a task priority, not a promise of percentage gain.</p>'+
@@ -238,6 +239,10 @@
     if(target.dataset.tab){state.tab=target.dataset.tab;render();return;}
     const action=target.dataset.action,p=state.p;
     try{
+      if(action==="surface-complete"){
+        if(window.confirm("Confirm Total Station XYZ has been captured for ALL visible manholes in this survey area?"))update(E.setSurfaceSurveyComplete(p,true),"Round 0 provisional route created with low evidence and unknown pipe invert Z.");
+        return;
+      }
       if(action==="inventory"){
         const mh=p.manholes.find(x=>x.id===target.dataset.id);
         update(E.inventory(p,target.dataset.id,!mh.inventoryComplete),"Opening inventory status updated.");return;
