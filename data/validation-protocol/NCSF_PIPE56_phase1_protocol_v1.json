@@ -1,0 +1,61 @@
+{
+  "schema": "subterra-blind-test-protocol/v1",
+  "caseId": "NCSF-P56-BLIND-V1",
+  "title": "PIPE-56 Blind Reconstruction — Phase 1",
+  "stage": "PHASE_1_PREPARED",
+  "frozenOn": "2026-11-21",
+  "sourceSnapshotCommit": "92486ace69b87d134cf9504d250cbafc3a7b72ba",
+  "legalStatus": "Retrospective controlled replay; Pipe 56 geometry and endpoint connection have been seen earlier in the project. This is NOT a previously unseen prospective blind study.",
+  "inputEvidence": {
+    "sourceLayer": 1,
+    "sourceObjects": [
+      42,
+      45
+    ],
+    "allowed": [
+      "Documented manhole name and top WGS84 latitude/longitude",
+      "Historical rim elevation, outlet/main invert elevation and documented inlet levels",
+      "Historical pipe-opening inlet/outlet roles, recorded nominal diameters and recorded TCP material",
+      "Explicit unknown and request-inference flags"
+    ],
+    "blocked": [
+      "All Gravity Main Line Layer 4 geometries, including OBJECTID 56",
+      "Historical pipe 56 recorded or measured length",
+      "Any precomputed line, route vertices, bearing derived from Pipe 56, or benchmark-derived connectivity",
+      "Any other information about the hidden pipe that is not independently documented as an allowed input"
+    ],
+    "selectedEndpoints": "Two manhole locations were preselected by the tester. Existence of a connecting pipe must NOT be credited as independently discovered.",
+    "references": "Layer 1 attributes are historical AutoCAD-derived; not independently field-verified",
+    "coordinateReference": "WGS84 (EPSG:4326)",
+    "validationDistanceReference": "EPSG:32617 metres for future route comparisons; define exact projection implementation before metric calculation",
+    "levelConversion": "ft to m using factor 0.3048 for the values previously recorded",
+    "verticalDatum": "Unknown / not established from reviewed GIS description; no absolute-depth correctness claim"
+  },
+  "openingLink": {
+    "proposed": "MH-42 OUT-01 -> MH-45 IN-01",
+    "status": "HYPOTHESIS",
+    "reason": "opening role, diameters, gravity levels are consistent, but specific pipe-to-opening identity not independently documented in allowed manhole-only evidence"
+  },
+  "benchmark": {
+    "referenceFile": "data/validation-reference/NCSF_PIPE56_reference_v1.json",
+    "allowedToLoadDuringPhase1": false,
+    "referenceQuality": "Historical digitized GIS record. Not a current subsurface survey or independent physical truth."
+  },
+  "prospectiveRules": {
+    "phase1": "Create one separate local Test Case with exactly two evidenced manholes, zero observedPipes, zero calculated route outputs; preserve all existing projects",
+    "phase2": "Freeze inference input / candidate before opening reference. Do not modify selection parameters using withheld geometry.",
+    "phase3": "Any depth/crown/terrain assumptions must be documented independently, and unverified datum remains unknown.",
+    "phase4": "Only then reveal separate reference and compute comparison metrics."
+  },
+  "acceptanceCriteria": {
+    "A1": "Exactly 2 manholes with expected IDs 42 and 45 and recorded source values",
+    "A2": "No observedPipes, GIS route geometry, reference length or historical benchmark values in the model input",
+    "A3": "No currently rendered calculated pipe in Stage 1 (run not started)",
+    "A4": "Original local project(s) and all imported records unchanged; test creation idempotent",
+    "A5": "Source provenance and units captured; missing Vertical Datum and specific opening-to-pipe link marked Unverified",
+    "A6": "Protocol and source snapshot committed before controlled rerun; the earlier exposure to Pipe 56 must be declared",
+    "A7": "Only after Phase 2 lock, quantify reference agreement in metres: planimetric mean offset <= 1 m and maximum <= 2 m is a DEMO benchmark target, not field accuracy or guarantee",
+    "A8": "Exact endpoint-based straight line matches are treated as a trivial baseline, not evidence of underground route discovery"
+  },
+  "successDefinition": "Passing internal historical GIS agreement metrics is a limited retrospective demo, NOT proof of real-world 100% location accuracy or TRL4."
+}
