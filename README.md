@@ -1,4 +1,4 @@
-# SUBTERRA — Infrastructure Reconstruction UI (v0.12)
+# SUBTERRA — Infrastructure Reconstruction UI (v0.13)
 
 Front-end-only evidence-capture prototype for existing underground utility assets. The platform **does not design new networks or perform reverse-engineering calculations yet**.
 
@@ -8,6 +8,23 @@ Front-end-only evidence-capture prototype for existing underground utility asset
 2. **Choose infrastructure system**: sanitary sewer is the first active workspace. Other utility categories remain placeholders.
 3. **Open sewer workspace**: view the pan/zoom metric canvas and manhole schedule.
 4. **Add / select a manhole**: complete the eight-step entry wizard. Each step is available by number or Previous / Next.
+
+## Pipe 56 Phase 2B — Hydraulic Constraints (v0.13)
+
+In the existing, saved **PIPE-56 Blind Reconstruction** project (already in `PHASE_2A_CALCULATED`), **Run Phase 2B** computes a *separate* conditional Manning hydraulic scenario and freezes the result. Original Phase 1 evidence, frozen Phase 2A calculations and the user's 87-manhole project remain unchanged.
+
+- `pipe56-hydraulics.js` consumes **only the independently verified Phase 2A result**. Neither the original historical GIS reference nor the original network `observedPipes` is read.
+- Base `n=0.013` with sensitivities `0.011` and `0.015`; range from EPA SWMM 5.1 User Manual Appendix A.7 (vitrified clay pipe). **Assumed roughness values, never measured in this pipe.**
+- Manning equations: `A=πD²/4`; `R=D/4`; `V=(1/n) R^(2/3) sqrt(S)`; `Q=A V`; diameter recorded as **nominal** 304.8 mm, explicitly assumed to equal inner bore. `S` is the hypothetical endpoint-to-endpoint geometric slope from Phase 2A, not a measured sewer gradient.
+- Base output is **2.423 m/s** / **176.8 L/s** under the fully circular, steady *uniform full-flow gravity scenario* only. Additional roughness scenarios are computed and displayed side by side. Actual operating velocity/discharge, flow depth, true bore, aging and deposits, pressure effects, hydraulic grade line, and historic design compliance remain **UNKNOWN / NOT ASSESSED**.
+- Result snapshot `blindCase.phase2b` is frozen and verified on reopen, with lifecycle stage `PHASE_2B_HYDRAULIC_SCENARIO`. Separate **Phase 2B JSON** export; original Phase 2A export remains available.
+- No observed GIS route or ground-truth segment is revealed. No confidence/accuracy score. No automatic construction standard pass/fail claimed.
+- Both the extended validator and hydraulics scripts are **versioned v0.13** in HTML to prevent the earlier stale-cache mismatch.
+
+### Phase 2B source
+
+U.S. EPA, *Storm Water Management Model User's Manual Version 5.1*, Appendix A.7, Manning's n — Closed Conduits:
+https://19january2021snapshot.epa.gov/sites/static/files/2019-02/documents/epaswmm5_1_manual_master_8-2-15.pdf
 
 ## Pipe 56 v0.12 — Phase 2A validator cache fix
 

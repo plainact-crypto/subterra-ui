@@ -57,3 +57,18 @@
 .phase2-equations p{margin:0}
 .phase2-summary .blind-caution{padding:10px}
 .phase2-summary .blind-caution p{margin:5px 0 0}
+
+/* v0.13: conditional full-flow Manning scenarios, not field measurements */
+.hydraulic-results{border-color:#afcfe2;background:#f9fcff}
+.hydraulic-results>strong{color:#185d80}
+.hydraulic-results .phase2-kpis>div{background:#f2f9fd;border-color:#b8dce9}
+.hydraulic-results .phase2-kpis b{color:#145c7b}
+.hydraulic-muted{font-size:11px;line-height:1.55;color:#526f80;margin:2px 0 0}
+.hydraulic-table-wrap{overflow-x:auto}
+.hydraulic-table{width:100%;border-collapse:collapse;font-size:11px;color:#415c6c}
+.hydraulic-table th,.hydraulic-table td{padding:9px 6px;border-bottom:1px solid #dce8ef;text-align:right;white-space:nowrap}
+.hydraulic-table th:first-child,.hydraulic-table td:first-child{text-align:left}
+.hydraulic-table th{font-size:10px;color:#4e6d7e}
+.hydraulic-table .base{background:#eaf4fa;font-weight:800}
+.hydraulic-citation{font-size:10px;line-height:1.5;color:#657d8d}
+.hydraulic-citation a{color:#126e92;text-decoration:underline}
