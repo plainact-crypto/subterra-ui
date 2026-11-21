@@ -130,14 +130,15 @@
   function dashboard(p,r){
     const points=r.score===null?"—":n(r.score,1),pct=r.score===null?0:r.score;
     const bars=r.factors?.length?r.factors.map(f=>'<div class="score-factor"><div><span>'+safe(f.label)+'</span><b>'+n(f.score,1)+' / '+f.max+'</b></div><div class="track"><i style="width:'+(100*f.score/f.max)+'%;background:'+color(pct)+'"></i></div></div>').join(""):"";
-    return '<aside class="confidence-col"><div class="panel-head">ROUTE CONFIDENCE</div><div class="score-big" style="color:'+color(pct)+'">'+points+'<span>/100</span></div>'+
-      '<p class="score-sub">Verification coverage · not probability</p><div class="track track-main"><i style="width:'+pct+'%;background:'+color(pct)+'"></i></div>'+
+    return '<aside class="confidence-col"><div class="panel-head">ROUTE CONFIDENCE'+(p.demo?.synthetic?' · SIMULATED':'')+'</div><div class="score-big" style="color:'+color(pct)+'">'+points+'<span>/100</span></div>'+
+      '<p class="score-sub">Verification coverage · not probability'+(p.demo?.synthetic?' · NOT SITE VERIFIED':'')+'</p><div class="track track-main"><i style="width:'+pct+'%;background:'+color(pct)+'"></i></div>'+
       '<div class="metric-line"><span>Key field survey progress</span><b>'+((r.completeness===null)?"—":n(r.completeness,0)+"%")+'</b></div>'+
       '<div class="metric-line"><span>Active route</span><b>'+safe(r.status.replaceAll("_"," "))+'</b></div>'+
       '<div class="metric-line"><span>Surveyed manholes</span><b>'+p.manholes.length+'</b></div>'+
       '<div class="metric-line"><span>Checklist fields available</span><b>'+state.catalog.length+'</b></div>'+
       '<div class="metric-line"><span>Checklist observations</span><b>'+p.fieldValues.length+'</b></div>'+
       '<hr/><div class="factors">'+bars+'</div>'+
+      (p.demo?.synthetic?'<div class="sim-score-alert">All evidence is synthetic. Even 100/100 does not prove physical pipe geometry.</div>':'')+
       '<p class="technical-note">Score is based on declared evidence conditions and measurement availability. Total Station cover Z is NOT pipe invert Z. Buried path uncertainty remains unquantified until traced.</p>'+
       (p.accepted?'<div class="accepted"><strong>USER ACCEPTED</strong><p>Score '+n(p.accepted.score,1)+'/100 with '+p.accepted.remaining.length+' unresolved evidence tasks.</p></div>':'')+
       '<div class="side-actions"><button class="btn secondary" data-action="export">Export Project JSON</button><button class="btn subtle" data-action="reset">Start Another Project</button></div></aside>';
