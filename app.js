@@ -148,7 +148,7 @@
     const visible=p?.showCalculatedCandidate!==false;
     display.hidden=false;
     if(!visible) {
-      display.textContent='Calculated Candidatess hidden · '+count+' available';
+      display.textContent='Calculated Candidates hidden · '+count+' available';
     } else if(count) {
       display.textContent=count+' calculated candidate'+(count===1?'':'s')+
         ' · '+eligible+' plausible opening pairs screened · Unverified straight-line hypotheses';
