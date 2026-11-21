@@ -1,4 +1,4 @@
-# SUBTERRA — Infrastructure Reconstruction UI (v0.5)
+# SUBTERRA — Infrastructure Reconstruction UI (v0.6)
 
 Front-end-only evidence-capture prototype for existing underground utility assets. The platform **does not design new networks or perform reverse-engineering calculations yet**.
 
@@ -8,6 +8,15 @@ Front-end-only evidence-capture prototype for existing underground utility asset
 2. **Choose infrastructure system**: sanitary sewer is the first active workspace. Other utility categories remain placeholders.
 3. **Open sewer workspace**: view the pan/zoom metric canvas and manhole schedule.
 4. **Add / select a manhole**: complete the eight-step entry wizard. Each step is available by number or Previous / Next.
+
+## Optional map backgrounds (v0.6)
+
+For a WGS84 Sanitary Sewer project, the canvas offers **Background**: None, Streets · OSM, or Satellite · USGS (USA). These are drawn **behind** recorded manhole markers and imported historical GIS pipe traces. Panning, zooming, selecting assets, and FIT still work, and the selected background is stored per project in the existing browser storage key.
+
+- **Streets · OSM**: worldwide OpenStreetMap standard tiles, visible attribution, viewport-only requests and normal browser caching. No bulk downloading.
+- **Satellite · USGS (USA)**: USGS National Map **NAIP Plus** dynamic aerial imagery for the current Raleigh, NC, USA test. Imagery is not available globally; use OSM Streets elsewhere. Attribution is displayed.
+- **None**: original empty metric-grid canvas.
+- Imagery is visual context for interpreting roads/buildings. It is **not independent validation** of buried utility location and must never be treated as surveying evidence. Alignments use the existing approximate local WGS84 canvas transformation; no survey-grade georeferencing is claimed. The earlier v0.5 engineering records remain untouched and continue to export normally.
 
 ## Additive JSON observation import (v0.5)
 
