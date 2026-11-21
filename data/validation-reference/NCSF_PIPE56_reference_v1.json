@@ -1,0 +1,42 @@
+{
+  "caseId": "NCSF-P56-BLIND-V1",
+  "source": {
+    "layer": "Sanitary Sewer Gravity Main Line",
+    "layerId": 4,
+    "objectId": 56,
+    "url": "https://services6.arcgis.com/3Sj1fiIDvQtFfbvg/ArcGIS/rest/services/Sanitary_Sewer_edit/FeatureServer/4",
+    "sourceType": "AutoCAD Data",
+    "detail": "Stantec; 2004 survey; stantec-revised Dorton Triangle Area Site Utilities.dwg.",
+    "disclaimer": "Historical record only. May be incomplete, outdated, inaccurate or different from the constructed network."
+  },
+  "geometry": {
+    "type": "LineString",
+    "crs": "EPSG:4326",
+    "coordinates": [
+      [
+        -78.7127936533158,
+        35.7953862901281
+      ],
+      [
+        -78.7136681814628,
+        35.795668163897
+      ]
+    ]
+  },
+  "length": {
+    "recorded": 278.8987187557639,
+    "unit": "ft",
+    "meterConversion": 0.3048
+  },
+  "diameter": {
+    "recorded": 12,
+    "unit": "in",
+    "materialCode": "TCP"
+  },
+  "validationRole": "WITHHELD_REFERENCE_NOT_ENGINE_INPUT",
+  "provenance": {
+    "builtFrom": "NC State Fairgrounds FeatureServer/4 OBJECTID=56",
+    "dateLocked": "2026-11-21",
+    "sourceSnapshotCommit": "92486ace69b87d134cf9504d250cbafc3a7b72ba"
+  }
+}
