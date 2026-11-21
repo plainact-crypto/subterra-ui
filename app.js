@@ -1,4 +1,4 @@
-/* Subterra UI v0.11 — evidence-only Pipe 56 Phase 2A. */
+/* Subterra UI v0.12 — Phase 2A stale validator cache fix. */
 (() => {
   'use strict';
 
@@ -174,7 +174,8 @@
 
 
   function pipe56StoredResult(p){
-    if(!p?.blindCase?.phase2 || !window.SubterraBlindTest?.validate(p).pass)return null;
+    if(!p?.blindCase?.phase2 || window.SubterraBlindTest?.validatorVersion!==2)return null;
+    if(!window.SubterraBlindTest.validate(p).pass)return null;
     const evidence=window.SubterraInferenceEvidence.build(p);
     return window.SubterraPipe56Phase2?.verify(evidence,p.blindCase.phase2).pass
       ? p.blindCase.phase2 : null;
@@ -197,6 +198,8 @@
   }
   function pipe56Phase2Html(p){
     if(!p.blindCase.phase2)return '<div class="blind-caution">No calculations run. Press Run Phase 2A to calculate from frozen evidence.</div>';
+    if(window.SubterraBlindTest?.validatorVersion!==2)
+      return '<div class="blind-caution">Outdated validator loaded. Reload the latest app version; the saved Phase 2A result has not been erased.</div>';
     const r=pipe56StoredResult(p);
     if(!r)return '<div class="blind-caution">Calculation integrity mismatch — results cannot be verified.</div>';
     const e=r.engineering,fmt=(v,d=3)=>Number(v).toFixed(d);
@@ -533,7 +536,7 @@
   $('#navSystems').addEventListener('click',()=>{if(active())navigate('systems');else announce('Create a project first');});
   $('#brandHome').addEventListener('click',()=>navigate('projects'));
   $('#brandHome').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')navigate('projects');});
-  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.11 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. Normal projects display preliminary geometric candidate hypotheses; those are not verified buried pipes. Pipe 56 Phase 1 is a separate read-only, manhole-only fixture with calculations disabled and the historical reference withheld. Data is saved locally; export backups regularly.'));
+  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.12 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. Normal projects display preliminary geometric candidate hypotheses; those are not verified buried pipes. Pipe 56 Phase 1 is a separate read-only, manhole-only fixture with calculations disabled and the historical reference withheld. Data is saved locally; export backups regularly.'));
   window.SubterraDetails.setup({getSelectedMh,active,save,renderInspector,announce});
   window.SubterraWizard.setup({getSelectedMh,active,save,renderInspector,announce,drawCanvas,refreshLocation});
   render();
