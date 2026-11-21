@@ -8,8 +8,11 @@ const validPt=p=>p&&num(p.x)&&num(p.y)&&num(p.z);
 function project(x){
  const name=(x.name||"").trim(),crs=(x.crs||"").trim(),datum=(x.verticalDatum||"").trim();
  if(!name||!crs||!datum)throw Error("Name, projected CRS and vertical datum required");
+ const targetXY=Number(x.targetXY),targetZ=Number(x.targetZ);
+ if(!num(targetXY)||!num(targetZ)||targetXY<=0||targetZ<=0||targetXY>3||targetZ>3)
+   throw Error("Project-specific horizontal and vertical survey precision targets required");
  return {schema:"subterra-v2",id:id(),name,network:x.network==="storm"?"storm":"sanitary",
- control:{method:"TOTAL_STATION",crs,verticalDatum:datum,instrumentId:x.instrumentId||"",surveyor:x.surveyor||""},
+ control:{method:"TOTAL_STATION",crs,verticalDatum:datum,instrumentId:x.instrumentId||"",surveyor:x.surveyor||"",targetXY,targetZ},
  manholes:[],points:[],fieldValues:[],evidence:[],pair:[],rounds:[],accepted:null,surfaceSurveyComplete:false};
 }
 function addManhole(p,m){
@@ -85,11 +88,14 @@ function assess(p){
  const match=opA&&opB&&opA.material&&opB.material&&opA.diameterMm&&opA.diameterMm===opB.diameterMm&&opA.material.toLowerCase()===String(opB.material).toLowerCase();
  const hasChan=[a,b].every(m=>!!getPoint(p,m,"CHANNEL_POINT"));
  const val=(fid,value)=>p.fieldValues.some(x=>x.fid===fid&&x.scope===key&&x.value===value);
- const scores={control:p.control.method==="TOTAL_STATION"&&p.control.crs&&p.control.verticalDatum?8:0,
+ const quality=(sigma,target)=>num(sigma)&&sigma>0&&num(target)&&target>0?Math.min(1,target/sigma):0;
+ const qxy=quality(Math.max(a.sigmaXY,b.sigmaXY),p.control.targetXY);
+ const qz=quality(Math.max(a.sigmaZ,b.sigmaZ),p.control.targetZ);
+ const scores={control:p.control.method==="TOTAL_STATION"&&p.control.crs&&p.control.verticalDatum?4+2*qxy+2*qz:0,
    centers:6+(centerA?2:0)+(centerB?2:0),
    inventory:(a.inventoryComplete?5:0)+(b.inventoryComplete?5:0),
-   ports:(pA?7.5:0)+(pB?7.5:0),
-   inverts:invA&&invB&&!conflict?12:invA||invB?2:0,
+   ports:(pA?7.5*quality(pA.sigmaXY,p.control.targetXY):0)+(pB?7.5*quality(pB.sigmaXY,p.control.targetXY):0),
+   inverts:invA&&invB&&!conflict?6*quality(invA.sigmaZ,p.control.targetZ)+6*quality(invB.sigmaZ,p.control.targetZ):invA||invB?2:0,
    attributes:match?6:0,channels:hasChan?5:0,continuity:continuity?12:0,
    trace:trace?12:0,constraints:val("SFP-REVIEW","COMPLETE")?4:0,qa:val("SFP-QA","INDEPENDENT_REVIEWED")?6:0};
  const factors=W.map(([k,label,max])=>({key:k,label,max,score:scores[k]}));
@@ -134,7 +140,7 @@ function accept(p,reason){
  return {...p,accepted:{at:new Date().toISOString(),score:r.score,reason:String(reason||""),remaining:r.tasks.map(x=>x.key),status:"USER_ACCEPTED_WITH_UNRESOLVED_RISK"}};
 }
 function selfTest(){
- let p=project({name:"Synthetic",crs:"LOCAL_ENU_METRES",verticalDatum:"SYNTHETIC_BM"});
+ let p=project({name:"Synthetic",crs:"LOCAL_ENU_METRES",verticalDatum:"SYNTHETIC_BM",targetXY:.03,targetZ:.025});
  p=addManhole(p,{id:"A",x:0,y:0,z:104,sigmaXY:.01,sigmaZ:.01});
  p=addManhole(p,{id:"B",x:60,y:0,z:102,sigmaXY:.01,sigmaZ:.01});
  p=setPair(p,"A","B");p=setSurfaceSurveyComplete(p,true);
