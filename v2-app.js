@@ -45,6 +45,8 @@
       field("Network",select("network",[["sanitary","Sanitary Sewer"],["storm","Stormwater Drainage"]]))+
       field("Projected coordinate reference (metres)",txt("crs","EPSG code or surveyed local engineering grid"))+
       field("Vertical datum / benchmark",txt("verticalDatum","e.g. Project BM-01"))+
+      field("Project XY target σ (m)",number("targetXY","Specify target",true,"any",".03"))+
+      field("Project Z target σ (m)",number("targetZ","Specify target",true,"any",".025"))+
       field("Total Station instrument / serial",txt("instrumentId","Instrument identifier",false))+
       field("Surveyor",txt("surveyor","Survey team",false))+'</div>','Create Field Survey Project')+
       '<div class="start-foot">Old application data are not imported. This is a new survey-first product. No AI is used for geometry or scoring.</div></section>';
@@ -201,7 +203,7 @@
   }
   function doForm(name,data,form){
     const p=state.p;
-    if(name==="create"){const a=E.project(data);state.tab="survey";update(a,"New v2 project created. Survey ALL visible manholes first.");return;}
+    if(name==="create"){const a=E.project({...data,targetXY:Number(data.targetXY),targetZ:Number(data.targetZ)});state.tab="survey";update(a,"New v2 project created. Survey ALL visible manholes first.");return;}
     if(!p)throw Error("Create a project first");
     if(name==="manhole"){
       let next=E.addManhole(p,parseNums(data,["x","y","z","sigmaXY","sigmaZ"]));
