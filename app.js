@@ -1,4 +1,4 @@
-/* Subterra UI v0.15 — independent field survey and deterministic correction. */
+/* Subterra UI v0.16 — left-side transparent confidence dashboard. */
 (() => {
   'use strict';
 
@@ -358,6 +358,40 @@
       addFieldSurveyInput(data);
     }catch(err){announce('Could not load demo: '+String(err?.message||err));}
   }
+
+  function confidenceDashboardHtml(p){
+    if(!p?.blindCase?.locked)return '';
+    const run=fieldSurveyActiveRun(p);
+    const hasField=Array.isArray(p.fieldSurveyRuns)&&p.fieldSurveyRuns.length>0;
+    const r=window.SubterraConfidence?.compute(run)||null;
+    if(!r)return '<div class="confidence-dashboard-unavailable">Confidence module unavailable</div>';
+    const scored=typeof r.score==='number'&&Number.isFinite(r.score);
+    const simulation=r.status==='SIMULATED_SCENARIO';
+    const conflict=r.status==='GEOMETRY_CONFLICT';
+    const invalid=hasField&&!run;
+    const format=n=>Number(n).toFixed(1);
+    const item=f=>{
+      const v=typeof f.score==='number'?f.score:0;
+      const pct=f.max>0?Math.min(100,Math.max(0,100*v/f.max)):0;
+      return '<div class="confidence-factor" title="'+escapeHtml(f.explain||'')+'"><div class="confidence-factor-label"><span>'+escapeHtml(f.label)+'</span><b>'+(typeof f.score==='number'?format(f.score):'—')+'<small> / '+f.max+'</small></b></div><div class="confidence-bar"><i style="width:'+pct.toFixed(1)+'%"></i></div></div>';
+    };
+    const marker=invalid?'SNAPSHOT INVALID':conflict?'CONFLICT':simulation?'SIMULATED INPUT':scored?'UNVERIFIED INPUT':'NO SURVEY';
+    const state=invalid?'Stored field scenario failed integrity verification.':r.reason;
+    const score=scored?format(r.score):'—';
+    const body='<div class="confidence-meta">'+escapeHtml(marker)+'</div>'
+      +'<div class="confidence-score"><strong>'+score+'</strong><span>/ 100</span></div>'
+      +'<div class="confidence-score-label">Evidence Readiness Index</div>'
+      +(scored?'<div class="confidence-score-track"><i style="width:'+r.score.toFixed(1)+'%"></i></div>':'')
+      +'<p class="confidence-explain">'+escapeHtml(state)+'</p>'
+      +'<div class="confidence-divider"></div>'
+      +(scored?r.factors.map(item).join(''):'<p class="confidence-muted">Load or import a valid Field Survey JSON to calculate a quality index.</p>')
+      +'<div class="confidence-truth"><b>Actual route confidence</b><span>NOT VERIFIED</span></div>'
+      +'<div class="confidence-uncertainty">Declared input σ: <b>'+(scored&&r.uncertaintyApprox1SigmaM!==null?'±'+format(r.uncertaintyApprox1SigmaM*1000)+' mm':'UNKNOWN')+'</b></div>'
+      +'<p class="confidence-disclaimer">Score is a <b>transparent checklist index</b>, NOT a probability of correct buried alignment or measured field accuracy. Independent verification remains 0 / 20.</p>'
+      +(scored?'<details class="confidence-method"><summary>Scoring formula</summary><div>Coverage 30 + Geometry 30 + Input precision 20 + Independent evidence 20.<br>Geometry: 24 × (1 − worst bearing difference / limit) + 6 for common-datum positive fall.<br>Precision: 20 × max(0, 1 − propagated σ / 0.20 m).<br>0.20 m is a display reference, not a certified tolerance. Conflicts cap total at 35.</div></details>':'');
+    return '<details class="confidence-dashboard '+(simulation?'confidence-demo ':'')+(conflict||invalid?'confidence-conflict ':'')+'" open><summary><span>◈ CONFIDENCE DASHBOARD</span><small>Hide / Show</small></summary><div class="confidence-body">'+body+'</div></details>';
+  }
+
   function fieldSurveyHtml(p){
     const runs=Array.isArray(p.fieldSurveyRuns)?p.fieldSurveyRuns:[];
     const run=fieldSurveyActiveRun(p),err=runs.length&&!run;
@@ -465,7 +499,7 @@
     const phase2bStored=!!p.blindCase?.phase2b;
     $('#mainContent').innerHTML=`<div class="workspace"><div class="ws-header"><div><h1>Sanitary Sewer <span style="font-size:12px;color:#80a3a3;font-weight:600">/ Data Workspace</span></h1><div class="ws-sub">${escapeHtml(p.name)} · ${blindLocked?(phase2Stored?(phase2bStored?'PHASE 2B FROZEN · Hydraulic Scenarios · Reference withheld':'PHASE 2A FROZEN · Geometry & Gravity · Reference withheld'):'PHASE 1 FROZEN · Manhole evidence only · Reference withheld'):'Surveyed evidence & manhole classification · No design calculations'}</div></div><div class="ws-actions">${blindLocked?
   (phase2bStored?'<button class="btn btn-outline btn-sm" id="exportPhase2bResult">↓ Phase 2B JSON</button>':phase2Stored?'<button class="btn btn-primary btn-sm" id="runPipe56Hydraulics">▶ Run Phase 2B</button>':'')+(phase2Stored?'<button class="btn btn-outline btn-sm" id="exportPhase2Result">↓ Phase 2A JSON</button>':'<button class="btn btn-primary btn-sm" id="runPipe56Phase2">▶ Run Phase 2A</button>')+'<button class="btn btn-outline btn-sm" id="exportBlindEvidence">↓ Evidence JSON</button><button class="btn btn-outline btn-sm" id="exportBlindProtocol">↓ Protocol</button><button class="btn btn-outline btn-sm" id="exportJson">↓ Project JSON</button><button class="btn btn-outline btn-sm" data-all-projects>← Projects</button>'
-  : '<button class="btn btn-outline btn-sm" data-create-blind-test>◈ Pipe 56 Blind Test</button><button class="btn btn-outline btn-sm hide-sm" id="exportCsv">↓ Export CSV</button><button class="btn btn-outline btn-sm" id="importJson">↑ Import JSON</button><input id="importJsonFile" type="file" accept=".json,application/json" hidden aria-label="Select Subterra observation JSON" /><button class="btn btn-outline btn-sm" id="exportJson">↓ JSON</button><button class="btn btn-outline btn-sm hide-sm" id="exportKml">↗ Google Earth KML</button><button class="btn btn-primary btn-sm" id="topAddMh">＋ Manhole</button>'}</div></div><div class="ws-main"><section class="canvas-pane"><canvas class="canvas-surface" id="mapCanvas" aria-label="Infinite canvas with surveyed manholes. Drag to pan, scroll to zoom."></canvas><div class="canvas-toolbar"><span class="canvas-pill green">● Sewer / Manholes</span><span class="canvas-pill">${p.coordMode==='geographic'?'WGS84 · Local metric view':'Local XY · Metres'}</span><label class="canvas-pill map-layer-control">Background <select id="mapLayerPicker" aria-label="Background map layer" ${p.coordMode==='geographic'?'':'disabled title="Basemaps require WGS84 coordinates"'}><option value="none" ${mapLayer==='none'?'selected':''}>None</option><option value="streets" ${mapLayer==='streets'?'selected':''}>Streets · OSM</option><option value="satellite" ${mapLayer==='satellite'?'selected':''}>Satellite · USGS (USA)</option></select></label>${blindLocked?'<span class="canvas-pill blind-lock-chip">◈ '+(phase2bStored?'Phase 2B hydraulic scenario':phase2Stored?'Phase 2A calculated':'Evidence frozen')+' · GIS withheld</span>'+(phase2Stored?calculatedCandidateButton(p):''):historicalPipesButton(p)+calculatedCandidateButton(p)}</div><div class="basemap-attribution" id="basemapAttribution" hidden></div><div class="canvas-controls"><button id="zoomIn" title="Zoom in">＋</button><button id="zoomOut" title="Zoom out">−</button><button class="fit" id="fitCanvas" title="Fit all manholes">FIT</button></div><div class="candidate-summary" id="candidateSummary" hidden></div><div id="canvasEmpty" class="canvas-overlay-empty"><div class="ghost-icon">⌖</div><strong>Your survey canvas is ready</strong><p>Add a manhole and enter its surveyed top coordinates. It will appear here automatically.</p></div><div class="canvas-hint">✥ Drag to pan <span style="opacity:.35">·</span> Scroll to zoom <span style="opacity:.35">·</span> Click a manhole to select</div><div class="canvas-legend"><span class="dot-legend"></span> Manholes · <span class="legend-route-orange">━━</span> Calculated Candidates · <span style="color:#16a371;font-weight:900">┄┄</span> Field-Corrected · <span class="legend-route-blue">┄┄</span> Historical GIS</div></section><aside class="inspector"><div class="inspector-tabs"><span class="inspector-caption">MANHOLE RECORDS &amp; CLASSIFICATION</span></div><div class="inspector-scroll" id="inspectorBody"></div></aside></div></div>`;
+  : '<button class="btn btn-outline btn-sm" data-create-blind-test>◈ Pipe 56 Blind Test</button><button class="btn btn-outline btn-sm hide-sm" id="exportCsv">↓ Export CSV</button><button class="btn btn-outline btn-sm" id="importJson">↑ Import JSON</button><input id="importJsonFile" type="file" accept=".json,application/json" hidden aria-label="Select Subterra observation JSON" /><button class="btn btn-outline btn-sm" id="exportJson">↓ JSON</button><button class="btn btn-outline btn-sm hide-sm" id="exportKml">↗ Google Earth KML</button><button class="btn btn-primary btn-sm" id="topAddMh">＋ Manhole</button>'}</div></div><div class="ws-main"><section class="canvas-pane"><canvas class="canvas-surface" id="mapCanvas" aria-label="Infinite canvas with surveyed manholes. Drag to pan, scroll to zoom."></canvas>${confidenceDashboardHtml(p)}<div class="canvas-toolbar"><span class="canvas-pill green">● Sewer / Manholes</span><span class="canvas-pill">${p.coordMode==='geographic'?'WGS84 · Local metric view':'Local XY · Metres'}</span><label class="canvas-pill map-layer-control">Background <select id="mapLayerPicker" aria-label="Background map layer" ${p.coordMode==='geographic'?'':'disabled title="Basemaps require WGS84 coordinates"'}><option value="none" ${mapLayer==='none'?'selected':''}>None</option><option value="streets" ${mapLayer==='streets'?'selected':''}>Streets · OSM</option><option value="satellite" ${mapLayer==='satellite'?'selected':''}>Satellite · USGS (USA)</option></select></label>${blindLocked?'<span class="canvas-pill blind-lock-chip">◈ '+(phase2bStored?'Phase 2B hydraulic scenario':phase2Stored?'Phase 2A calculated':'Evidence frozen')+' · GIS withheld</span>'+(phase2Stored?calculatedCandidateButton(p):''):historicalPipesButton(p)+calculatedCandidateButton(p)}</div><div class="basemap-attribution" id="basemapAttribution" hidden></div><div class="canvas-controls"><button id="zoomIn" title="Zoom in">＋</button><button id="zoomOut" title="Zoom out">−</button><button class="fit" id="fitCanvas" title="Fit all manholes">FIT</button></div><div class="candidate-summary" id="candidateSummary" hidden></div><div id="canvasEmpty" class="canvas-overlay-empty"><div class="ghost-icon">⌖</div><strong>Your survey canvas is ready</strong><p>Add a manhole and enter its surveyed top coordinates. It will appear here automatically.</p></div><div class="canvas-hint">✥ Drag to pan <span style="opacity:.35">·</span> Scroll to zoom <span style="opacity:.35">·</span> Click a manhole to select</div><div class="canvas-legend"><span class="dot-legend"></span> Manholes · <span class="legend-route-orange">━━</span> Calculated Candidates · <span style="color:#16a371;font-weight:900">┄┄</span> Field-Corrected · <span class="legend-route-blue">┄┄</span> Historical GIS</div></section><aside class="inspector"><div class="inspector-tabs"><span class="inspector-caption">MANHOLE RECORDS &amp; CLASSIFICATION</span></div><div class="inspector-scroll" id="inspectorBody"></div></aside></div></div>`;
     renderInspector(); setupCanvas(); requestAnimationFrame(()=>{if(state.canvas.dirtyFit)fitCanvas();else drawCanvas();});
   }
   function renderInspector(){renderManholes();}
@@ -723,7 +757,7 @@
   $('#navSystems').addEventListener('click',()=>{if(active())navigate('systems');else announce('Create a project first');});
   $('#brandHome').addEventListener('click',()=>navigate('projects'));
   $('#brandHome').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')navigate('projects');});
-  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.15 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. Normal projects display preliminary geometric candidate hypotheses; those are not verified buried pipes. Pipe 56 Phase 1 is a separate read-only, manhole-only fixture with calculations disabled and the historical reference withheld. Data is saved locally; export backups regularly.'));
+  $('#helpButton').addEventListener('click',()=>alert('Subterra v0.16 — Record measured top and invert coordinates, classify each manhole through the supplied engineering taxonomy, and document existing pipe openings and components. Normal projects display preliminary geometric candidate hypotheses; those are not verified buried pipes. Pipe 56 Phase 1 is a separate read-only, manhole-only fixture with calculations disabled and the historical reference withheld. Data is saved locally; export backups regularly.'));
   window.SubterraDetails.setup({getSelectedMh,active,save,renderInspector,announce});
   window.SubterraWizard.setup({getSelectedMh,active,save,renderInspector,announce,drawCanvas,refreshLocation});
   render();
